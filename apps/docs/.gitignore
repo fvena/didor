@@ -1,0 +1,27 @@
+# Dependencies
+node_modules
+
+# Logs
+*.log*
+
+# Nuxt
+.nuxt
+.output
+.vercel_build_output
+.build-*
+.env
+.netlify
+
+# Testing
+reports
+coverage
+*.lcov
+.nyc_output
+
+# Temp directories
+.temp
+.tmp
+.cache
+
+# OSX
+.DS_Store

@@ -1,0 +1,80 @@
+{
+  "name": "@didor/style-guide",
+  "version": "0.1.0",
+  "description": "Didor's engineering style guide",
+  "homepage": "https://github.com/fvena/didor/packages/style-guide#readme",
+  "main": "index.js",
+  "files": [
+    "eslint",
+    "prettier",
+    "stylelint",
+    "typescript",
+    "vitest"
+  ],
+  "scripts": {
+    "clean": "rimraf node_modules",
+    "lint": "eslint --max-warnings=0 ."
+  },
+  "prettier": "./prettier",
+  "dependencies": {
+    "@babel/core": "^7.19.6",
+    "@babel/eslint-parser": "^7.19.1",
+    "@rushstack/eslint-patch": "^1.2.0",
+    "@testing-library/user-event": "^14.4.3",
+    "@testing-library/vue": "^6.6.1",
+    "@typescript-eslint/eslint-plugin": "^5.41.0",
+    "@typescript-eslint/parser": "^5.41.0",
+    "@volar/vue-language-plugin-pug": "^1.0.9",
+    "@vue/eslint-config-prettier": "^7.0.0",
+    "@vue/eslint-config-typescript": "^11.0.2",
+    "eslint-config-prettier": "^8.5.0",
+    "eslint-config-turbo": "latest",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-import-resolver-typescript": "^3.5.2",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "eslint-plugin-testing-library": "^5.9.1",
+    "eslint-plugin-tsdoc": "^0.2.17",
+    "eslint-plugin-unicorn": "^44.0.2",
+    "eslint-plugin-vitest-globals": "^1.2.0",
+    "eslint-plugin-vue": "^9.7.0",
+    "eslint-plugin-vue-pug": "^0.5.4",
+    "eslint-plugin-vuejs-accessibility": "^2.0.0",
+    "jest-canvas-mock": "^2.4.0",
+    "postcss-html": "^1.5.0",
+    "prettier-plugin-packagejson": "^2.3.0",
+    "stylelint-config-prettier": "^9.0.3",
+    "stylelint-config-recess-order": "^3.0.0",
+    "stylelint-config-recommended-scss": "^8.0.0",
+    "stylelint-config-recommended-vue": "^1.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.27.0",
+    "prettier": "^2.7.1",
+    "stylelint": "^14.14.0",
+    "typescript": "^4.8.4",
+    "vitest": "^0.24.3",
+    "vue": "^3.2.41"
+  },
+  "peerDependencies": {
+    "eslint": "^8.27.0",
+    "prettier": "^2.7.1",
+    "stylelint": "^14.14.0",
+    "typescript": "^4.8.4"
+  },
+  "peerDependenciesMeta": {
+    "eslint": {
+      "optional": true
+    },
+    "prettier": {
+      "optional": true
+    },
+    "stylelint": {
+      "optional": true
+    },
+    "typescript": {
+      "optional": true
+    }
+  }
+}

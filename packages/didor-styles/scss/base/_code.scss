@@ -1,0 +1,80 @@
+@use '../core/vars' as *;
+
+@if $useBase == true {
+  /*
+   * ================ Bloques de código ================
+   */
+  code,
+  pre {
+    font-family: font(monospace);
+    font-size: font-size(small1);
+    font-weight: font-weight(normal);
+    line-height: 1.2rem;
+    color: $code-color;
+    background-color: $code-background;
+    border-radius: $border-radius;
+  }
+
+  pre {
+    position: relative;
+    display: block;
+    padding: half() simple();
+    overflow: auto;
+    hyphens: none;
+    text-align: left;
+    word-break: normal;
+    word-wrap: normal;
+    tab-size: 4;
+    white-space: pre;
+    word-spacing: normal;
+
+    a > & {
+      padding: 0;
+      color: inherit;
+      background-color: inherit;
+    }
+
+    &::after {
+      position: absolute;
+      top: quarter();
+      right: 0;
+      display: block;
+      height: simple();
+      padding: 0 half();
+      font-size: 0.6rem;
+      font-weight: font-weight(bold);
+      line-height: simple();
+      color: color(gray4);
+      text-align: right;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      content: attr(data-lang);
+    }
+  }
+
+  /*
+   * ================ Código dentro de una linea de texto normal ================
+   */
+  :not(pre) > code {
+    padding: 0.1rem 0.3rem;
+    font-size: 0.9em;
+    line-height: simple();
+    color: $inline-code-color;
+    white-space: nowrap;
+    background-color: $inline-code-background;
+    border-radius: $border-radius;
+  }
+
+  /*
+   * ================ Teclas del teclado ================
+   */
+  kbd {
+    padding: 0.1rem 0.3rem;
+    font-family: font(monospace);
+    font-size: 0.8em;
+    line-height: simple();
+    color: $kbd-color;
+    background-color: $kbd-background;
+    border-radius: $border-radius;
+  }
+}

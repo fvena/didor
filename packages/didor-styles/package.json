@@ -1,0 +1,47 @@
+{
+  "name": "@didor/styles",
+  "version": "3.0.0",
+  "description": "A fully configurable utility class generator and CSS framework built for Sass projects.",
+  "keywords": [
+    "css",
+    "sass",
+    "scss",
+    "library",
+    "framework",
+    "responsive",
+    "didor",
+    "utility first"
+  ],
+  "homepage": "https://github.com/fvena/didor#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fvena/didor/packages/styles.git"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Francisco Vena",
+    "email": "fvena32@gmail.com",
+    "url": "http://www.fvena.com/"
+  },
+  "main": "./scss",
+  "files": [
+    "scss"
+  ],
+  "scripts": {
+    "clean": "rimraf .turbo && rimraf node_modules && rimraf dist",
+    "dev": "npm-run-all sass:dev sass:watch",
+    "lint": "npm run stylelint",
+    "sass:dev": "sass --load-path=./scss/didor ./test/main.scss ./test/didor.css",
+    "sass:watch": "sass --load-path=./scss/didor ./test/main.scss ./test/didor.css --watch",
+    "stylelint": "stylelint scss/**/*.scss --fix"
+  },
+  "stylelint": {
+    "extends": "@didor/style-guide/stylelint"
+  },
+  "devDependencies": {
+    "@didor/style-guide": "*",
+    "sass": "^1.55.0",
+    "stylelint": "^14.14.0",
+    "npm-run-all": "^4.1.5"
+  }
+}

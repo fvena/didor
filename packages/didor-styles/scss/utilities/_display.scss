@@ -1,0 +1,36 @@
+@use '../core/helpers' as *;
+@use '../core/vars' as *;
+@use '../core/responsive' as *;
+
+/*
+ * ================ Generadores ================
+ */
+
+@if generate(display) == true {
+  $displays: (none, inline, inline-block, block);
+
+  /*
+   * Modificadores del modo de visualización de un elemento
+   *
+   * .display-{value}--{breakpoint}
+   *
+   * @example CSS
+   *   .display-none         // Oculta el elemento
+   *   .display-inline--palm    // Muestra un elemento como inline solo en pantallas pequeñas
+   *   .display-block--print    // Muestra un elemento como bloque al imprimir la página
+   */
+
+  @each $display in $displays {
+    .#{$prefix}display-#{$display} {
+      @include responsive {
+        display: #{$display} #{$important};
+      }
+    }
+
+    .#{$prefix}display-#{$display}--print {
+      @media print {
+        display: #{$display} #{$important};
+      }
+    }
+  }
+}

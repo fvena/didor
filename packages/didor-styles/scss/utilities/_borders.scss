@@ -1,0 +1,262 @@
+@use 'sass:map';
+@use 'sass:meta';
+@use '../core/vars' as *;
+@use '../core/helpers' as *;
+@use 'colors' as *;
+
+/*
+ * ================ Funciones ================
+ */
+
+/*
+ * Devuelve la anchura del borde en base al tamaño indicado
+ *
+ * @param {string|null|number} $size - Alias de la anchura del borde
+ * @return {string} - valor del borde en texto
+ *
+ * @example SCSS
+ *   border(thin) => 1px;
+ *   border() => 2px; // Medium (Por defecto)
+ */
+@function border($size: medium) {
+  // Obtengo el tipo del valor
+  $border-type: meta.type-of($size);
+
+  // Compruebo si el valor es un número
+  @if $border-type == number {
+    @return #{$size}px;
+  }
+
+  // Compruebo si el valor pertenece al listado de anchuras de borde
+  @if map.get($border-widths, $size) {
+    @if $css-variables == true {
+      @return var(--border-#{$size});
+    }
+
+    @return #{map.get($border-widths, $size)}px;
+  }
+
+  // No es un valor válido
+  @error "[#{$size}] does not exist";
+}
+
+/*
+ * Devuelve el valor del radio indicado
+ *
+ * @param {string} $radius - tamaño de radio
+ * @return {Number} - valor de radio en rem
+ *
+ * @example SCSS
+ *   radius(lg) =>  1.125rem;
+ */
+
+@function radius($radius: medium) {
+  @if map.get($radiuses, $radius) {
+    @if $css-variables == true {
+      @return var(--radius-#{$radius});
+    }
+
+    @return map.get($radiuses, $radius);
+  }
+
+  // No es un valor válido
+  @error "[#{$radius}] does not exist";
+}
+
+/*
+ * ================ Generadores ================
+ */
+
+@if generate(borders) == true {
+  /*
+   * Genera una clase para añadir o quitar bordes a un elemento
+   *
+   * @example CSS
+   *   .border                                // Todos los lados a la vez
+   *   .border-{top,right,bottom,left,x,y}    // A un solo lado
+   *   .no-border                             // Elimina todos los bordes de un elemento
+   *   .no-border-{top,right,bottom,left,x,y} // Elimina el borde de un solo lado
+   */
+
+  .#{$prefix}border {
+    border: border($border-width)
+      isVar('--border-style', $border-style)
+      color($border-color)
+      #{$important};
+  }
+
+  .#{$prefix}no-border {
+    border: 0 #{$important};
+  }
+
+  @each $position in ('top', 'right', 'bottom', 'left') {
+    .#{$prefix}border-#{$position} {
+      border-#{$position}: border($border-width)
+        isVar('--border-style', $border-style)
+        color($border-color)
+        #{$important};
+    }
+
+    .#{$prefix}no-border-#{$position} {
+      border-#{$position}: 0 #{$important};
+    }
+  }
+
+  .#{$prefix}border-x {
+    border-right: border($border-width)
+      isVar('--border-style', $border-style)
+      color($border-color)
+      #{$important};
+    border-left: border($border-width)
+      isVar('--border-style', $border-style)
+      color($border-color)
+      #{$important};
+  }
+
+  .#{$prefix}border-y {
+    border-top: border($border-width)
+      isVar('--border-style', $border-style)
+      color($border-color)
+      #{$important};
+    border-bottom: border($border-width)
+      isVar('--border-style', $border-style)
+      color($border-color)
+      #{$important};
+  }
+
+  .#{$prefix}no-border-x {
+    border-right: 0 #{$important};
+    border-left: 0 #{$important};
+  }
+
+  .#{$prefix}no-border-y {
+    border-top: 0 #{$important};
+    border-bottom: 0 #{$important};
+  }
+
+  /*
+   * Color del borde
+   *
+   * Modifica el color del borde por defecto
+   *
+   * @example CSS
+   *   .border.border--brand  // Colorea el borde con el color de la marca
+   */
+
+  @each $name, $color in $theme {
+    .#{$prefix}border--#{$name} {
+      border-color: color($color) #{$important};
+    }
+  }
+
+  @each $name, $color in $light-theme {
+    .#{$prefix}border--#{'' + $name} {
+      border-color: color($color) #{$important};
+    }
+  }
+
+  /*
+   * Ancho del borde
+   *
+   * Modifica el ancho del borde por defecto
+   *
+   * @example CSS
+   *   .border.border--thin  // Establece el ancho del borde a 1px
+   *   .border.border--medium  // Establece el ancho del borde a 2px
+   *   .border.border--thick  // Establece el ancho del borde a 4px
+   */
+
+  @each $name, $value in $border-widths {
+    .#{$prefix}border--#{$name} {
+      border-width: border($name) #{$important};
+    }
+  }
+
+  /*
+   * Estilo del borde
+   *
+   * Modifica el estilo del borde por defecto
+   *
+   * @example CSS
+   *   .border.border--solid   // Establece el estilo del borde a sólido
+   *   .border.border--dashed  // Establece el estilo del borde a discontinuo
+   *   .border.border--dotted  // Establece el estilo del borde a puntillado
+   *   .border.border--none    // Establece el estilo del borde a ninguno
+   */
+
+  @each $name in $border-styles {
+    .#{$prefix}border--#{$name} {
+      border-style: $name #{$important};
+    }
+  }
+
+  /*
+   * Esquinas redondeadas
+   *
+   * Aplica/Elimina una esquina redondeada a un elemento
+   *
+   * @example CSS
+   *   .rounded                         // Todas las esquinas a la vez
+   *   .rounded-{top,right,bottom,left} // A las esquinas de un lado
+   *   .rounded-circle                  // Redondea todas las esquinas hasta convertir al elemento en un círculo
+   *   .no-rounded                      // Elimina todas las esquinas redondeadas
+   */
+
+  .#{$prefix}rounded {
+    border-radius: radius() #{$important};
+  }
+
+  .#{$prefix}rounded-top {
+    border-top-left-radius: radius() #{$important};
+    border-top-right-radius: radius() #{$important};
+  }
+
+  .#{$prefix}rounded-right {
+    border-top-right-radius: radius() #{$important};
+    border-bottom-right-radius: radius() #{$important};
+  }
+
+  .#{$prefix}rounded-bottom {
+    border-bottom-right-radius: radius() #{$important};
+    border-bottom-left-radius: radius() #{$important};
+  }
+
+  .#{$prefix}rounded-left {
+    border-top-left-radius: radius() #{$important};
+    border-bottom-left-radius: radius() #{$important};
+  }
+
+  .#{$prefix}circle {
+    border-radius: 50% #{$important};
+  }
+
+  .#{$prefix}square {
+    border-radius: 0 #{$important};
+  }
+
+  @each $name, $radius in $radiuses {
+    .#{$prefix}rounded-#{$name} {
+      border-radius: radius($name) #{$important};
+    }
+
+    .#{$prefix}rounded-top-#{$name} {
+      border-top-left-radius: radius($name) #{$important};
+      border-top-right-radius: radius($name) #{$important};
+    }
+
+    .#{$prefix}rounded-right-#{$name} {
+      border-top-right-radius: radius($name) #{$important};
+      border-bottom-right-radius: radius($name) #{$important};
+    }
+
+    .#{$prefix}rounded-bottom-#{$name} {
+      border-bottom-right-radius: radius($name) #{$important};
+      border-bottom-left-radius: radius($name) #{$important};
+    }
+
+    .#{$prefix}rounded-left-#{$name} {
+      border-top-left-radius: radius($name) #{$important};
+      border-bottom-left-radius: radius($name) #{$important};
+    }
+  }
+}

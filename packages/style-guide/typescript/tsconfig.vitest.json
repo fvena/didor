@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.vue.json",
+  "compilerOptions": {
+    "composite": true,
+    "lib": [],
+    "types": ["vue", "vite/client", "vitest/globals","node", "jsdom"]
+  }
+}

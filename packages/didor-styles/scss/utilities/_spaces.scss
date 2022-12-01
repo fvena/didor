@@ -1,0 +1,114 @@
+@use 'sass:map';
+@use '../core/helpers' as *;
+@use '../core/vars' as *;
+@use '../core/responsive' as *;
+@use 'sizes' as *;
+
+/*
+ * ================ Generadores ================
+ */
+
+@if generate(spaces) == true {
+  /*
+   * Modifican los margenes internos y externos de un elemento
+   *
+   * Las clases se forman con el siguiente formato:
+   *
+   * .{none}-{property}-{sides}-{breakpoint}-{size}
+   *
+   * {none} Indica si el tamaño del margen es 0
+   *   - no
+   *   - ''
+   * {property} Indica el tipo de margen, exterior o interior
+   *   - margin
+   *   - padding
+   * {sides} Indica a que lado afecta
+   *   - top, bottom, left, right, x, y.
+   *   - Si no se indica ningún lado, se aplica a los cuatro
+   * {breakpoint} Indica a que tamaño de pantalla afecta
+   *   - palm, lap, small, desk, large
+   *   - Si no se indica ningún tamaño de pantalla, se aplica a todos
+   * {size} Indica el tamaño del margen
+   *   - quarter, half, double, triple, quadruple, quintuple, sextuple, auto
+   *   - Si no se indica ningún tamaño, se aplica el espaciado estandar
+   *   - El valor 'auto' solo se aplica a los valores horizontales 'x'
+   *
+   * @example CSS
+   *   .margin               // Margen externo de tamaño estandar a los cuatro lados
+   *   .margin-top           // Margen externo de tamaño estandar al lado superior
+   *   .margin-top--lap      // Margen externo de tamaño estandar al lado superior solo a tamaños de pantalla móviles
+   *   .padding-top-double   // Margen interno de tamaño doble al lado superior
+   *   .padding-x-triple     // Margen interno de tamaño triple a los lados derecho e izquierdo
+   *   .no-margin-bottom     // Quita el margen externo de abajo
+   *   .margin-auto          // Margen externo automático a los lados derecho e izquierdo
+   */
+
+  @each $property in ('margin', 'padding') {
+    @each $size, $length in $sizes-relatives {
+      // Inicializo valores
+      $none: '';
+      $sizeName: '';
+
+      // Si el tamaño es 0, añado el prefijo no
+      @if $size == 'none' {
+        $none: 'no-';
+      }
+
+      // Cuando el tamaño es 0 o 1 (simple) no añado sufijo
+      @if $size != 'none' and $size != 'simple' {
+        $sizeName: '-#{$size}';
+      }
+
+      .#{$prefix}#{$none}#{$property}#{$sizeName} {
+        @include responsive {
+          #{$property}: #{size($length)} #{$important};
+        }
+      }
+
+      .#{$prefix}#{$none}#{$property}-top#{$sizeName} {
+        @include responsive {
+          #{$property}-top: #{size($length)} #{$important};
+        }
+      }
+
+      .#{$prefix}#{$none}#{$property}-right#{$sizeName} {
+        @include responsive {
+          #{$property}-right: #{size($length)} #{$important};
+        }
+      }
+
+      .#{$prefix}#{$none}#{$property}-bottom#{$sizeName} {
+        @include responsive {
+          #{$property}-bottom: #{size($length)} #{$important};
+        }
+      }
+
+      .#{$prefix}#{$none}#{$property}-left#{$sizeName} {
+        @include responsive {
+          #{$property}-left: #{size($length)} #{$important};
+        }
+      }
+
+      .#{$prefix}#{$none}#{$property}-x#{$sizeName} {
+        @include responsive {
+          #{$property}-left: #{size($length)} #{$important};
+          #{$property}-right: #{size($length)} #{$important};
+        }
+      }
+
+      .#{$prefix}#{$none}#{$property}-y#{$sizeName} {
+        @include responsive {
+          #{$property}-top: #{size($length)} #{$important};
+          #{$property}-bottom: #{size($length)} #{$important};
+        }
+      }
+    }
+  }
+
+  .#{$prefix}margin-auto {
+    @include responsive {
+      margin-right: auto #{$important};
+      margin-left: auto #{$important};
+    }
+  }
+}

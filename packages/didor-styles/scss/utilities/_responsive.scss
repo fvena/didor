@@ -1,0 +1,54 @@
+@use 'sass:map';
+@use '../core/vars' as *;
+@use '../core/responsive' as *;
+
+/*
+ * ================ Mixins ================
+ */
+
+/*
+ * Genera un media query con los parámetros del tipo de pantalla seleccionada
+ *
+ * @param {String} $screen - Tamaño de pantalla
+ *
+ * @example SCSS
+ *     .myClass {
+ *       @include media(palm) {
+ *         color: color(brand);
+ *       }
+ *     }
+ *
+ * @result CSS
+ *     @media screen and (max-width: 37.4375em) {
+ *       .myClass {
+ *         color: rgba(var(--brand), 1);
+ *       }
+ *     }
+ */
+
+@mixin media($screen) {
+  // Si el alias existe en la lista que indicamos en el setting
+  @if map-has-key($breakpoints, $screen) {
+    // Crea la regla media-query
+    @media #{map-get($breakpoints, $screen)} {
+      @content;
+    }
+  }
+
+  // Si aplica a los modelos con notch
+  @else if $screen == 'notch' {
+    @supports (padding: max(0)) and (padding: env(safe-area-inset-bottom)) {
+      @content;
+    }
+  }
+
+  // Si aplica a todos los tamaños no añado nada
+  @else if $screen == 'all' {
+    @content;
+  }
+
+  // Si no existe ningun alias muestra una alerta
+  @else {
+    @warn 'Oops! Breakpoint "#{$screen}" does not exist.';
+  }
+}

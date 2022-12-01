@@ -1,0 +1,35 @@
+@use 'vars' as *;
+
+/*
+ * ================ Mixins ================
+ */
+
+/*
+ * Genera un bloque de código dentro de un media que aplica solo a pantallas que no son táctiles
+ *
+ * @example SCSS
+ *   .myClass {
+ *     @include hover {
+ *       color: color(brand);
+ *     }
+ *   }
+ *
+ * @result CSS
+ *   @media (hover: hover) and (pointer: fine) {
+ *     .myClass {
+ *       color: rgba(var(--brand), 1);
+ *     }
+ *   }
+ */
+
+@mixin hover {
+  @content;
+
+  @if $hover == true {
+    @media (hover: hover) and (pointer: fine) {
+      &--hover:not([disabled]):hover {
+        @content;
+      }
+    }
+  }
+}

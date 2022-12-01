@@ -1,0 +1,202 @@
+@use '../core/vars' as *;
+@use '../utilities/types' as *;
+@use '../utilities/colors' as *;
+
+@if $useBase == true {
+  /*
+   * ================ Tipografía ================
+   */
+
+  body {
+    font-family: font(body);
+    font-size: font(base);
+    font-weight: font($font-base-weight);
+    line-height: leading(medium);
+    color: color($font-base-color);
+    background-color: color($page-background-color);
+  }
+
+  // Cabeceras
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: font(header);
+    font-weight: font($font-header-weight);
+    color: color($font-header-color);
+  }
+
+  h1 {
+    font-size: font(h1);
+  }
+
+  h2 {
+    font-size: font(h2);
+  }
+
+  h3 {
+    font-size: font(h3);
+  }
+
+  h4 {
+    font-size: font(h4);
+  }
+
+  h5 {
+    font-size: font(h5);
+  }
+
+  h6 {
+    font-size: font(base);
+  }
+
+  // Parrafos
+  p {
+    font-size: font(base);
+  }
+
+  // Bold.
+  b,
+  strong {
+    font-weight: font(semibold);
+    color: color(gray2);
+  }
+
+  // Italic.
+  em,
+  i {
+    font-style: italic;
+  }
+
+  // Texto en linea pequeño.
+  small,
+  .small {
+    font-size: font(small1);
+    font-style: normal;
+    font-weight: font(regular);
+  }
+
+  // Texto resaltado
+  mark,
+  .mark {
+    padding: quarter();
+    color: color(white);
+    background-color: color(brand);
+    border-radius: radius();
+  }
+
+  // Caption
+  .caption {
+    font-family: font(body);
+    font-size: font(h5);
+    font-style: italic;
+    color: color(gray4);
+  }
+
+  h1 + .caption,
+  .h1 + .caption {
+    margin-top: half();
+    margin-bottom: simple();
+    font-size: font(h4);
+    font-style: normal;
+    line-height: leading(small);
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  h2 + .caption,
+  .h2 + .caption {
+    margin-top: half();
+    margin-bottom: simple();
+    font-size: font(h5);
+    font-style: normal;
+    line-height: leading(small);
+  }
+
+  /* stylelint-disable-next-line no-descending-specificity */
+  h3 + .caption,
+  .h3 + .caption {
+    margin-bottom: half();
+    font-size: font(base);
+    font-style: normal;
+    line-height: leading(small);
+  }
+
+  // Abbreviations
+  abbr[title],
+  abbr[data-original-title] {
+    cursor: help;
+    border-bottom: 0;
+  }
+
+  // Quotes.
+  blockquote,
+  .blockquote {
+    margin: double() 0;
+    font-size: font(h5);
+    line-height: leading(small);
+    color: color(gray1);
+
+    p {
+      padding-right: 30%;
+      font-size: font(h5);
+      line-height: leading(small);
+    }
+
+    p:last-of-type {
+      margin-bottom: 0;
+    }
+
+    > footer,
+    > .footer {
+      display: block;
+      padding-right: 30%;
+      font-size: font(small1);
+      font-style: italic;
+      color: color(gray4);
+
+      &::before {
+        content: '\2014 \00A0'; // em dash, nbsp
+      }
+    }
+  }
+
+  sub,
+  sup {
+    position: relative;
+    font-size: 0.75em;
+  }
+
+  sub {
+    bottom: -0.25em;
+    left: 0.25em;
+  }
+
+  sup {
+    top: -0.5em;
+    left: 0.25em;
+  }
+
+  // Horizontal rule.
+  hr {
+    margin-top: double();
+    margin-bottom: double();
+    border-top: var(--border-width) var(--border-style) color($border-color);
+  }
+
+  // Ritmo vertical
+  /* stylelint-disable-next-line no-descending-specificity */
+  p,
+  h1,
+  h2,
+  h3,
+  ul,
+  ol,
+  dl,
+  table,
+  blockquote,
+  pre {
+    margin-bottom: simple();
+  }
+}

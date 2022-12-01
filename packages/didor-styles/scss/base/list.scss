@@ -1,0 +1,126 @@
+/* stylelint-disable no-descending-specificity */
+@use '../core/vars' as *;
+
+@if $useBase == true {
+  /*
+   * ================ Listados ================
+   */
+
+  ol,
+  ul,
+  dl {
+    margin-top: 0;
+    margin-bottom: simple();
+  }
+
+  ol ol,
+  ul ul,
+  ol ul,
+  ul ol {
+    margin-top: quarter();
+    margin-bottom: 0;
+  }
+
+  dt {
+    font-weight: font-weight(bold);
+  }
+
+  dd {
+    margin-bottom: spacers('1/2');
+    margin-left: 0; // Deshace el valor predeterminado del navegador
+  }
+
+  // Elimina el espacio vertical extra, cuando anidamos varias listas.
+  li {
+    > ul,
+    > ol {
+      margin-bottom: 0;
+    }
+  }
+
+  ul > li,
+  ol > li {
+    margin-left: simple();
+  }
+
+  /*
+   * ================ Listados numerados ================
+   */
+  ol {
+    list-style: none;
+    counter-reset: b;
+
+    li {
+      position: relative;
+      padding-left: simple();
+      margin-bottom: quarter();
+      margin-left: 0;
+
+      &::before {
+        position: absolute;
+        left: quarter('-');
+        width: simple();
+        color: $list-markers-color;
+        text-align: right;
+        content: counters(b, '.') ' ';
+        counter-increment: b;
+      }
+
+      img {
+        display: block;
+        max-width: calc(100% - #{simple()});
+        margin: simple() auto;
+      }
+    }
+  }
+
+  /*
+   * ================ Listados no numerados ================
+   */
+
+  ul {
+    list-style: none;
+
+    li {
+      position: relative;
+      padding-left: simple();
+      margin-bottom: quarter();
+      margin-left: 0;
+
+      &::before {
+        position: absolute;
+        top: 11px;
+        left: 14px;
+        display: block;
+        width: 6px;
+        height: 6px;
+        text-align: right;
+        content: '';
+        background-color: $list-markers-color;
+        border-radius: 3px;
+      }
+    }
+  }
+
+  /*
+   * ================ Definiciones ================
+   */
+  dl {
+    dt,
+    dd {
+      margin-left: 0;
+
+      @include media(palm) {
+        margin-left: half();
+      }
+    }
+
+    dt {
+      font-weight: font-weight(normal);
+    }
+
+    dd + dt {
+      padding-top: 1rem;
+    }
+  }
+}

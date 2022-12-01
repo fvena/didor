@@ -1,0 +1,108 @@
+@use 'sass:meta';
+@use 'sass:list';
+@use '../core/vars' as *;
+@use 'colors' as *;
+@use 'gradients' as *;
+@use 'types' as *;
+@use 'shadows' as *;
+@use 'borders' as *;
+
+/*
+ * ================ Generadores ================
+ */
+
+@if ($css-variables) {
+  :root {
+    --FONT-FAMILIES-----------------: 01;
+
+    @each $key, $value in $font-families {
+      --font-#{'' + $key}: #{meta.inspect($value)};
+    }
+
+    --FONT-SIZES--------------------: 02;
+
+    @each $key, $value in $font-sizes {
+      --font-#{'' + $key}: #{font-size($value)};
+    }
+
+    --FONT-WEIGHTS------------------: 03;
+
+    @each $key, $value in $font-weights {
+      --font-#{'' + $key}: #{$value};
+    }
+
+    --TEXT-LEADING------------------: 04;
+
+    @each $key, $value in $leading {
+      --leading-#{'' + $key}: #{leading($value)};
+    }
+
+    --TRAKING-----------------------: 05;
+
+    @each $key, $value in $traking {
+      --traking-#{'' + $key}: #{$value};
+    }
+
+    --RADIUS------------------------: 06;
+
+    @each $key, $value in $radiuses {
+      --radius-#{'' + $key}: #{$value};
+    }
+
+    --BLUR--------------------------: 07;
+
+    @each $key, $value in $blurs {
+      --blur-#{'' + $key}: #{$value};
+    }
+    --SHADOWS-----------------------: 08;
+
+    --shadow-color: #{hex2rgb($shadow-color)};
+
+    @each $key, $value in $shadows {
+      --shadow-#{'' + $key}: #{shadow($value)};
+    }
+
+    --GRADIENTS---------------------: 09;
+
+    @each $gradient, $gradient-value in $gradients {
+      --#{'' + $gradient}-gradient: #{gradient(
+          #{list.nth($gradient-value, 1)},
+          #{list.nth($gradient-value, 2)}
+        )};
+    }
+
+    --COLORS------------------------: 10;
+
+    @each $color, $color-value in $theme {
+      --#{'' + $color}: #{hex2rgb($color-value)};
+    }
+
+    --BORDERS-----------------------: 11;
+
+    @each $width, $width-value in $border-widths {
+      --border-#{'' + $width}: #{border($width-value)};
+    }
+    --border-color: #{color($border-color)};
+    --border-width: #{border($border-width)};
+    --border-style: #{$border-style};
+
+    --SPACE-------------------------: 12;
+
+    --space: #{$space};
+  }
+
+  :root,
+  .#{$prefix}light-mode,
+  [data-theme='light'] {
+    @each $color, $color-value in $light-theme {
+      --#{'' + $color}: #{hex2rgb($color-value)};
+    }
+  }
+
+  .#{$prefix}dark-mode,
+  [data-theme='dark'] {
+    @each $color, $color-value in $dark-theme {
+      --#{'' + $color}: #{hex2rgb($color-value)};
+    }
+  }
+}

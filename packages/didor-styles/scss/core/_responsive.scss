@@ -1,0 +1,91 @@
+@use 'sass:map';
+@use 'vars' as *;
+@use 'math' as *;
+
+$palm: map.get($screens-config, palm);
+$lap: map.get($screens-config, lap);
+$small: map.get($screens-config, small);
+$desk: map.get($screens-config, desk);
+
+/*
+ * Desk First Alias
+ *
+ * Listado de los alias con los puntos de corte para un desarrollo responsive
+ */
+
+$breakpoints: (
+  'palm': 'screen and (max-width: #{em($palm - 1)})',
+  'lap': 'screen and (min-width: #{em($palm)}) and (max-width: #{em($lap - 1)})',
+  'small': 'screen and (min-width: #{em($lap)}) and (max-width: #{em($small - 1)})',
+  'desk': 'screen and (min-width: #{em($small)}) and (max-width: #{em($desk - 1)})',
+  'large': 'screen and (min-width: #{em($desk)})',
+  'portrait': 'screen and (max-width: #{em($lap - 1)})',
+  'landscape': 'screen and (min-width: #{em($lap)})',
+  'touch': 'screen and (max-width: #{em($small - 1)})',
+  'screen': 'screen and (min-width: #{em($small)})',
+  'tablet': 'screen and (min-width: #{em($palm)}) and (max-width: #{em($small - 1)})',
+);
+
+/*
+ * ================ Mixins ================
+ */
+
+/*
+ * Genera una clase con todas sus variantes responsive
+ *
+ * @example SCSS
+ *     .myClass {
+ *       @include responsive {
+ *         color: color(brand);
+ *       }
+ *     }
+ *
+ * @result CSS
+ *      .myClass {
+ *        color: rgba(var(--brand), 1);
+ *      }
+ *
+ *      @media screen and (max-width: 37.4375em) {
+ *        .myClass--palm {
+ *          color: rgba(var(--brand), 1);
+ *        }
+ *      }
+ *
+ *      @media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+ *        .myClass--lap {
+ *          color: rgba(var(--brand), 1);
+ *        }
+ *      }
+ *
+ *      @media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+ *        .myClass--small {
+ *          color: rgba(var(--brand), 1);
+ *        }
+ *      }
+ *
+ *      @media screen and (min-width: 75em) and (max-width: 99.9375em) {
+ *        .myClass--desk {
+ *          color: rgba(var(--brand), 1);
+ *        }
+ *      }
+ *
+ *      @media screen and (min-width: 100em) {
+ *        .myClass--large {
+ *          color: rgba(var(--brand), 1);
+ *        }
+ *      }
+ */
+
+@mixin responsive {
+  @content;
+
+  @if $responsive == true {
+    @each $screen in $medias {
+      @media #{map-get($breakpoints, $screen)} {
+        &--#{$screen} {
+          @content;
+        }
+      }
+    }
+  }
+}

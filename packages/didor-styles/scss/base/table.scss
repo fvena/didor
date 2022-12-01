@@ -1,0 +1,65 @@
+@use '../core/vars' as *;
+
+@if $useBase == true {
+  /*
+   * ================ Tabla ================
+   */
+
+  table {
+    width: 100%;
+    min-width: 100%;
+    margin-bottom: simple();
+    border-spacing: 0;
+    border-collapse: separate;
+  }
+
+  td,
+  th {
+    padding: quarter();
+    vertical-align: top;
+    border-bottom: 1px solid transparent;
+  }
+
+  th,
+  td,
+  tbody + tbody {
+    border-bottom-color: $table-border-color;
+  }
+
+  th {
+    font-size: font-size(small2);
+    font-weight: font-weight(bold);
+    color: $table-header-color;
+    text-transform: uppercase;
+    vertical-align: bottom;
+    background-color: $table-header-background;
+    border-top: 1px solid $table-border-color;
+    border-bottom-color: $table-border-color;
+
+    &:first-of-type {
+      border-left: 1px solid $table-border-color;
+      border-radius: $border-radius 0 0 $border-radius;
+    }
+
+    &:last-of-type {
+      border-right: 1px solid $table-border-color;
+      border-radius: 0 $border-radius $border-radius 0;
+    }
+  }
+
+  td {
+    font-size: font-size(small1);
+    line-height: 1.4rem;
+    color: $table-header-color;
+    border-bottom: 1px solid $table-border-color;
+
+    &:first-of-type {
+      font-weight: font-weight(bold);
+      white-space: nowrap;
+    }
+  }
+
+  tbody + tbody {
+    border-bottom: 1px solid transparent;
+  }
+}

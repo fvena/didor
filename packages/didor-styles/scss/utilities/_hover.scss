@@ -1,0 +1,19 @@
+@use '../core/helpers' as *;
+@use '../core/vars' as *;
+
+/*
+ * ================ Generadores ================
+ *
+
+ *
+ * Añade una clase que aplica automaticamente una transición
+ * y modifica el cursor para todos los elementos cuyo nombre de clase
+ * contenga --hover, siempre y cuando la propiedad hover esté configurada
+ */
+
+@if $hover == true and generate(hover) == true {
+  [class*='--hover'] {
+    cursor: pointer;
+    transition: all $transition-duration;
+  }
+}

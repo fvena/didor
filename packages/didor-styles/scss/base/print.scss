@@ -1,0 +1,62 @@
+@use '../core/vars' as *;
+
+@if $useBase == true {
+  /*
+   * ================ Estilos para imprimir ================
+   */
+
+  @media print {
+    *,
+    *::before,
+    *::after {
+      color: #000000 !important;
+      text-shadow: none !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+      text-decoration: underline;
+    }
+
+    a[href]::after {
+      content: ' (' attr(href) ')';
+    }
+
+    abbr[title]::after {
+      content: ' (' attr(title) ')';
+    }
+
+    pre {
+      white-space: pre-wrap !important;
+    }
+
+    pre,
+    blockquote {
+      border: 1px solid #999999;
+      page-break-inside: avoid;
+    }
+
+    thead {
+      display: table-header-group;
+    }
+
+    tr,
+    img {
+      page-break-inside: avoid;
+    }
+
+    p,
+    h2,
+    h3 {
+      orphans: 3;
+      widows: 3;
+    }
+
+    h2,
+    h3 {
+      page-break-after: avoid;
+    }
+  }
+}

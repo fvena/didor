@@ -1,0 +1,18 @@
+{
+  "name": "@didor/ui",
+  "version": "0.0.0",
+  "main": "./nuxt.ts",
+  "type": "module",
+  "license": "MIT",
+  "scripts": {
+    "clean": "rimraf node_modules && rimraf coverage",
+    "test": "vitest run --config ./vitest.config.ts --coverage"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^3.2.0",
+    "@vitest/coverage-c8": "^0.25.3",
+    "@vue/test-utils": "^2.2.4",
+    "jsdom": "^20.0.3",
+    "vitest": "^0.25.3"
+  }
+}

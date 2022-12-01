@@ -1,0 +1,198 @@
+@use 'sass:map';
+@use 'sass:color';
+@use 'sass:string';
+@use 'sass:meta';
+@use '../core/helpers' as *;
+@use '../core/vars' as *;
+@use '../core/hover' as *;
+
+/*
+ * ================ Funciones ================
+ */
+
+/*
+ * Transforma un valor en hexadecimal en los tres valores que forman un color rgb
+ *
+ * @param {string} $hexColor - Color en formato hexadecimal
+ * @return {string} - Valores del color en rgb
+ *
+ * @example SCSS
+ *   hex2rgb(#8f0537) =>  221,34,78;
+ */
+
+@function hex2rgb($hexColor) {
+  @return '#{color.red($hexColor)},#{color.green($hexColor)},#{color.blue($hexColor)}';
+}
+
+/*
+ * Codifica un color para poder para poderlo usar dentro de un string
+ *
+ * @param {string} $color - Color en formato hexadecimal o el nombre de un color definido en la configuración
+ * @return {string} - Color codificado
+ *
+ * @example SCSS
+ *   encodecolor(#8f0537) => %238f0537;
+ *   encodecolor(brand)   => %238f0537;
+ */
+
+@function encodecolor($color) {
+  @if meta.type-of($color) != color {
+    @if map.get($theme, $color) {
+      $color: map.get($theme, $color);
+    }
+
+    @if map.get($light-theme, $color) {
+      $color: map.get($light-theme, $color);
+    }
+
+    @if map.get($dark-theme, $color) {
+      $color: map.get($dark-theme, $color);
+    }
+  }
+
+  $hex: string.slice(color.ie-hex-str($color), 4);
+  $color: string.unquote('#{$hex}');
+  @return '%23' + $color;
+}
+
+/*
+ * Devuelve el color y opacidad indicados en formato rgba.
+ *
+ * Admite los nombres de los colores definidos en la configuración o un color en hexadecimal
+ * si están habilitadas las variables CSS devuelve el nombre de la variable
+ *
+ * @param {string} $color - Nombre del color definido en la configuración global, o color en hexadecimal
+ * @param {number} $opacity - Valor de la Opacidad de 0 a 1
+ * @return {string} - Color en formato rgba
+ *
+ * @example SCSS
+ *   color(brand)          => rgba(var(--brand),1) // Variables CSS activadas
+ *   color(brand)          => rgba(221,34,78,1)    // Variables CSS desactivadas
+ *   color(#8f0537, 0.5);  => rgba(221,34,78,0.5)
+ */
+
+@function color($color, $opacity: 1) {
+  @if meta.type-of($opacity) == number and ($opacity < 0 or $opacity > 1) {
+    @error "La opacidad debe tener un valor entre 0 y 1";
+  }
+
+  @if meta.type-of($color) == color {
+    @return rgba($color, $opacity);
+  }
+
+  @if map.get($theme, $color) {
+    @if $css-variables == true {
+      @return rgba(var(--#{$color}), $opacity);
+    }
+
+    @return rgba(map.get($theme, $color), $opacity);
+  }
+
+  @if map.get($light-theme, $color) {
+    @if $css-variables == true {
+      @return rgba(var(--#{$color}), $opacity);
+    }
+
+    @return rgba(map.get($light-theme, $color), $opacity);
+  }
+
+  @if map.get($dark-theme, $color) {
+    @if $css-variables == true {
+      @return rgba(var(--#{$color}), $opacity);
+    }
+
+    @return rgba(map.get($dark-theme, $color), $opacity);
+  }
+
+  @error "El color no existe";
+}
+
+/*
+ * ================ Mixins ================
+ */
+
+/*
+ * Genera una variación específica para un tema
+ * por defecto se crean los temas 'light', 'dark' aunque se pueden crear nuevos
+ *
+ * @param {String} $theme - Indica el tema al que aplica
+ *
+ * @example SCSS
+ *   .myClass {
+ *     @include theme(dark) {
+ *       color: color(brand);
+ *     }
+ *   }
+ *
+ * @result CSS
+ *   .myClass [data-theme=dark] {
+ *     color: rgba(var(--brand), 1);
+ *   }
+ */
+
+@mixin theme($theme) {
+  [data-theme='#{$theme}'] {
+    @content;
+  }
+}
+
+/*
+ * ================ Generadores ================
+ */
+
+@if generate(colors) == true {
+  /*
+   * Genera una clase para modificar el color de fondo por cada color definido
+   *
+   * @example CSS
+   *   .bg-brand             // El color de fondo se colorea con el color de la marca
+   */
+
+  @each $name, $color in $theme {
+    .#{$prefix}bg-#{'' + $name} {
+      @include hover {
+        --bg-opacity: 1;
+        background-color: color($name, var(--bg-opacity)) #{$important};
+      }
+    }
+  }
+
+  @each $name, $color in $light-theme {
+    .#{$prefix}bg-#{'' + $name} {
+      --bg-opacity: 1;
+      background-color: color($name, var(--bg-opacity)) #{$important};
+    }
+  }
+
+  /*
+   * Genera una clase para fondos transparentes
+   *
+   * @example CSS
+   *   .bg-transparent
+   */
+
+  .#{$prefix}bg-transparent {
+    background-color: transparent;
+  }
+
+  /*
+   * Genera una clase para modificar el color del texto por cada color definido
+   *
+   * @example CSS
+   *   .color-brand
+   */
+
+  @each $name, $color in $theme {
+    .#{$prefix}color-#{'' + $name} {
+      --color-opacity: 1;
+      color: color($name, var(--color-opacity)) #{$important};
+    }
+  }
+
+  @each $name, $color in $light-theme {
+    .#{$prefix}color-#{'' + $name} {
+      --color-opacity: 1;
+      color: color($name, var(--color-opacity)) #{$important};
+    }
+  }
+}

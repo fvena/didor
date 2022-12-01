@@ -1,0 +1,374 @@
+@use 'sass:map';
+@use 'sass:math';
+@use 'sass:meta';
+@use '../core/helpers' as *;
+@use '../core/vars' as *;
+@use '../core/math' as *;
+@use '../core/responsive' as *;
+@use 'colors' as *;
+
+/*
+ * ================ Funciones ================
+ */
+
+/*
+ * Devuelve el tamaño del texto en base al tamaño indicado
+ *
+ * @param {string|integer} $size - Valor númerico de la escala o alias del listado de tamaños de texto
+ * @return {Number} - valor del texto en rem
+ *
+ * @example SCSS
+ *   font-size(2) =>  1.381rem;
+ *   font-size(h4) =>  1.381rem;
+ */
+
+@function calcFontSize($size) {
+  $module: math.pow($modular-scale, $size);
+  $round: decimal-round($module, 3, ceil);
+
+  @return #{$round}rem;
+}
+
+@function font-size($size) {
+  // Obtengo el tipo del valor
+  $font-type: meta.type-of($size);
+
+  // Compruebo si el valor es un número
+  @if $font-type == number {
+    @return calcFontSize($size);
+  }
+
+  // Compruebo si el valor pertenece al listado de tamaños de texto
+  @if map.get($font-sizes, $size) {
+    @if $css-variables == true {
+      @return var(--font-#{$size});
+    }
+
+    @return calcFontSize(map.get($font-sizes, $size));
+  }
+
+  // No es un valor válido
+  @error "[#{$size}] does not exist";
+}
+
+/*
+ * Devuelve la altura de línea en base al tamaño indicado
+ *
+ * @param {string|integer} $size - Valor númerico de la escala o alias del listado de tamaños de texto
+ * @return {Number} - valor del texto en rem
+ *
+ * @example SCSS
+ *   leading(2) =>  3.2;
+ *   leading(large) => 1.84;
+ */
+
+@function calcLeading($size) {
+  @return #{$space * $size};
+}
+
+@function leading($size) {
+  // Obtengo el tipo del valor
+  $leading-type: meta.type-of($size);
+
+  // Compruebo si el valor es un número
+  @if $leading-type == number {
+    @return calcLeading($size);
+  }
+
+  // Compruebo si el valor pertenece al listado de alturas de línea
+  @if map.get($leading, $size) {
+    @if $css-variables == true {
+      @return var(--leading-#{$size});
+    }
+
+    @return calcLeading(map.get($leading, $size));
+  }
+
+  // No es un valor válido
+  @error "[#{$size}] does not exist";
+}
+
+/*
+ * Devuelve el peso tipográfico
+ *
+ * @param {string} $weight - Alias del listado de tamaños de texto
+ * @return {Number} - valor del peso tipográfico
+ *
+ * @example SCSS
+ *   font-weight(semibold) =>  600;
+ */
+
+@function font-weight($weight) {
+  // Compruebo si el valor pertenece al listado de pesos tipográficos
+  @if map.get($font-weights, $weight) {
+    @if $css-variables == true {
+      @return var(--font-#{$weight});
+    }
+
+    @return map.get($font-weights, $weight);
+  }
+
+  // No es un valor válido
+  @error "[#{$weight}] does not exist";
+}
+
+/*
+ * Devuele el valor de la familia seleccionada
+ *
+ * @param {string} $family - Alias del listado de tamaños de texto
+ * @return {Number} - valor del peso tipográfico
+ *
+ * @example SCSS
+ *   font-family(header) => "Source Sans Pro", Helvetica Neue, Arial, sans-serif;
+ */
+
+@function font-family($family) {
+  // Compruebo si el valor pertenece al listados de familias
+  @if map.get($font-families, $family) {
+    @if $css-variables == true {
+      @return var(--font-#{$family});
+    }
+
+    @return map.get($font-families, $family);
+  }
+
+  // No es un valor válido
+  @error "[#{$family}] does not exist";
+}
+
+/*
+ * Devuelve un tamaño de fuente, familia o peso dependiendo del valor indicado
+ *
+ * @param {string} $font - Alias del tamaño del texto, peso tipográfico o familia
+ * @return {string} - valor del tamaño del texto, peso tipográfico o familia
+ *
+ * @example SCSS
+ *   font(h4) => 1.381rem;
+ *   font(header) => "Source Sans Pro", Helvetica Neue, Arial, sans-serif;
+ *   font(semibold) => 500;
+ */
+
+@function font($value) {
+  // Compruebo si el valor pertenece al listado de tamaños de texto
+  @if map.get($font-sizes, $value) {
+    @return font-size($value);
+  }
+
+  // Compruebo si el valor pertenece al listado de pesos tipográficos
+  @if map.get($font-weights, $value) {
+    @return font-weight($value);
+  }
+
+  // Compruebo si el valor pertenece al listados de familias
+  @if map.get($font-families, $value) {
+    @return font-family($value);
+  }
+
+  // No es un valor válido
+  @error "[#{$value}] does not exist";
+}
+
+/*
+ * ================ Generadores ================
+ */
+
+@if generate(types) == true {
+  /*
+   * Genera clases para definir el texto en base al tamaño, peso y color
+   *
+   * @example CSS
+   *   .h2-semibold-gray1       // Tamaño de fuente h2, peso semibold y color gray1
+   *   .small1-regular-danger   // Tamaño de fuente small1, peso regular y color danger
+   */
+  @each $size-name in map.get($font-style-guide, sizes) {
+    @each $weight-name in map.get($font-style-guide, weights) {
+      @each $color-name in map.get($font-style-guide, colors) {
+        %#{$size-name}-#{$weight-name}-#{$color-name},
+        .#{$prefix}#{$size-name}-#{$weight-name}-#{$color-name} {
+          font-size: font-size($size-name) #{$important};
+          font-weight: font-weight($weight-name) #{$important};
+          color: color($color-name) #{$important};
+        }
+      }
+    }
+  }
+
+  /*
+   * Genera clases en base a los tamaños texto definidos
+   *
+   * @example CSS
+   *   .h2            // Tamaño de fuente h2
+   *   .h3-lap        // Tamaño de fuente solo para pantallas Lap de tamaño h3
+   */
+
+  @each $font-size-name, $font-size-value in $font-sizes {
+    .#{$prefix}#{$font-size-name} {
+      @include responsive {
+        font-size: font-size($font-size-name) #{$important};
+      }
+    }
+  }
+
+  /*
+   * Genera clases en base a las alturas de texto definidos
+   *
+   * @example CSS
+   *   .leading-large       // Altura de línea para textos de tamaño large
+   */
+
+  @each $leading-size-name, $leading-size-value in $leading {
+    .#{$prefix}leading-#{$leading-size-name} {
+      line-height: leading($leading-size-name) #{$important};
+    }
+  }
+
+  /*
+   * Genera clases en base a la separación entre letras definidas
+   *
+   * @example CSS
+   *   .traking-large       // Separación entre letras large
+   */
+
+  @each $traking-size-name, $traking-size-value in $traking {
+    .#{$prefix}traking-#{$traking-size-name} {
+      @if $traking-size-name == medium {
+        letter-spacing: initial #{$important};
+      } @else {
+        letter-spacing: isVar(--traking-#{$traking-size-name}, $traking-size-value) #{$important};
+      }
+    }
+  }
+
+  /*
+   * Genera clases con los pesos tipográficos definidos
+   *
+   * @example CSS
+   *   .semibold
+   *   .regular
+   */
+  @each $font-weight-name, $font-weight-value in $font-weights {
+    .#{$prefix}#{$font-weight-name} {
+      font-weight: $font-weight-value #{$important};
+    }
+  }
+
+  /*
+   * Genera clases con las familias tipográficas
+   *
+   * @example CSS
+   *   .body
+   *   .header
+   */
+  @each $font-family-name, $font-family-value in $font-families {
+    .#{$prefix}font-#{$font-family-name} {
+      font-family: $font-family-value #{$important};
+    }
+  }
+
+  /*
+   * Indica como se alinea el texto dentro un elemento.
+   *
+   * @example CSS
+   *   .align-left
+   *   .align-center--lap
+   */
+
+  .#{$prefix}align-left {
+    @include responsive {
+      text-align: left #{$important};
+    }
+  }
+
+  .#{$prefix}align-right {
+    @include responsive {
+      text-align: right #{$important};
+    }
+  }
+
+  .#{$prefix}align-center {
+    @include responsive {
+      text-align: center #{$important};
+    }
+  }
+
+  .#{$prefix}justify {
+    @include responsive {
+      text-align: justify #{$important};
+    }
+  }
+
+  /*
+   * Texto desbordante
+   */
+
+  .#{$prefix}nowrap {
+    white-space: nowrap #{$important};
+  }
+
+  .#{$prefix}truncate {
+    overflow: hidden #{$important};
+    text-overflow: ellipsis #{$important};
+    white-space: nowrap #{$important};
+  }
+
+  .#{$prefix}truncate-2 {
+    display: -webkit-box #{$important};
+    overflow: hidden #{$important};
+    -webkit-line-clamp: 2 #{$important};
+    -webkit-box-orient: vertical #{$important};
+  }
+
+  .#{$prefix}truncate-3 {
+    display: -webkit-box #{$important};
+    overflow: hidden #{$important};
+    -webkit-line-clamp: 3 #{$important};
+    -webkit-box-orient: vertical #{$important};
+  }
+
+  .#{$prefix}truncate-4 {
+    display: -webkit-box #{$important};
+    overflow: hidden #{$important};
+    -webkit-line-clamp: 4 #{$important};
+    -webkit-box-orient: vertical #{$important};
+  }
+
+  /*
+   * Transformación
+   */
+
+  .#{$prefix}lowercase {
+    text-transform: lowercase #{$important};
+  }
+
+  .#{$prefix}uppercase {
+    text-transform: uppercase #{$important};
+  }
+
+  .#{$prefix}capitalize {
+    text-transform: capitalize #{$important};
+  }
+
+  /*
+   * Apariencia
+   */
+
+  .#{$prefix}italic {
+    font-style: italic #{$important};
+  }
+
+  .#{$prefix}normal {
+    font-style: normal #{$important};
+  }
+
+  .#{$prefix}text-hide {
+    text-indent: -10000px #{$important};
+  }
+
+  .#{$prefix}underline {
+    text-decoration: underline #{$important};
+  }
+
+  .#{$prefix}no-decoration {
+    text-decoration: none #{$important};
+  }
+}

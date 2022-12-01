@@ -1,0 +1,90 @@
+@use '../core/helpers' as *;
+@use '../core/vars' as *;
+@use '../core/responsive' as *;
+
+/*
+ * ================ Generadores ================
+ */
+
+@if generate(position) == true {
+  /*
+   * Modifica como se posiciona un elemento respecto de su enterno.
+   */
+
+  /*
+   * Posicionamiento estático
+   */
+  .#{$prefix}position-static {
+    @include responsive {
+      position: static #{$important};
+    }
+  }
+
+  /*
+   * Posicionamiento relativo
+   */
+  .#{$prefix}position-relative {
+    @include responsive {
+      position: relative #{$important};
+    }
+  }
+
+  /*
+   * Posicionamiento absoluto
+   */
+  .#{$prefix}position-absolute {
+    @include responsive {
+      position: absolute #{$important};
+    }
+  }
+
+  /*
+   * Posicionamiento fijo en la parte superior de la pantalla
+   */
+  .#{$prefix}fixed-top {
+    @include responsive {
+      position: fixed #{$important};
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 1000;
+    }
+  }
+
+  /*
+   * Posicionamiento fijo en la parte inferior de la pantalla
+   */
+  .#{$prefix}fixed-bottom {
+    @include responsive {
+      position: fixed #{$important};
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1000;
+    }
+  }
+
+  /*
+   * Se posiciona de forma fija en la parte superior de la pantalla
+   * cuando haciendo scroll llega a la parte superior
+   */
+  .#{$prefix}sticky-top {
+    @supports (position: sticky) {
+      @include responsive {
+        position: sticky #{$important};
+        top: 0;
+        z-index: 1000;
+      }
+    }
+  }
+
+  .#{$prefix}sticky-bottom {
+    @supports (position: sticky) {
+      @include responsive {
+        position: sticky #{$important};
+        bottom: 0;
+        z-index: 1000;
+      }
+    }
+  }
+}

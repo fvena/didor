@@ -1,0 +1,206 @@
+@use 'sass:math';
+@use 'sass:list';
+
+/*
+ * ================ Funciones ================
+ */
+
+/*
+ * Elimina las unidades de un valor
+ *
+ * @param {Number} $number - Valor con unidades
+ * @return {Number} - Valor sin unidades
+ *
+ * @example SCSS
+ *     strip-unit(18px)  => 18
+ *     strip-unit(18)    => 18
+ */
+@function strip-unit($number) {
+  @if type-of($number) == 'number' and not unitless($number) {
+    @return math.div($number, ($number * 0 + 1));
+  }
+
+  @return $number;
+}
+
+/*
+ * Transforma un valor de pixel a rem
+ *
+ * @param  {Number} $value - Valor en píxeles
+ * @return {Number} - Valor en rem
+ *
+ * @example SCSS
+ *     rem(18)    => 1.125rem
+ *     rem(18px)  => 1.125rem
+ */
+
+@function rem($value) {
+  @return math.div(strip-unit($value), 16) * 1rem;
+}
+
+/*
+ * Transforma un valor de pixel a em
+ *
+ * @param  {Number} $value - Valor en píxeles
+ * @return {Number} - Valor en em
+ *
+ * @example SCSS
+ *     em(18)    => 1.12rem
+ *     em(18px)  => 1.12rem
+ */
+
+@function em($value: $space) {
+  @return math.div(strip-unit($value), 16) * 1em;
+}
+
+/* Redondea un número a los decimales indicados
+ *
+ * @param  {Number} $number - Un número para redondear
+ * @param  {Number} $digits [0] - Decimales de salida
+ * @param  {String} $mode [round] - (round|ceil|floor) Como redondear el número
+ * @return {Number} - Número redondeado
+ *
+ * @example SCSS
+ *     decimal-round(0.333)    => 0
+ *     decimal-round(0.333, 1) => 0.3
+ *     decimal-round(0.333, 2) => 0.33
+ *     decimal-round(0.666)    => 1
+ *     decimal-round(0.666, 1) => 0.7
+ *     decimal-round(0.666, 2) => 0.67
+ *     decimal-round(0.333, 2, ceil) => 0.34
+ *     decimal-round(0.666, 2, floor) => 0.66
+ */
+
+@function decimal-round($number, $digits: 0, $mode: round) {
+  $factor: 1;
+
+  @if type-of($number) != number {
+    @warn '#{ $number } no es un número.';
+    @return $number;
+  }
+  @if type-of($digits) != number {
+    @warn '#{ $digits } no es un número.';
+    @return $number;
+  } @else if not unitless($digits) {
+    @warn '#{ $digits } tiene unidades.';
+    @return $number;
+  }
+
+  // Obtengo el factor para redondear
+  @if $digits > 0 {
+    @for $i from 1 through $digits {
+      $factor: $factor * 10;
+    }
+  }
+
+  @if $mode == round {
+    @return math.div(math.round($number * $factor), $factor);
+  } @else if $mode == ceil {
+    @return math.div(math.ceil($number * $factor), $factor);
+  } @else if $mode == floor {
+    @return math.div(math.floor($number * $factor), $factor);
+  } @else {
+    @warn '#{ $mode } no es un modo válido.';
+    @return $number;
+  }
+}
+
+/*
+ * Cubic Bezier
+ * Devuelve un listado de puntos (x,y)
+ * correspondientes a la curva generada según los párametros indicados.
+ *
+ * Importante, todos las coordenadas se representan en valores de 0 a 1
+ *
+ * @param {Number} $x1 - Coordenada X del primer punto
+ * @param {Number} $y1 - Coordenada Y del primer punto
+ * @param {Number} $x2 - Coordenada X del segundo punto
+ * @param {Number} $y2 - Coordenada Y del segundo punto
+ * @param {Number} $steps - Número de pasos
+ * @return {List} - Listado de puntos generados
+ *
+ * @example SCSS
+ *     bezier(0.5, 0, 1, 0.5, 10) => (0, 0)
+ *                                   (0.15, 0.015)
+ *                                   (0.296, 0.056)
+ *                                   (0.437, 0.122)
+ *                                   (0.568, 0.208)
+ *                                   (0.688, 0.313)
+ *                                   (0.792, 0.432)
+ *                                   (0.879, 0.564)
+ *                                   (0.944, 0.704)
+ *                                   (0.986, 0.851)
+ *                                   (1, 1)
+ */
+/* prettier-ignore */
+@function bezier($x1, $y1, $x2, $y2, $steps) {
+  $points: ();
+
+  @for $i from 0 to $steps + 1 {
+    $t: math.div($i, $steps);
+    $x: (3 * math.pow(1 - $t, 2) * $t * $x1) + (3 * (1 - $t) * math.pow($t,2) * $x2) + math.pow($t, 3);
+    $y: (3 * math.pow(1 - $t, 2) * $t * $y1) + (3 * (1 - $t) * math.pow($t,2) * $y2) + math.pow($t, 3);
+
+    $x: decimal-round($x, 3);
+    $y: decimal-round($y, 3);
+
+    $points: list.append($points, ($x, $y));
+  }
+
+  @return $points;
+}
+
+/*
+ * Aurea
+ * Devuelve el valor de la posición indicada en una progresión Aurea
+ *
+ * Importante, dado que esta función se utilizará para definir escalas
+ * se han eliminado los dos primeros valores (0, 1) de forma que la progresión quedaría
+ *
+ * 1, 2, 3, 5, 8, 13, 21, 34, 55, ...
+ *
+ * @param {Number} $position - Posición que queremos obtener
+ * @return {Number} - Valor de esa posición en la progresión Aurea
+ *
+ * @example SCSS
+ *     aurea(2) => 2
+ *     aurea(4) => 5
+ *     aurea(6) => 13
+ */
+
+@function aurea($position) {
+  $ret: 0;
+  $ret1: 0;
+  $ret2: 1;
+
+  @if $position < 0 {
+    @error "El valor de la posición debe ser superior a 0";
+  }
+
+  @for $i from 1 through $position {
+    $ret: $ret1 + $ret2;
+    $ret1: $ret2;
+    $ret2: $ret;
+  }
+
+  @return $ret;
+}
+
+/*
+ * Aurea
+ * Devuelve el valor de la posición indicada en una progresión potencia de 2
+ *
+ * 1, 2, 4, 5, 16, 32, 64, 128, ...
+ *
+ * @param {Number} $position - Posición que queremos obtener
+ * @return {Number} - Valor de esa posición en la progresión Aurea
+ *
+ * @example SCSS
+ *     power2(2) => 4
+ *     power2(4) => 16
+ *     power2(6) => 64
+ */
+
+@function power2($position) {
+  @return math.pow(2, $position);
+}

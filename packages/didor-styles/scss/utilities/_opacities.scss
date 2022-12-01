@@ -1,0 +1,38 @@
+@use 'sass:map';
+@use '../core/helpers' as *;
+@use '../core/vars' as *;
+@use '../core/hover' as *;
+
+/*
+ * ================ Generadores ================
+ */
+
+@if generate(opacities) == true {
+  /*
+   * Modifica la transparencia de un elemento, su fondo o su texto
+   *
+   * @example CSS
+   *   .opacity-20                   // Varía la transparencia de un elemento al 20%
+   *   .opacity-20.opacity-50--hover // Varía la transparencia de un elemento al 20% con transición al 50% al hacer hover
+   *   .bg-opacity-20                // Varía la transparencia del fondo de un elemento al 20%
+   *   .color-opacity-20             // Varía la transparencia del color de un elemento al 20%
+   */
+
+  @each $name, $value in $opacities {
+    .#{$prefix}opacity-#{'' + $name} {
+      @include hover {
+        opacity: #{$value} #{$important};
+      }
+    }
+    .#{$prefix}bg-opacity-#{'' + $name} {
+      @include hover {
+        --bg-opacity: #{$value} #{$important};
+      }
+    }
+    .#{$prefix}color-opacity-#{'' + $name} {
+      @include hover {
+        --color-opacity: #{$value} #{$important};
+      }
+    }
+  }
+}

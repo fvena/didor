@@ -1,0 +1,27 @@
+@use 'sass:map';
+@use '../core/helpers' as *;
+@use '../core/vars' as *;
+
+/*
+ * ================ Generadores ================
+ */
+
+/*
+ * Modifica el cursor de un ratón al hacer hover sobre un elemento.
+ */
+
+@if generate(cursor) == true {
+   /*
+   * Modifica el cursor de un ratón al hacer hover sobre un elemento.
+   *
+   * @example CSS
+   *   .cursor-pointer       // Cursor de tipo puntero
+   *   .cursor-wait          // Cursor de tipo esperar
+   */
+
+  @each $name in $cursor {
+    .#{$prefix}cursor-#{$name} {
+      cursor: #{$name} #{$important};
+    }
+  }
+}

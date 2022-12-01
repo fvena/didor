@@ -1,0 +1,58 @@
+@use '../core/vars' as *;
+
+@if $useBase == true {
+  /*
+   * ================ Imágenes ================
+   *
+   * 1. Las imágenes ocupan todo el ancho para mejorar la adaptación a distintas pantallas.
+   * 2. Offset `alt` text from surrounding copy.
+   * 3. Elimina el espacio en blanco que aparece debajo del elemento 'img'.
+   *    Mejor alternativa que usar 'display:block'.
+   * 4. Si se define de forma explicita la altura o anchura de una imagen, tenemos
+   *    que evitar que se adapte para que no se deforme.
+   */
+  img {
+    box-sizing: content-box;
+    max-width: 100%; /* [1] */
+    height: auto;
+    font-style: italic; /* [2] */
+    vertical-align: middle; /* [3] */
+  }
+
+  img[width],
+  img[height] {
+    max-width: none; /* [4] */
+  }
+
+  /*
+   * ================ Pies de foto ================
+   */
+
+  figure {
+    margin: double() 0 triple();
+
+    img {
+      display: block;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    figcaption {
+      margin-top: quarter();
+      font-size: font-size(small1);
+      font-style: italic;
+      color: color(gray3);
+      text-align: center;
+    }
+  }
+
+  /*
+   * ================ Google maps ================
+   *
+   * Los mapas de Google se rompen si `max-width: 100%`;
+   * usamos su propio selector para evitar este problema.
+   */
+  .gm-style img {
+    max-width: none;
+  }
+}

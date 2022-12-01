@@ -1,0 +1,38 @@
+@use '../core/vars' as *;
+@use '../utilities/hover' as *;
+
+@if $useBase == true {
+  /*
+   * ================ Enlaces ================
+   */
+
+  a img {
+    border: 0;
+  }
+
+  a,
+  .link {
+    display: inline-block;
+    color: color(brand-darkest);
+    text-decoration-thickness: 0.1em;
+    text-decoration-color: color(brand);
+    text-underline-offset: 1.5px;
+    transition: color $transition-duration $transition-easing;
+    text-decoration-skip-ink: auto;
+
+    @include hover {
+      color: color(brand);
+    }
+
+    &:active,
+    &:focus,
+    &:visited {
+      color: inherit;
+    }
+
+    a[disabled] {
+      cursor: not-allowed;
+      opacity: 0.6;
+    }
+  }
+}

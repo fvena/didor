@@ -1,0 +1,97 @@
+@use 'sass:math';
+@use 'sass:list';
+@use 'sass:meta';
+@use 'vars' as *;
+
+/*
+ * ================ Funciones ================
+ */
+
+/*
+ * Comprueba si debe generarse un grupo de clases de ayuda en base a la configuración
+ *
+ * @param {string} - nombre del grupo
+ * @return {Boolean} - true si debe generarse
+ */
+
+@function generate($utily) {
+  /*
+   * Si no se habilitan las utilidades de clases no se genera ninguna
+   */
+  @if $utility-class == false {
+    @return false;
+  }
+
+  /*
+   * Si las utilidades de clases se encuentran en la lista de excluidos no se genera
+   */
+  @if list.index($excludes, $utily) {
+    @return false;
+  }
+
+  /*
+   * Si hay lista de incluidos, solo se generan las utilidades de clases que se encuentren en ella
+   */
+  @if list.length($includes) > 0 and not list.index($includes, $utily) {
+    @return false;
+  }
+
+  @return true;
+}
+
+/*
+ * Devuelve el nombre de la variable o su valor dependiendo de si las variables CSS están activadas
+ *
+ * @param {string} $name - Nombre de la variable
+ * @param {string} $value - Valor de la variable
+ * @return {string} - Nombre de la variable o su valor
+ *
+ * @example SCSS
+ *   isVar('--border-style', $border-style) => var(--border-style) // css-variable = true
+ *   isVar('--border-style', $border-style) => $border-style // css-variable = false
+ */
+
+@function isVar($name, $value) {
+  @if $css-variables == true {
+    @return var(#{$name});
+  }
+
+  @return $value;
+}
+
+/*
+ * Comprueba si un valor es una dirección de degradado válida
+ *
+ * @param {*} $value - Valor para comprobar
+ * @return {Bool}
+ *
+ * @example SCSS
+ *   is-direction('to top right')    => true
+ *   is-direction('top right')       => false
+ *   is-direction(135deg)            => true
+ *   is-direction(135)               => false
+ */
+
+@function is-direction($value) {
+  $is-keyword: list.index(
+    (
+      'to top',
+      'to top right',
+      'to right top',
+      'to right',
+      'to bottom right',
+      'to right bottom',
+      'to bottom',
+      'to bottom left',
+      'to left bottom',
+      'to left',
+      'to left top',
+      'to top left'
+    ),
+    $value
+  );
+
+  $is-angle: meta.type-of($value) == 'number' and list.index('deg' 'grad' 'turn' 'rad', math.unit($value));
+
+  @return $is-keyword or $is-angle;
+}

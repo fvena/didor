@@ -1,0 +1,57 @@
+{
+  "name": "@didor/docs",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./nuxt.config.ts",
+  "files": [
+    ".docs",
+    "src",
+    "assets",
+    "components",
+    "composables",
+    "layouts",
+    "plugins",
+    "app.config.ts",
+    "app.vue",
+    "nuxt.config.ts"
+  ],
+  "scripts": {
+    "clean": "rimraf node_modules && rimraf .nuxt",
+    "prepare": "nuxt prepare",
+    "devOld": "nuxi prepare & nuxi dev .playground",
+    "build": "nuxi build .playground",
+    "generate": "nuxi generate .playground",
+    "preview": "nuxi preview .playground",
+    "lint": "eslint .",
+    "postinstall": "npm run prepare"
+  },
+  "peerDependencies": {
+    "codemirror": "^6.0.1"
+  },
+  "dependencies": {
+    "@codemirror/autocomplete": "^6.3.4",
+    "@codemirror/commands": "^6.1.2",
+    "@codemirror/language": "^6.3.1",
+    "@codemirror/lint": "^6.1.0",
+    "@codemirror/state": "^6.1.4",
+    "@codemirror/view": "^6.6.0",
+    "@nuxt/content": "^2.2.2"
+  },
+  "devDependencies": {
+    "@codemirror/lang-css": "^6.0.1",
+    "@codemirror/lang-html": "^6.4.0",
+    "@codemirror/lang-javascript": "^6.1.1",
+    "@codemirror/lang-json": "^6.0.1",
+    "@codemirror/lang-markdown": "^6.0.5",
+    "@didor/styles": "*",
+    "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "eslint": "^8.27.0",
+    "nuxt": "^3.0.0",
+    "pug": "^3.0.2",
+    "pug-plain-loader": "^1.1.0",
+    "sass": "^1.56.1",
+    "sass-loader": "^10.4.1",
+    "typescript": "^4.9.3",
+    "vue3-sfc-loader": "^0.8.4"
+  }
+}

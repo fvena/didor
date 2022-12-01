@@ -1,0 +1,9 @@
+{
+  "extends": "@vue/tsconfig/tsconfig.web.json",
+  "compilerOptions": {
+    "composite": true
+  },
+  "vueCompilerOptions": {
+    "plugins": ["@volar/vue-language-plugin-pug"]
+  }
+}

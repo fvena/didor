@@ -1,0 +1,143 @@
+@use 'sass:map';
+@use '../core/helpers' as *;
+@use '../core/vars' as *;
+@use '../core/responsive' as *;
+
+/*
+ * ================ Funciones ================
+ */
+
+/*
+ * Devuelve el tamaño relativo de un elemento en base al tamaño por defecto
+ *
+ * @param {string|integer} $value - Valor númerico o alias del listado de tamaños
+ * @return {Number} - valor del texto en rem
+ *
+ * @example SCSS
+ *   size(2) =>  3.2rem;
+ *   size(double) =>  3.2rem;
+ */
+
+@function size($value) {
+  // Compruebo si el valor pertenece al listado de tamaños relativos
+  @if type-of($value) == 'string' {
+    @if map.get($sizes-relatives, $value) {
+      $value: #{map.get($sizes-relatives, $value)};
+    }
+
+    // No es un valor válido
+    @error "[#{$size}] does not exist";
+  }
+
+  @if $css-variables == true {
+    @return calc(var(--space) * #{$value * 1rem});
+  }
+
+  @return $space * $value * 1rem;
+}
+
+/*
+ * ================ Generadores ================
+ */
+
+/*
+ * Modifica el tamaño de un elemento.
+ */
+
+@if generate(sizes) == true {
+  /*
+   * Tamaños relativos
+   *
+   * @example CSS
+   *   .width-half            // Anchura de medio espacio
+   *   .width-simple          // Anchura de un espacio
+   *   .height-triple         // Altura de tres espacios
+   *   .height-triple--lap    // Altura de tres espacios solo para dispostivos de escritorio
+   */
+
+  @each $size, $value in $sizes-relatives {
+    .#{$prefix}width-#{$size} {
+      @include responsive {
+        width: size($value) #{$important};
+      }
+    }
+
+    .#{$prefix}height-#{$size} {
+      @include responsive {
+        height: size($value) #{$important};
+      }
+    }
+  }
+
+  /*
+   * Tamaños proporcionales
+   *
+   * @example CSS
+   *   .width-50           // Anchura del 50% del contenedor
+   *   .vw-50              // Anchura del 50% de la pantalla
+   *   .max-width-50       // Anchura máxima del 50% del contenedor
+   *   .max-vw-50          // Anchura máxima del 50% de la pantalla
+   *   .height-auto        // Altura automática
+   *   .height-50--lap     // Altura del 50% del contenedor solo para dispostivos de escritorio
+   */
+
+  @each $size, $value in $sizes-percentages {
+    .#{$prefix}width-#{$size} {
+      @include responsive {
+        width: #{$value * 1%} #{$important};
+      }
+    }
+
+    .#{$prefix}height-#{$size} {
+      @include responsive {
+        height: #{$value * 1%} #{$important};
+      }
+    }
+
+    .#{$prefix}vw-#{$size} {
+      @include responsive {
+        width: #{$value}vw #{$important};
+      }
+    }
+
+    .#{$prefix}vh-#{$size} {
+      @include responsive {
+        height: #{$value}vh #{$important};
+      }
+    }
+    .#{$prefix}max-width-#{$size} {
+      @include responsive {
+        max-width: #{$value * 1%} #{$important};
+      }
+    }
+
+    .#{$prefix}max-height-#{$size} {
+      @include responsive {
+        max-height: #{$value * 1%} #{$important};
+      }
+    }
+    .#{$prefix}max-vw-#{$size} {
+      @include responsive {
+        max-width: #{$value}vw #{$important};
+      }
+    }
+
+    .#{$prefix}max-vh-#{$size} {
+      @include responsive {
+        max-height: #{$value}vh #{$important};
+      }
+    }
+  }
+
+  .#{$prefix}width-auto {
+    @include responsive {
+      width: auto #{$important};
+    }
+  }
+
+  .#{$prefix}height-auto {
+    @include responsive {
+      width: auto #{$important};
+    }
+  }
+}

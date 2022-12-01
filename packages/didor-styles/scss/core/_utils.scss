@@ -1,0 +1,32 @@
+/*
+ * ================ Funciones ================
+ */
+
+/*
+ * Comprueba si debe añadirse !important a las clases generadas
+ *
+ * @param {Boolean} - true si debe añadirse !important
+ * @return {string} - cadena vacía o !important
+ */
+
+@function check-important($important) {
+  @if $important == true {
+    @return '!important';
+  }
+  @return '';
+}
+
+/*
+ * Comprueba si debe añadirse un prefijo a las clases generadas
+ *
+ * @param {string} - cadena vacía o el prefijo
+ * @return {string} - cadena vacía o el prefijo con un guión
+ */
+
+@function check-prefix($prefix) {
+  @if $prefix != '' and $prefix {
+    @return '#{$prefix}-';
+  }
+
+  @return '';
+}
