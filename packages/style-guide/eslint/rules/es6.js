@@ -62,4 +62,4 @@ module.exports = {
      */
     'symbol-description': 'error'
   }
-};
+}

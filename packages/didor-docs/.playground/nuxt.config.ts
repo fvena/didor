@@ -4,13 +4,13 @@ export default defineNuxtConfig({
     includeWorkspace: true
   },
 
-  vite: {
-    css: {
-      preprocessorOptions: {
-        scss: {
-          additionalData: '@use "../assets/_colors.scss";',
-        }
-      }
-    }
-  },
+  // vite: {
+  //   css: {
+  //     preprocessorOptions: {
+  //       scss: {
+  //         additionalData: '@use "../assets/_colors.scss";',
+  //       }
+  //     }
+  //   }
+  // },
 })

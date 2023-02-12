@@ -230,4 +230,4 @@ module.exports = {
      */
     yoda: 'warn'
   }
-};
+}

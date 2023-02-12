@@ -1,0 +1,15 @@
+# Source code
+* text eol=lf
+
+# Images
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary
+
+# Documents
+*.pdf binary
+*.xlsx binary
+*.docx binary

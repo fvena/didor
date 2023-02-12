@@ -38,4 +38,4 @@ module.exports = {
      */
     'no-unreachable-loop': 'error'
   }
-};
+}

@@ -1,9 +1,4 @@
 @use 'sass:math';
-@use '../core/helpers' as *;
-@use '../core/vars' as *;
-@use '../core/math' as *;
-@use '../core/hover' as *;
-@use 'colors' as *;
 
 /*
  * ================ Funciones ================
@@ -28,15 +23,13 @@
  *                0 16px 16px rgba(var(--shadow-color), 0.125)
  */
 
-@function shadow(
-  $size,
+@function shadow($size,
   $color: $shadow-color,
   $soft: $shadow-soft,
   $shadow-horizontal: $shadow-horizontal,
   $shadow-vertical: $shadow-vertical,
   $hardness: $shadow-hard,
-  $invertAplha: $shadow-invert-alpha
-) {
+  $invertAplha: $shadow-invert-alpha) {
   @if $size < 1 {
     @error "El tamaño de la sombra debe ser mayor de cero";
   }
@@ -66,14 +59,18 @@
 
     $opacity: math.div($hardness, 2 * ($i + 4));
 
-    @if $invertAplha == true {
+    @if $invertAplha ==true {
       $opacity: math.div($hardness, 2 * ($size - $i + 4));
     }
 
-    @if $css-variables == true and $color == $shadow-color {
-      $shadow: #{$shadow}, #{$x}px #{$y}px #{$blur}px rgba(var(--shadow-color), $opacity);
-    } @else {
-      $shadow: #{$shadow}, #{$x}px #{$y}px #{$blur}px color($color, $opacity);
+    @if $css-variables ==true and $color ==$shadow-color {
+      $shadow: #{$shadow},
+      #{$x}px #{$y}px #{$blur}px rgba(var(--shadow-color), $opacity);
+    }
+
+    @else {
+      $shadow: #{$shadow},
+      #{$x}px #{$y}px #{$blur}px color($color, $opacity);
     }
   }
 
@@ -84,7 +81,7 @@
  * ================ Generadores ================
  */
 
-@if generate(shadows) == true {
+@if generate(shadows)==true {
   /*
    * Genera clases en base a las sombras definidas y a los colores principales
    * Si están habilitadas las clases hober, genera las mismas clases hover
@@ -95,7 +92,8 @@
    *   .shadow-5.shadow-2--hover  // Sombra de tamaño 5 con transición a un tamaño 2 al hacer hover
    */
 
-  @each $key, $value in $shadows {
+  @each $key,
+  $value in $shadows {
     .#{$prefix}shadow-#{'' + $key} {
       @include hover {
         box-shadow: shadow($value) #{$important};

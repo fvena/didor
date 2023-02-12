@@ -1,6 +1,3 @@
-@use '../core/helpers' as *;
-@use '../core/vars' as *;
-
 /*
  * ================ Generadores ================
  *
@@ -11,7 +8,7 @@
  * contenga --hover, siempre y cuando la propiedad hover esté configurada
  */
 
-@if $hover == true and generate(hover) == true {
+@if $hover ==true and generate(hover)==true {
   [class*='--hover'] {
     cursor: pointer;
     transition: all $transition-duration;

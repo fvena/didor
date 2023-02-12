@@ -1,4 +1,5 @@
 @charset "UTF-8";
+/*! Didor CSS v3.0.0 | MIT License | github.com/fvena/didor */
 /*
  * ================ Funciones ================
  */
@@ -135,6 +136,130 @@
  */
 /*
  * ================ Obtengo las variables globales ================
+ */
+/*
+ * ================ Funciones ================
+ */
+/*
+ * Comprueba si debe generarse un grupo de clases de ayuda en base a la configuración
+ *
+ * @param {string} - nombre del grupo
+ * @return {Boolean} - true si debe generarse
+ */
+/*
+ * Devuelve el nombre de la variable o su valor dependiendo de si las variables CSS están activadas
+ *
+ * @param {string} $name - Nombre de la variable
+ * @param {string} $value - Valor de la variable
+ * @return {string} - Nombre de la variable o su valor
+ *
+ * @example SCSS
+ *   isVar('--border-style', $border-style) => var(--border-style) // css-variable = true
+ *   isVar('--border-style', $border-style) => $border-style // css-variable = false
+ */
+/*
+ * Comprueba si un valor es una dirección de degradado válida
+ *
+ * @param {*} $value - Valor para comprobar
+ * @return {Bool}
+ *
+ * @example SCSS
+ *   is-direction('to top right')    => true
+ *   is-direction('top right')       => false
+ *   is-direction(135deg)            => true
+ *   is-direction(135)               => false
+ */
+/*
+ * ================ Mixins ================
+ */
+/*
+ * Genera un bloque de código dentro de un media que aplica solo a pantallas que no son táctiles
+ *
+ * @example SCSS
+ *   .myClass {
+ *     @include hover {
+ *       color: color(brand);
+ *     }
+ *   }
+ *
+ * @result CSS
+ *   @media (hover: hover) and (pointer: fine) {
+ *     .myClass {
+ *       color: rgba(var(--brand), 1);
+ *     }
+ *   }
+ */
+/*
+ * Desk First Alias
+ *
+ * Listado de los alias con los puntos de corte para un desarrollo responsive
+ */
+/*
+ * ================ Mixins ================
+ */
+/*
+ * Genera una clase con todas sus variantes responsive
+ *
+ * @example SCSS
+ *     .myClass {
+ *       @include responsive {
+ *         color: color(brand);
+ *       }
+ *     }
+ *
+ * @result CSS
+ *      .myClass {
+ *        color: rgba(var(--brand), 1);
+ *      }
+ *
+ *      @media screen and (max-width: 37.4375em) {
+ *        .myClass--palm {
+ *          color: rgba(var(--brand), 1);
+ *        }
+ *      }
+ *
+ *      @media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+ *        .myClass--lap {
+ *          color: rgba(var(--brand), 1);
+ *        }
+ *      }
+ *
+ *      @media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+ *        .myClass--small {
+ *          color: rgba(var(--brand), 1);
+ *        }
+ *      }
+ *
+ *      @media screen and (min-width: 75em) and (max-width: 99.9375em) {
+ *        .myClass--desk {
+ *          color: rgba(var(--brand), 1);
+ *        }
+ *      }
+ *
+ *      @media screen and (min-width: 100em) {
+ *        .myClass--large {
+ *          color: rgba(var(--brand), 1);
+ *        }
+ *      }
+ */
+/*
+ * Genera un media query con los parámetros del tipo de pantalla seleccionada
+ *
+ * @param {String} $screen - Tamaño de pantalla
+ *
+ * @example SCSS
+ *     .myClass {
+ *       @include media(palm) {
+ *         color: color(brand);
+ *       }
+ *     }
+ *
+ * @result CSS
+ *     @media screen and (max-width: 37.4375em) {
+ *       .myClass {
+ *         color: rgba(var(--brand), 1);
+ *       }
+ *     }
  */
 *,
 *::before,
@@ -295,110 +420,1118 @@ select:focus {
   }
 }
 /*
+ * ================ Tipografía ================
+ */
+body {
+  font-family: font(body);
+  font-size: font(base);
+  font-weight: font(regular);
+  line-height: leading(medium);
+  color: color(gray3);
+  background-color: color(gray8);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: font(header);
+  font-weight: font(semibold);
+  color: color(gray1);
+}
+
+h1 {
+  font-size: font(h1);
+}
+
+h2 {
+  font-size: font(h2);
+}
+
+h3 {
+  font-size: font(h3);
+}
+
+h4 {
+  font-size: font(h4);
+}
+
+h5 {
+  font-size: font(h5);
+}
+
+h6 {
+  font-size: font(base);
+}
+
+p {
+  font-size: font(base);
+}
+
+b,
+strong {
+  font-weight: font(semibold);
+  color: color(gray2);
+}
+
+em,
+i {
+  font-style: italic;
+}
+
+small,
+.small {
+  font-size: font(small1);
+  font-style: normal;
+  font-weight: font(regular);
+}
+
+mark,
+.mark {
+  padding: quarter();
+  color: color(white);
+  background-color: color(brand);
+  border-radius: radius();
+}
+
+.caption {
+  font-family: font(body);
+  font-size: font(h5);
+  font-style: italic;
+  color: color(gray4);
+}
+
+h1 + .caption,
+.h1 + .caption {
+  margin-top: half();
+  margin-bottom: simple();
+  font-size: font(h4);
+  font-style: normal;
+  line-height: leading(small);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+h2 + .caption,
+.h2 + .caption {
+  margin-top: half();
+  margin-bottom: simple();
+  font-size: font(h5);
+  font-style: normal;
+  line-height: leading(small);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+h3 + .caption,
+.h3 + .caption {
+  margin-bottom: half();
+  font-size: font(base);
+  font-style: normal;
+  line-height: leading(small);
+}
+
+abbr[title],
+abbr[data-original-title] {
+  cursor: help;
+  border-bottom: 0;
+}
+
+blockquote,
+.blockquote {
+  margin: double() 0;
+  font-size: font(h5);
+  line-height: leading(small);
+  color: color(gray1);
+}
+blockquote p,
+.blockquote p {
+  padding-right: 30%;
+  font-size: font(h5);
+  line-height: leading(small);
+}
+blockquote p:last-of-type,
+.blockquote p:last-of-type {
+  margin-bottom: 0;
+}
+blockquote > footer,
+blockquote > .footer,
+.blockquote > footer,
+.blockquote > .footer {
+  display: block;
+  padding-right: 30%;
+  font-size: font(small1);
+  font-style: italic;
+  color: color(gray4);
+}
+blockquote > footer::before,
+blockquote > .footer::before,
+.blockquote > footer::before,
+.blockquote > .footer::before {
+  content: "— ";
+}
+
+sub,
+sup {
+  position: relative;
+  font-size: 0.75em;
+}
+
+sub {
+  bottom: -0.25em;
+  left: 0.25em;
+}
+
+sup {
+  top: -0.5em;
+  left: 0.25em;
+}
+
+hr {
+  margin-top: double();
+  margin-bottom: double();
+  border-top: var(--border-width) var(--border-style) color(gray3);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+p,
+h1,
+h2,
+h3,
+ul,
+ol,
+dl,
+table,
+blockquote,
+pre {
+  margin-bottom: simple();
+}
+
+/*
+ * ================ Formularios ================
+ */
+input,
+button,
+select,
+textarea {
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+label,
+textarea,
+input[type=file] {
+  display: block;
+}
+
+input {
+  cursor: pointer;
+}
+
+input,
+textarea {
+  height: double();
+  padding: 0 simple();
+  line-height: double();
+  border: 1px solid color(gray3);
+}
+input:focus,
+textarea:focus {
+  border-color: color(brand);
+  outline: none;
+}
+input:placeholder,
+textarea:placeholder {
+  color: color(gray3);
+  opacity: 1;
+}
+input[disabled], input[readonly],
+textarea[disabled],
+textarea[readonly] {
+  color: color(gray4);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
+/*
+ * ================ Checkboxs y Radios ================
+ */
+[type=radio] {
+  border-radius: 9999px;
+}
+
+[type=checkbox],
+[type=radio] {
+  position: relative;
+  bottom: 1px;
+  width: 1em;
+  height: 1em;
+  margin-right: half();
+  vertical-align: middle;
+}
+[type=checkbox]:checked,
+[type=radio]:checked {
+  background-color: currentColor;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  border-color: transparent;
+}
+
+[type=checkbox]:checked {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='white' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='M6 10l3 3l6-6'/%3e%3c/svg%3e");
+}
+
+[type=radio]:checked {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='-4 -4 8 8'%3e%3ccircle r='2' fill='white'/%3e%3c/svg%3e");
+}
+
+/*
+ * ================ Selects ================
+ */
+select {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 0.75em center;
+  background-size: 16px 12px;
+}
+
+/*
+ * ================ Imágenes ================
+ *
+ * 1. Las imágenes ocupan todo el ancho para mejorar la adaptación a distintas pantallas.
+ * 2. Offset `alt` text from surrounding copy.
+ * 3. Elimina el espacio en blanco que aparece debajo del elemento 'img'.
+ *    Mejor alternativa que usar 'display:block'.
+ * 4. Si se define de forma explicita la altura o anchura de una imagen, tenemos
+ *    que evitar que se adapte para que no se deforme.
+ */
+img {
+  box-sizing: content-box;
+  max-width: 100%;
+  /* [1] */
+  height: auto;
+  font-style: italic;
+  /* [2] */
+  vertical-align: middle;
+  /* [3] */
+}
+
+img[width],
+img[height] {
+  max-width: none;
+  /* [4] */
+}
+
+/*
+ * ================ Pies de foto ================
+ */
+figure {
+  margin: double() 0 triple();
+}
+figure img {
+  display: block;
+  width: 100%;
+  margin: 0 auto;
+}
+figure figcaption {
+  margin-top: quarter();
+  font-size: font-size(small1);
+  font-style: italic;
+  color: color(gray3);
+  text-align: center;
+}
+
+/*
+ * ================ Google maps ================
+ *
+ * Los mapas de Google se rompen si `max-width: 100%`;
+ * usamos su propio selector para evitar este problema.
+ */
+.gm-style img {
+  max-width: none;
+}
+
+/*
+ * ================ Enlaces ================
+ */
+a img {
+  border: 0;
+}
+
+a,
+.link {
+  display: inline-block;
+  color: color(brand-darkest);
+  text-decoration-thickness: 0.1em;
+  text-decoration-color: color(brand);
+  text-underline-offset: 1.5px;
+  transition: color 0.3s ease-in-out;
+  text-decoration-skip-ink: auto;
+  color: color(brand);
+}
+@media (hover: hover) and (pointer: fine) {
+  a--hover:not([disabled]):hover,
+  .link--hover:not([disabled]):hover {
+    color: color(brand);
+  }
+}
+a:active, a:focus, a:visited,
+.link:active,
+.link:focus,
+.link:visited {
+  color: inherit;
+}
+a a[disabled],
+.link a[disabled] {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* stylelint-disable no-descending-specificity */
+/*
+ * ================ Listados ================
+ */
+ol,
+ul,
+dl {
+  margin-top: 0;
+  margin-bottom: simple();
+}
+
+ol ol,
+ul ul,
+ol ul,
+ul ol {
+  margin-top: quarter();
+  margin-bottom: 0;
+}
+
+dt {
+  font-weight: font-weight(bold);
+}
+
+dd {
+  margin-bottom: spacers("1/2");
+  margin-left: 0;
+}
+
+li > ul,
+li > ol {
+  margin-bottom: 0;
+}
+
+ul > li,
+ol > li {
+  margin-left: simple();
+}
+
+/*
+ * ================ Listados numerados ================
+ */
+ol {
+  list-style: none;
+  counter-reset: b;
+}
+ol li {
+  position: relative;
+  padding-left: simple();
+  margin-bottom: quarter();
+  margin-left: 0;
+}
+ol li::before {
+  position: absolute;
+  left: quarter("-");
+  width: simple();
+  color: brand;
+  text-align: right;
+  content: counters(b, ".") " ";
+  counter-increment: b;
+}
+ol li img {
+  display: block;
+  max-width: calc(100% - simple());
+  margin: simple() auto;
+}
+
+/*
+ * ================ Listados no numerados ================
+ */
+ul {
+  list-style: none;
+}
+ul li {
+  position: relative;
+  padding-left: simple();
+  margin-bottom: quarter();
+  margin-left: 0;
+}
+ul li::before {
+  position: absolute;
+  top: 11px;
+  left: 14px;
+  display: block;
+  width: 6px;
+  height: 6px;
+  text-align: right;
+  content: "";
+  background-color: brand;
+  border-radius: 3px;
+}
+
+/*
+ * ================ Definiciones ================
+ */
+dl dt,
+dl dd {
+  margin-left: 0;
+}
+@media screen and (max-width: 37.4375em) {
+  dl dt,
+  dl dd {
+    margin-left: half();
+  }
+}
+dl dt {
+  font-weight: font-weight(medium);
+}
+dl dd + dt {
+  padding-top: 1rem;
+}
+
+/*
+ * ================ Estilos para imprimir ================
+ */
+@media print {
+  *,
+  *::before,
+  *::after {
+    color: #000000 !important;
+    text-shadow: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  a,
+  a:visited {
+    text-decoration: underline;
+  }
+  a[href]::after {
+    content: " (" attr(href) ")";
+  }
+  abbr[title]::after {
+    content: " (" attr(title) ")";
+  }
+  pre {
+    white-space: pre-wrap !important;
+  }
+  pre,
+  blockquote {
+    border: 1px solid #999999;
+    page-break-inside: avoid;
+  }
+  thead {
+    display: table-header-group;
+  }
+  tr,
+  img {
+    page-break-inside: avoid;
+  }
+  p,
+  h2,
+  h3 {
+    orphans: 3;
+    widows: 3;
+  }
+  h2,
+  h3 {
+    page-break-after: avoid;
+  }
+}
+/*
+ * ================ Tabla ================
+ */
+table {
+  width: 100%;
+  min-width: 100%;
+  margin-bottom: simple();
+  border-spacing: 0;
+  border-collapse: separate;
+}
+
+td,
+th {
+  padding: quarter();
+  vertical-align: top;
+  border-bottom: 1px solid transparent;
+}
+
+th,
+td,
+tbody + tbody {
+  border-bottom-color: color(gray3);
+}
+
+th {
+  font-size: font-size(small2);
+  font-weight: font-weight(bold);
+  color: color(gray1);
+  text-transform: uppercase;
+  vertical-align: bottom;
+  background-color: color(gray5);
+  border-top: 1px solid color(gray3);
+  border-bottom-color: color(gray3);
+}
+th:first-of-type {
+  border-left: 1px solid color(gray3);
+  border-radius: radius(medium) 0 0 radius(medium);
+}
+th:last-of-type {
+  border-right: 1px solid color(gray3);
+  border-radius: 0 radius(medium) radius(medium) 0;
+}
+
+td {
+  font-size: font-size(small1);
+  line-height: 1.4rem;
+  color: color(gray1);
+  border-bottom: 1px solid color(gray3);
+}
+td:first-of-type {
+  font-weight: font-weight(bold);
+  white-space: nowrap;
+}
+
+tbody + tbody {
+  border-bottom: 1px solid transparent;
+}
+
+/*
  * ================ Funciones ================
  */
 /*
- * Comprueba si debe generarse un grupo de clases de ayuda en base a la configuración
+ * Devuelve la anchura del borde en base al tamaño indicado
  *
- * @param {string} - nombre del grupo
- * @return {Boolean} - true si debe generarse
- */
-/*
- * Devuelve el nombre de la variable o su valor dependiendo de si las variables CSS están activadas
- *
- * @param {string} $name - Nombre de la variable
- * @param {string} $value - Valor de la variable
- * @return {string} - Nombre de la variable o su valor
+ * @param {string|null|number} $size - Alias de la anchura del borde
+ * @return {string} - valor del borde en texto
  *
  * @example SCSS
- *   isVar('--border-style', $border-style) => var(--border-style) // css-variable = true
- *   isVar('--border-style', $border-style) => $border-style // css-variable = false
+ *   border(thin) => 1px;
+ *   border() => 2px; // Medium (Por defecto)
  */
 /*
- * Comprueba si un valor es una dirección de degradado válida
+ * Devuelve el valor del radio indicado
  *
- * @param {*} $value - Valor para comprobar
- * @return {Bool}
+ * @param {string} $radius - tamaño de radio
+ * @return {Number} - valor de radio en rem
  *
  * @example SCSS
- *   is-direction('to top right')    => true
- *   is-direction('top right')       => false
- *   is-direction(135deg)            => true
- *   is-direction(135)               => false
+ *   radius(lg) =>  1.125rem;
  */
 /*
- * Desk First Alias
- *
- * Listado de los alias con los puntos de corte para un desarrollo responsive
+ * ================ Generadores ================
  */
 /*
- * ================ Mixins ================
+ * Genera una clase para añadir o quitar bordes a un elemento
+ *
+ * @example CSS
+ *   .border                                // Todos los lados a la vez
+ *   .border-{top,right,bottom,left,x,y}    // A un solo lado
+ *   .no-border                             // Elimina todos los bordes de un elemento
+ *   .no-border-{top,right,bottom,left,x,y} // Elimina el borde de un solo lado
  */
+.border {
+  border: var(--border-medium) var(--border-style) color(gray3) !important;
+}
+
+.no-border {
+  border: 0 !important;
+}
+
+.border-top {
+  border-top: var(--border-medium) var(--border-style) color(gray3) !important;
+}
+
+.no-border-top {
+  border-top: 0 !important;
+}
+
+.border-right {
+  border-right: var(--border-medium) var(--border-style) color(gray3) !important;
+}
+
+.no-border-right {
+  border-right: 0 !important;
+}
+
+.border-bottom {
+  border-bottom: var(--border-medium) var(--border-style) color(gray3) !important;
+}
+
+.no-border-bottom {
+  border-bottom: 0 !important;
+}
+
+.border-left {
+  border-left: var(--border-medium) var(--border-style) color(gray3) !important;
+}
+
+.no-border-left {
+  border-left: 0 !important;
+}
+
+.border-x {
+  border-right: var(--border-medium) var(--border-style) color(gray3) !important;
+  border-left: var(--border-medium) var(--border-style) color(gray3) !important;
+}
+
+.border-y {
+  border-top: var(--border-medium) var(--border-style) color(gray3) !important;
+  border-bottom: var(--border-medium) var(--border-style) color(gray3) !important;
+}
+
+.no-border-x {
+  border-right: 0 !important;
+  border-left: 0 !important;
+}
+
+.no-border-y {
+  border-top: 0 !important;
+  border-bottom: 0 !important;
+}
+
 /*
- * Genera una clase con todas sus variantes responsive
+ * Color del borde
  *
- * @example SCSS
- *     .myClass {
- *       @include responsive {
- *         color: color(brand);
- *       }
- *     }
+ * Modifica el color del borde por defecto
  *
- * @result CSS
- *      .myClass {
- *        color: rgba(var(--brand), 1);
- *      }
- *
- *      @media screen and (max-width: 37.4375em) {
- *        .myClass--palm {
- *          color: rgba(var(--brand), 1);
- *        }
- *      }
- *
- *      @media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
- *        .myClass--lap {
- *          color: rgba(var(--brand), 1);
- *        }
- *      }
- *
- *      @media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
- *        .myClass--small {
- *          color: rgba(var(--brand), 1);
- *        }
- *      }
- *
- *      @media screen and (min-width: 75em) and (max-width: 99.9375em) {
- *        .myClass--desk {
- *          color: rgba(var(--brand), 1);
- *        }
- *      }
- *
- *      @media screen and (min-width: 100em) {
- *        .myClass--large {
- *          color: rgba(var(--brand), 1);
- *        }
- *      }
+ * @example CSS
+ *   .border.border--brand  // Colorea el borde con el color de la marca
  */
+.border--brand-darkest {
+  border-color: color(#4e011e) !important;
+}
+
+.border--brand-darker {
+  border-color: color(#80002f) !important;
+}
+
+.border--brand-dark {
+  border-color: color(#bb1642) !important;
+}
+
+.border--brand {
+  border-color: color(#dd224e) !important;
+}
+
+.border--brand-light {
+  border-color: color(#fb5067) !important;
+}
+
+.border--brand-lighter {
+  border-color: color(#ff817a) !important;
+}
+
+.border--brand-lightest {
+  border-color: color(#fae0df) !important;
+}
+
+.border--warning-darkest {
+  border-color: color(#b37400) !important;
+}
+
+.border--warning-darker {
+  border-color: color(#b37400) !important;
+}
+
+.border--warning-dark {
+  border-color: color(#e69d00) !important;
+}
+
+.border--warning {
+  border-color: color(#ffbe33) !important;
+}
+
+.border--warning-light {
+  border-color: color(#ffd780) !important;
+}
+
+.border--warning-lighter {
+  border-color: color(#ffefcc) !important;
+}
+
+.border--warning-lightest {
+  border-color: color(#faf1dd) !important;
+}
+
+.border--success-darkest {
+  border-color: color(#448a0f) !important;
+}
+
+.border--success-darker {
+  border-color: color(#448a0f) !important;
+}
+
+.border--success-dark {
+  border-color: color(#5faf23) !important;
+}
+
+.border--success {
+  border-color: color(#77c23d) !important;
+}
+
+.border--success-light {
+  border-color: color(#ace580) !important;
+}
+
+.border--success-lighter {
+  border-color: color(#e3f7d4) !important;
+}
+
+.border--success-lightest {
+  border-color: color(#ebfae0) !important;
+}
+
+.border--danger-darkest {
+  border-color: color(#990f00) !important;
+}
+
+.border--danger-darker {
+  border-color: color(#990f00) !important;
+}
+
+.border--danger-dark {
+  border-color: color(#e61700) !important;
+}
+
+.border--danger {
+  border-color: color(#ff4733) !important;
+}
+
+.border--danger-light {
+  border-color: color(#ff8c80) !important;
+}
+
+.border--danger-lighter {
+  border-color: color(#ffd1cc) !important;
+}
+
+.border--danger-lightest {
+  border-color: color(#fce4e1) !important;
+}
+
+.border--black {
+  border-color: color(#000000) !important;
+}
+
+.border--gray1 {
+  border-color: color(#121a1d) !important;
+}
+
+.border--gray2 {
+  border-color: color(#3b4c54) !important;
+}
+
+.border--gray3 {
+  border-color: color(#6a7981) !important;
+}
+
+.border--gray4 {
+  border-color: color(#9da6aa) !important;
+}
+
+.border--gray5 {
+  border-color: color(#ced5d9) !important;
+}
+
+.border--gray6 {
+  border-color: color(#e7ebee) !important;
+}
+
+.border--gray7 {
+  border-color: color(#f6f7f9) !important;
+}
+
+.border--gray8 {
+  border-color: color(#fcfcfd) !important;
+}
+
+.border--gray9 {
+  border-color: color(#f7f6f5) !important;
+}
+
+.border--gray10 {
+  border-color: color(#f7f6f5) !important;
+}
+
+.border--white {
+  border-color: color(#ffffff) !important;
+}
+
 /*
- * ================ Mixins ================
+ * Ancho del borde
+ *
+ * Modifica el ancho del borde por defecto
+ *
+ * @example CSS
+ *   .border.border--thin  // Establece el ancho del borde a 1px
+ *   .border.border--medium  // Establece el ancho del borde a 2px
+ *   .border.border--thick  // Establece el ancho del borde a 4px
  */
+.border--thin {
+  border-width: var(--border-thin) !important;
+}
+
+.border--medium {
+  border-width: var(--border-medium) !important;
+}
+
+.border--thick {
+  border-width: var(--border-thick) !important;
+}
+
 /*
- * Genera un bloque de código dentro de un media que aplica solo a pantallas que no son táctiles
+ * Estilo del borde
  *
- * @example SCSS
- *   .myClass {
- *     @include hover {
- *       color: color(brand);
- *     }
- *   }
+ * Modifica el estilo del borde por defecto
  *
- * @result CSS
- *   @media (hover: hover) and (pointer: fine) {
- *     .myClass {
- *       color: rgba(var(--brand), 1);
- *     }
- *   }
+ * @example CSS
+ *   .border.border--solid   // Establece el estilo del borde a sólido
+ *   .border.border--dashed  // Establece el estilo del borde a discontinuo
+ *   .border.border--dotted  // Establece el estilo del borde a puntillado
+ *   .border.border--none    // Establece el estilo del borde a ninguno
  */
+.border--solid {
+  border-style: solid !important;
+}
+
+.border--dashed {
+  border-style: dashed !important;
+}
+
+.border--dotted {
+  border-style: dotted !important;
+}
+
+.border--hidden {
+  border-style: hidden !important;
+}
+
+.border--none {
+  border-style: none !important;
+}
+
+/*
+ * Esquinas redondeadas
+ *
+ * Aplica/Elimina una esquina redondeada a un elemento
+ *
+ * @example CSS
+ *   .rounded                         // Todas las esquinas a la vez
+ *   .rounded-{top,right,bottom,left} // A las esquinas de un lado
+ *   .rounded-circle                  // Redondea todas las esquinas hasta convertir al elemento en un círculo
+ *   .no-rounded                      // Elimina todas las esquinas redondeadas
+ */
+.rounded {
+  border-radius: var(--radius-medium) !important;
+}
+
+.rounded-top {
+  border-top-left-radius: var(--radius-medium) !important;
+  border-top-right-radius: var(--radius-medium) !important;
+}
+
+.rounded-right {
+  border-top-right-radius: var(--radius-medium) !important;
+  border-bottom-right-radius: var(--radius-medium) !important;
+}
+
+.rounded-bottom {
+  border-bottom-right-radius: var(--radius-medium) !important;
+  border-bottom-left-radius: var(--radius-medium) !important;
+}
+
+.rounded-left {
+  border-top-left-radius: var(--radius-medium) !important;
+  border-bottom-left-radius: var(--radius-medium) !important;
+}
+
+.circle {
+  border-radius: 50% !important;
+}
+
+.square {
+  border-radius: 0 !important;
+}
+
+.rounded-xxsmall {
+  border-radius: var(--radius-xxsmall) !important;
+}
+
+.rounded-top-xxsmall {
+  border-top-left-radius: var(--radius-xxsmall) !important;
+  border-top-right-radius: var(--radius-xxsmall) !important;
+}
+
+.rounded-right-xxsmall {
+  border-top-right-radius: var(--radius-xxsmall) !important;
+  border-bottom-right-radius: var(--radius-xxsmall) !important;
+}
+
+.rounded-bottom-xxsmall {
+  border-bottom-right-radius: var(--radius-xxsmall) !important;
+  border-bottom-left-radius: var(--radius-xxsmall) !important;
+}
+
+.rounded-left-xxsmall {
+  border-top-left-radius: var(--radius-xxsmall) !important;
+  border-bottom-left-radius: var(--radius-xxsmall) !important;
+}
+
+.rounded-xsmall {
+  border-radius: var(--radius-xsmall) !important;
+}
+
+.rounded-top-xsmall {
+  border-top-left-radius: var(--radius-xsmall) !important;
+  border-top-right-radius: var(--radius-xsmall) !important;
+}
+
+.rounded-right-xsmall {
+  border-top-right-radius: var(--radius-xsmall) !important;
+  border-bottom-right-radius: var(--radius-xsmall) !important;
+}
+
+.rounded-bottom-xsmall {
+  border-bottom-right-radius: var(--radius-xsmall) !important;
+  border-bottom-left-radius: var(--radius-xsmall) !important;
+}
+
+.rounded-left-xsmall {
+  border-top-left-radius: var(--radius-xsmall) !important;
+  border-bottom-left-radius: var(--radius-xsmall) !important;
+}
+
+.rounded-small {
+  border-radius: var(--radius-small) !important;
+}
+
+.rounded-top-small {
+  border-top-left-radius: var(--radius-small) !important;
+  border-top-right-radius: var(--radius-small) !important;
+}
+
+.rounded-right-small {
+  border-top-right-radius: var(--radius-small) !important;
+  border-bottom-right-radius: var(--radius-small) !important;
+}
+
+.rounded-bottom-small {
+  border-bottom-right-radius: var(--radius-small) !important;
+  border-bottom-left-radius: var(--radius-small) !important;
+}
+
+.rounded-left-small {
+  border-top-left-radius: var(--radius-small) !important;
+  border-bottom-left-radius: var(--radius-small) !important;
+}
+
+.rounded-medium {
+  border-radius: var(--radius-medium) !important;
+}
+
+.rounded-top-medium {
+  border-top-left-radius: var(--radius-medium) !important;
+  border-top-right-radius: var(--radius-medium) !important;
+}
+
+.rounded-right-medium {
+  border-top-right-radius: var(--radius-medium) !important;
+  border-bottom-right-radius: var(--radius-medium) !important;
+}
+
+.rounded-bottom-medium {
+  border-bottom-right-radius: var(--radius-medium) !important;
+  border-bottom-left-radius: var(--radius-medium) !important;
+}
+
+.rounded-left-medium {
+  border-top-left-radius: var(--radius-medium) !important;
+  border-bottom-left-radius: var(--radius-medium) !important;
+}
+
+.rounded-large {
+  border-radius: var(--radius-large) !important;
+}
+
+.rounded-top-large {
+  border-top-left-radius: var(--radius-large) !important;
+  border-top-right-radius: var(--radius-large) !important;
+}
+
+.rounded-right-large {
+  border-top-right-radius: var(--radius-large) !important;
+  border-bottom-right-radius: var(--radius-large) !important;
+}
+
+.rounded-bottom-large {
+  border-bottom-right-radius: var(--radius-large) !important;
+  border-bottom-left-radius: var(--radius-large) !important;
+}
+
+.rounded-left-large {
+  border-top-left-radius: var(--radius-large) !important;
+  border-bottom-left-radius: var(--radius-large) !important;
+}
+
+.rounded-xlarge {
+  border-radius: var(--radius-xlarge) !important;
+}
+
+.rounded-top-xlarge {
+  border-top-left-radius: var(--radius-xlarge) !important;
+  border-top-right-radius: var(--radius-xlarge) !important;
+}
+
+.rounded-right-xlarge {
+  border-top-right-radius: var(--radius-xlarge) !important;
+  border-bottom-right-radius: var(--radius-xlarge) !important;
+}
+
+.rounded-bottom-xlarge {
+  border-bottom-right-radius: var(--radius-xlarge) !important;
+  border-bottom-left-radius: var(--radius-xlarge) !important;
+}
+
+.rounded-left-xlarge {
+  border-top-left-radius: var(--radius-xlarge) !important;
+  border-bottom-left-radius: var(--radius-xlarge) !important;
+}
+
+.rounded-xxlarge {
+  border-radius: var(--radius-xxlarge) !important;
+}
+
+.rounded-top-xxlarge {
+  border-top-left-radius: var(--radius-xxlarge) !important;
+  border-top-right-radius: var(--radius-xxlarge) !important;
+}
+
+.rounded-right-xxlarge {
+  border-top-right-radius: var(--radius-xxlarge) !important;
+  border-bottom-right-radius: var(--radius-xxlarge) !important;
+}
+
+.rounded-bottom-xxlarge {
+  border-bottom-right-radius: var(--radius-xxlarge) !important;
+  border-bottom-left-radius: var(--radius-xxlarge) !important;
+}
+
+.rounded-left-xxlarge {
+  border-top-left-radius: var(--radius-xxlarge) !important;
+  border-bottom-left-radius: var(--radius-xxlarge) !important;
+}
+
 /*
  * ================ Funciones ================
  */
@@ -1051,1934 +2184,18 @@ select:focus {
 }
 
 /*
- * ================ Funciones ================
- */
-/*
- * Devuelve el tamaño del texto en base al tamaño indicado
- *
- * @param {string|integer} $size - Valor númerico de la escala o alias del listado de tamaños de texto
- * @return {Number} - valor del texto en rem
- *
- * @example SCSS
- *   font-size(2) =>  1.381rem;
- *   font-size(h4) =>  1.381rem;
- */
-/*
- * Devuelve la altura de línea en base al tamaño indicado
- *
- * @param {string|integer} $size - Valor númerico de la escala o alias del listado de tamaños de texto
- * @return {Number} - valor del texto en rem
- *
- * @example SCSS
- *   leading(2) =>  3.2;
- *   leading(large) => 1.84;
- */
-/*
- * Devuelve el peso tipográfico
- *
- * @param {string} $weight - Alias del listado de tamaños de texto
- * @return {Number} - valor del peso tipográfico
- *
- * @example SCSS
- *   font-weight(semibold) =>  600;
- */
-/*
- * Devuele el valor de la familia seleccionada
- *
- * @param {string} $family - Alias del listado de tamaños de texto
- * @return {Number} - valor del peso tipográfico
- *
- * @example SCSS
- *   font-family(header) => "Source Sans Pro", Helvetica Neue, Arial, sans-serif;
- */
-/*
- * Devuelve un tamaño de fuente, familia o peso dependiendo del valor indicado
- *
- * @param {string} $font - Alias del tamaño del texto, peso tipográfico o familia
- * @return {string} - valor del tamaño del texto, peso tipográfico o familia
- *
- * @example SCSS
- *   font(h4) => 1.381rem;
- *   font(header) => "Source Sans Pro", Helvetica Neue, Arial, sans-serif;
- *   font(semibold) => 500;
- */
-/*
- * ================ Generadores ================
- */
-/*
- * Genera clases para definir el texto en base al tamaño, peso y color
- *
- * @example CSS
- *   .h2-semibold-gray1       // Tamaño de fuente h2, peso semibold y color gray1
- *   .small1-regular-danger   // Tamaño de fuente small1, peso regular y color danger
- */
-.h1-regular-gray1 {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.h1-regular-gray4 {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.h1-regular-brand {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.h1-regular-danger {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.h1-regular-success {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.h1-regular-warning {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.h1-semibold-gray1 {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.h1-semibold-gray4 {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.h1-semibold-brand {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.h1-semibold-danger {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.h1-semibold-success {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.h1-semibold-warning {
-  font-size: var(--font-h1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.h2-regular-gray1 {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.h2-regular-gray4 {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.h2-regular-brand {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.h2-regular-danger {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.h2-regular-success {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.h2-regular-warning {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.h2-semibold-gray1 {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.h2-semibold-gray4 {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.h2-semibold-brand {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.h2-semibold-danger {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.h2-semibold-success {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.h2-semibold-warning {
-  font-size: var(--font-h2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.h3-regular-gray1 {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.h3-regular-gray4 {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.h3-regular-brand {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.h3-regular-danger {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.h3-regular-success {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.h3-regular-warning {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.h3-semibold-gray1 {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.h3-semibold-gray4 {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.h3-semibold-brand {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.h3-semibold-danger {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.h3-semibold-success {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.h3-semibold-warning {
-  font-size: var(--font-h3) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.h4-regular-gray1 {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.h4-regular-gray4 {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.h4-regular-brand {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.h4-regular-danger {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.h4-regular-success {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.h4-regular-warning {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.h4-semibold-gray1 {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.h4-semibold-gray4 {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.h4-semibold-brand {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.h4-semibold-danger {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.h4-semibold-success {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.h4-semibold-warning {
-  font-size: var(--font-h4) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.h5-regular-gray1 {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.h5-regular-gray4 {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.h5-regular-brand {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.h5-regular-danger {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.h5-regular-success {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.h5-regular-warning {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.h5-semibold-gray1 {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.h5-semibold-gray4 {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.h5-semibold-brand {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.h5-semibold-danger {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.h5-semibold-success {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.h5-semibold-warning {
-  font-size: var(--font-h5) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.base-regular-gray1 {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.base-regular-gray4 {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.base-regular-brand {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.base-regular-danger {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.base-regular-success {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.base-regular-warning {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.base-semibold-gray1 {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.base-semibold-gray4 {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.base-semibold-brand {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.base-semibold-danger {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.base-semibold-success {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.base-semibold-warning {
-  font-size: var(--font-base) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.small1-regular-gray1 {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.small1-regular-gray4 {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.small1-regular-brand {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.small1-regular-danger {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.small1-regular-success {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.small1-regular-warning {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.small1-semibold-gray1 {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.small1-semibold-gray4 {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.small1-semibold-brand {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.small1-semibold-danger {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.small1-semibold-success {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.small1-semibold-warning {
-  font-size: var(--font-small1) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.small2-regular-gray1 {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.small2-regular-gray4 {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.small2-regular-brand {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.small2-regular-danger {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.small2-regular-success {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.small2-regular-warning {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-regular) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-.small2-semibold-gray1 {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray1), 1) !important;
-}
-
-.small2-semibold-gray4 {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--gray4), 1) !important;
-}
-
-.small2-semibold-brand {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--brand), 1) !important;
-}
-
-.small2-semibold-danger {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--danger), 1) !important;
-}
-
-.small2-semibold-success {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--success), 1) !important;
-}
-
-.small2-semibold-warning {
-  font-size: var(--font-small2) !important;
-  font-weight: var(--font-semibold) !important;
-  color: rgba(var(--warning), 1) !important;
-}
-
-/*
- * Genera clases en base a los tamaños texto definidos
- *
- * @example CSS
- *   .h2            // Tamaño de fuente h2
- *   .h3-lap        // Tamaño de fuente solo para pantallas Lap de tamaño h3
- */
-.h1 {
-  font-size: var(--font-h1) !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .h1--palm {
-    font-size: var(--font-h1) !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .h1--lap {
-    font-size: var(--font-h1) !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .h1--small {
-    font-size: var(--font-h1) !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .h1--desk {
-    font-size: var(--font-h1) !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .h1--large {
-    font-size: var(--font-h1) !important;
-  }
-}
-
-.h2 {
-  font-size: var(--font-h2) !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .h2--palm {
-    font-size: var(--font-h2) !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .h2--lap {
-    font-size: var(--font-h2) !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .h2--small {
-    font-size: var(--font-h2) !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .h2--desk {
-    font-size: var(--font-h2) !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .h2--large {
-    font-size: var(--font-h2) !important;
-  }
-}
-
-.h3 {
-  font-size: var(--font-h3) !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .h3--palm {
-    font-size: var(--font-h3) !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .h3--lap {
-    font-size: var(--font-h3) !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .h3--small {
-    font-size: var(--font-h3) !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .h3--desk {
-    font-size: var(--font-h3) !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .h3--large {
-    font-size: var(--font-h3) !important;
-  }
-}
-
-.h4 {
-  font-size: var(--font-h4) !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .h4--palm {
-    font-size: var(--font-h4) !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .h4--lap {
-    font-size: var(--font-h4) !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .h4--small {
-    font-size: var(--font-h4) !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .h4--desk {
-    font-size: var(--font-h4) !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .h4--large {
-    font-size: var(--font-h4) !important;
-  }
-}
-
-.h5 {
-  font-size: var(--font-h5) !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .h5--palm {
-    font-size: var(--font-h5) !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .h5--lap {
-    font-size: var(--font-h5) !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .h5--small {
-    font-size: var(--font-h5) !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .h5--desk {
-    font-size: var(--font-h5) !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .h5--large {
-    font-size: var(--font-h5) !important;
-  }
-}
-
-.base {
-  font-size: var(--font-base) !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .base--palm {
-    font-size: var(--font-base) !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .base--lap {
-    font-size: var(--font-base) !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .base--small {
-    font-size: var(--font-base) !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .base--desk {
-    font-size: var(--font-base) !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .base--large {
-    font-size: var(--font-base) !important;
-  }
-}
-
-.small1 {
-  font-size: var(--font-small1) !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .small1--palm {
-    font-size: var(--font-small1) !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .small1--lap {
-    font-size: var(--font-small1) !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .small1--small {
-    font-size: var(--font-small1) !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .small1--desk {
-    font-size: var(--font-small1) !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .small1--large {
-    font-size: var(--font-small1) !important;
-  }
-}
-
-.small2 {
-  font-size: var(--font-small2) !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .small2--palm {
-    font-size: var(--font-small2) !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .small2--lap {
-    font-size: var(--font-small2) !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .small2--small {
-    font-size: var(--font-small2) !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .small2--desk {
-    font-size: var(--font-small2) !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .small2--large {
-    font-size: var(--font-small2) !important;
-  }
-}
-
-/*
- * Genera clases en base a las alturas de texto definidos
- *
- * @example CSS
- *   .leading-large       // Altura de línea para textos de tamaño large
- */
-.leading-xxsmall {
-  line-height: var(--leading-xxsmall) !important;
-}
-
-.leading-xsmall {
-  line-height: var(--leading-xsmall) !important;
-}
-
-.leading-small {
-  line-height: var(--leading-small) !important;
-}
-
-.leading-medium {
-  line-height: var(--leading-medium) !important;
-}
-
-.leading-large {
-  line-height: var(--leading-large) !important;
-}
-
-.leading-xlarge {
-  line-height: var(--leading-xlarge) !important;
-}
-
-.leading-xxlarge {
-  line-height: var(--leading-xxlarge) !important;
-}
-
-/*
- * Genera clases en base a la separación entre letras definidas
- *
- * @example CSS
- *   .traking-large       // Separación entre letras large
- */
-.traking-xxsmall {
-  letter-spacing: var(--traking-xxsmall) !important;
-}
-
-.traking-xsmall {
-  letter-spacing: var(--traking-xsmall) !important;
-}
-
-.traking-small {
-  letter-spacing: var(--traking-small) !important;
-}
-
-.traking-medium {
-  letter-spacing: initial !important;
-}
-
-.traking-large {
-  letter-spacing: var(--traking-large) !important;
-}
-
-.traking-xlarge {
-  letter-spacing: var(--traking-xlarge) !important;
-}
-
-.traking-xxlarge {
-  letter-spacing: var(--traking-xxlarge) !important;
-}
-
-/*
- * Genera clases con los pesos tipográficos definidos
- *
- * @example CSS
- *   .semibold
- *   .regular
- */
-.ultralight {
-  font-weight: 100 !important;
-}
-
-.extralight {
-  font-weight: 200 !important;
-}
-
-.light {
-  font-weight: 300 !important;
-}
-
-.regular {
-  font-weight: 400 !important;
-}
-
-.medium {
-  font-weight: 500 !important;
-}
-
-.semibold {
-  font-weight: 600 !important;
-}
-
-.bold {
-  font-weight: 700 !important;
-}
-
-.extrabold {
-  font-weight: 800 !important;
-}
-
-.ultrabold {
-  font-weight: 900 !important;
-}
-
-/*
- * Genera clases con las familias tipográficas
- *
- * @example CSS
- *   .body
- *   .header
- */
-.font-body {
-  font-family: "Source Sans Pro", Helvetica Neue, Arial, sans-serif !important;
-}
-
-.font-header {
-  font-family: "Source Sans Pro", Helvetica Neue, Arial, sans-serif !important;
-}
-
-.font-mono {
-  font-family: "Fira Code", "Courier New", Courier, monospace !important;
-}
-
-/*
- * Indica como se alinea el texto dentro un elemento.
- *
- * @example CSS
- *   .align-left
- *   .align-center--lap
- */
-.align-left {
-  text-align: left !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .align-left--palm {
-    text-align: left !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .align-left--lap {
-    text-align: left !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .align-left--small {
-    text-align: left !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .align-left--desk {
-    text-align: left !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .align-left--large {
-    text-align: left !important;
-  }
-}
-
-.align-right {
-  text-align: right !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .align-right--palm {
-    text-align: right !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .align-right--lap {
-    text-align: right !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .align-right--small {
-    text-align: right !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .align-right--desk {
-    text-align: right !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .align-right--large {
-    text-align: right !important;
-  }
-}
-
-.align-center {
-  text-align: center !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .align-center--palm {
-    text-align: center !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .align-center--lap {
-    text-align: center !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .align-center--small {
-    text-align: center !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .align-center--desk {
-    text-align: center !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .align-center--large {
-    text-align: center !important;
-  }
-}
-
-.justify {
-  text-align: justify !important;
-}
-@media screen and (max-width: 37.4375em) {
-  .justify--palm {
-    text-align: justify !important;
-  }
-}
-@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
-  .justify--lap {
-    text-align: justify !important;
-  }
-}
-@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
-  .justify--small {
-    text-align: justify !important;
-  }
-}
-@media screen and (min-width: 75em) and (max-width: 99.9375em) {
-  .justify--desk {
-    text-align: justify !important;
-  }
-}
-@media screen and (min-width: 100em) {
-  .justify--large {
-    text-align: justify !important;
-  }
-}
-
-/*
- * Texto desbordante
- */
-.nowrap {
-  white-space: nowrap !important;
-}
-
-.truncate {
-  overflow: hidden !important;
-  text-overflow: ellipsis !important;
-  white-space: nowrap !important;
-}
-
-.truncate-2 {
-  display: -webkit-box !important;
-  overflow: hidden !important;
-  -webkit-line-clamp: 2 !important;
-  -webkit-box-orient: vertical !important;
-}
-
-.truncate-3 {
-  display: -webkit-box !important;
-  overflow: hidden !important;
-  -webkit-line-clamp: 3 !important;
-  -webkit-box-orient: vertical !important;
-}
-
-.truncate-4 {
-  display: -webkit-box !important;
-  overflow: hidden !important;
-  -webkit-line-clamp: 4 !important;
-  -webkit-box-orient: vertical !important;
-}
-
-/*
- * Transformación
- */
-.lowercase {
-  text-transform: lowercase !important;
-}
-
-.uppercase {
-  text-transform: uppercase !important;
-}
-
-.capitalize {
-  text-transform: capitalize !important;
-}
-
-/*
- * Apariencia
- */
-.italic {
-  font-style: italic !important;
-}
-
-.normal {
-  font-style: normal !important;
-}
-
-.text-hide {
-  text-indent: -10000px !important;
-}
-
-.underline {
-  text-decoration: underline !important;
-}
-
-.no-decoration {
-  text-decoration: none !important;
-}
-
-/*
- * ================ Tipografía ================
- */
-body {
-  font-family: var(--font-body);
-  font-size: var(--font-base);
-  font-weight: var(--font-regular);
-  line-height: var(--leading-medium);
-  color: rgba(var(--gray3), 1);
-  background-color: rgba(var(--gray8), 1);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-header);
-  font-weight: var(--font-semibold);
-  color: rgba(var(--gray1), 1);
-}
-
-h1 {
-  font-size: var(--font-h1);
-}
-
-h2 {
-  font-size: var(--font-h2);
-}
-
-h3 {
-  font-size: var(--font-h3);
-}
-
-h4 {
-  font-size: var(--font-h4);
-}
-
-h5 {
-  font-size: var(--font-h5);
-}
-
-h6 {
-  font-size: var(--font-base);
-}
-
-p {
-  font-size: var(--font-base);
-}
-
-b,
-strong {
-  font-weight: var(--font-semibold);
-  color: rgba(var(--gray2), 1);
-}
-
-em,
-i {
-  font-style: italic;
-}
-
-small,
-.small {
-  font-size: var(--font-small1);
-  font-style: normal;
-  font-weight: var(--font-regular);
-}
-
-mark,
-.mark {
-  padding: quarter();
-  color: white;
-  background-color: rgba(var(--brand), 1);
-  border-radius: radius();
-}
-
-.caption {
-  font-family: var(--font-body);
-  font-size: var(--font-h5);
-  font-style: italic;
-  color: rgba(var(--gray4), 1);
-}
-
-h1 + .caption,
-.h1 + .caption {
-  margin-top: half();
-  margin-bottom: simple();
-  font-size: var(--font-h4);
-  font-style: normal;
-  line-height: var(--leading-small);
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-h2 + .caption,
-.h2 + .caption {
-  margin-top: half();
-  margin-bottom: simple();
-  font-size: var(--font-h5);
-  font-style: normal;
-  line-height: var(--leading-small);
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-h3 + .caption,
-.h3 + .caption {
-  margin-bottom: half();
-  font-size: var(--font-base);
-  font-style: normal;
-  line-height: var(--leading-small);
-}
-
-abbr[title],
-abbr[data-original-title] {
-  cursor: help;
-  border-bottom: 0;
-}
-
-blockquote,
-.blockquote {
-  margin: double() 0;
-  font-size: var(--font-h5);
-  line-height: var(--leading-small);
-  color: rgba(var(--gray1), 1);
-}
-blockquote p,
-.blockquote p {
-  padding-right: 30%;
-  font-size: var(--font-h5);
-  line-height: var(--leading-small);
-}
-blockquote p:last-of-type,
-.blockquote p:last-of-type {
-  margin-bottom: 0;
-}
-blockquote > footer,
-blockquote > .footer,
-.blockquote > footer,
-.blockquote > .footer {
-  display: block;
-  padding-right: 30%;
-  font-size: var(--font-small1);
-  font-style: italic;
-  color: rgba(var(--gray4), 1);
-}
-blockquote > footer::before,
-blockquote > .footer::before,
-.blockquote > footer::before,
-.blockquote > .footer::before {
-  content: "— ";
-}
-
-sub,
-sup {
-  position: relative;
-  font-size: 0.75em;
-}
-
-sub {
-  bottom: -0.25em;
-  left: 0.25em;
-}
-
-sup {
-  top: -0.5em;
-  left: 0.25em;
-}
-
-hr {
-  margin-top: double();
-  margin-bottom: double();
-  border-top: var(--border-width) var(--border-style) rgba(var(--gray3), 1);
-}
-
-/* stylelint-disable-next-line no-descending-specificity */
-p,
-h1,
-h2,
-h3,
-ul,
-ol,
-dl,
-table,
-blockquote,
-pre {
-  margin-bottom: simple();
-}
-
-/*
- * ================ Funciones ================
- */
-/*
- * Devuelve la anchura del borde en base al tamaño indicado
- *
- * @param {string|null|number} $size - Alias de la anchura del borde
- * @return {string} - valor del borde en texto
- *
- * @example SCSS
- *   border(thin) => 1px;
- *   border() => 2px; // Medium (Por defecto)
- */
-/*
- * Devuelve el valor del radio indicado
- *
- * @param {string} $radius - tamaño de radio
- * @return {Number} - valor de radio en rem
- *
- * @example SCSS
- *   radius(lg) =>  1.125rem;
- */
-/*
- * ================ Generadores ================
- */
-/*
- * Genera una clase para añadir o quitar bordes a un elemento
- *
- * @example CSS
- *   .border                                // Todos los lados a la vez
- *   .border-{top,right,bottom,left,x,y}    // A un solo lado
- *   .no-border                             // Elimina todos los bordes de un elemento
- *   .no-border-{top,right,bottom,left,x,y} // Elimina el borde de un solo lado
- */
-.border {
-  border: var(--border-medium) var(--border-style) rgba(var(--gray3), 1) !important;
-}
-
-.no-border {
-  border: 0 !important;
-}
-
-.border-top {
-  border-top: var(--border-medium) var(--border-style) rgba(var(--gray3), 1) !important;
-}
-
-.no-border-top {
-  border-top: 0 !important;
-}
-
-.border-right {
-  border-right: var(--border-medium) var(--border-style) rgba(var(--gray3), 1) !important;
-}
-
-.no-border-right {
-  border-right: 0 !important;
-}
-
-.border-bottom {
-  border-bottom: var(--border-medium) var(--border-style) rgba(var(--gray3), 1) !important;
-}
-
-.no-border-bottom {
-  border-bottom: 0 !important;
-}
-
-.border-left {
-  border-left: var(--border-medium) var(--border-style) rgba(var(--gray3), 1) !important;
-}
-
-.no-border-left {
-  border-left: 0 !important;
-}
-
-.border-x {
-  border-right: var(--border-medium) var(--border-style) rgba(var(--gray3), 1) !important;
-  border-left: var(--border-medium) var(--border-style) rgba(var(--gray3), 1) !important;
-}
-
-.border-y {
-  border-top: var(--border-medium) var(--border-style) rgba(var(--gray3), 1) !important;
-  border-bottom: var(--border-medium) var(--border-style) rgba(var(--gray3), 1) !important;
-}
-
-.no-border-x {
-  border-right: 0 !important;
-  border-left: 0 !important;
-}
-
-.no-border-y {
-  border-top: 0 !important;
-  border-bottom: 0 !important;
-}
-
-/*
- * Color del borde
- *
- * Modifica el color del borde por defecto
- *
- * @example CSS
- *   .border.border--brand  // Colorea el borde con el color de la marca
- */
-.border--brand-darkest {
-  border-color: #4e011e !important;
-}
-
-.border--brand-darker {
-  border-color: #80002f !important;
-}
-
-.border--brand-dark {
-  border-color: #bb1642 !important;
-}
-
-.border--brand {
-  border-color: #dd224e !important;
-}
-
-.border--brand-light {
-  border-color: #fb5067 !important;
-}
-
-.border--brand-lighter {
-  border-color: #ff817a !important;
-}
-
-.border--brand-lightest {
-  border-color: #fae0df !important;
-}
-
-.border--warning-darkest {
-  border-color: #b37400 !important;
-}
-
-.border--warning-darker {
-  border-color: #b37400 !important;
-}
-
-.border--warning-dark {
-  border-color: #e69d00 !important;
-}
-
-.border--warning {
-  border-color: #ffbe33 !important;
-}
-
-.border--warning-light {
-  border-color: #ffd780 !important;
-}
-
-.border--warning-lighter {
-  border-color: #ffefcc !important;
-}
-
-.border--warning-lightest {
-  border-color: #faf1dd !important;
-}
-
-.border--success-darkest {
-  border-color: #448a0f !important;
-}
-
-.border--success-darker {
-  border-color: #448a0f !important;
-}
-
-.border--success-dark {
-  border-color: #5faf23 !important;
-}
-
-.border--success {
-  border-color: #77c23d !important;
-}
-
-.border--success-light {
-  border-color: #ace580 !important;
-}
-
-.border--success-lighter {
-  border-color: #e3f7d4 !important;
-}
-
-.border--success-lightest {
-  border-color: #ebfae0 !important;
-}
-
-.border--danger-darkest {
-  border-color: #990f00 !important;
-}
-
-.border--danger-darker {
-  border-color: #990f00 !important;
-}
-
-.border--danger-dark {
-  border-color: #e61700 !important;
-}
-
-.border--danger {
-  border-color: #ff4733 !important;
-}
-
-.border--danger-light {
-  border-color: #ff8c80 !important;
-}
-
-.border--danger-lighter {
-  border-color: #ffd1cc !important;
-}
-
-.border--danger-lightest {
-  border-color: #fce4e1 !important;
-}
-
-.border--black {
-  border-color: black !important;
-}
-
-.border--gray1 {
-  border-color: #121a1d !important;
-}
-
-.border--gray2 {
-  border-color: #3b4c54 !important;
-}
-
-.border--gray3 {
-  border-color: #6a7981 !important;
-}
-
-.border--gray4 {
-  border-color: #9da6aa !important;
-}
-
-.border--gray5 {
-  border-color: #ced5d9 !important;
-}
-
-.border--gray6 {
-  border-color: #e7ebee !important;
-}
-
-.border--gray7 {
-  border-color: #f6f7f9 !important;
-}
-
-.border--gray8 {
-  border-color: #fcfcfd !important;
-}
-
-.border--gray9 {
-  border-color: #f7f6f5 !important;
-}
-
-.border--gray10 {
-  border-color: #f7f6f5 !important;
-}
-
-.border--white {
-  border-color: white !important;
-}
-
-/*
- * Ancho del borde
- *
- * Modifica el ancho del borde por defecto
- *
- * @example CSS
- *   .border.border--thin  // Establece el ancho del borde a 1px
- *   .border.border--medium  // Establece el ancho del borde a 2px
- *   .border.border--thick  // Establece el ancho del borde a 4px
- */
-.border--thin {
-  border-width: var(--border-thin) !important;
-}
-
-.border--medium {
-  border-width: var(--border-medium) !important;
-}
-
-.border--thick {
-  border-width: var(--border-thick) !important;
-}
-
-/*
- * Estilo del borde
- *
- * Modifica el estilo del borde por defecto
- *
- * @example CSS
- *   .border.border--solid   // Establece el estilo del borde a sólido
- *   .border.border--dashed  // Establece el estilo del borde a discontinuo
- *   .border.border--dotted  // Establece el estilo del borde a puntillado
- *   .border.border--none    // Establece el estilo del borde a ninguno
- */
-.border--solid {
-  border-style: solid !important;
-}
-
-.border--dashed {
-  border-style: dashed !important;
-}
-
-.border--dotted {
-  border-style: dotted !important;
-}
-
-.border--hidden {
-  border-style: hidden !important;
-}
-
-.border--none {
-  border-style: none !important;
-}
-
-/*
- * Esquinas redondeadas
- *
- * Aplica/Elimina una esquina redondeada a un elemento
- *
- * @example CSS
- *   .rounded                         // Todas las esquinas a la vez
- *   .rounded-{top,right,bottom,left} // A las esquinas de un lado
- *   .rounded-circle                  // Redondea todas las esquinas hasta convertir al elemento en un círculo
- *   .no-rounded                      // Elimina todas las esquinas redondeadas
- */
-.rounded {
-  border-radius: var(--radius-medium) !important;
-}
-
-.rounded-top {
-  border-top-left-radius: var(--radius-medium) !important;
-  border-top-right-radius: var(--radius-medium) !important;
-}
-
-.rounded-right {
-  border-top-right-radius: var(--radius-medium) !important;
-  border-bottom-right-radius: var(--radius-medium) !important;
-}
-
-.rounded-bottom {
-  border-bottom-right-radius: var(--radius-medium) !important;
-  border-bottom-left-radius: var(--radius-medium) !important;
-}
-
-.rounded-left {
-  border-top-left-radius: var(--radius-medium) !important;
-  border-bottom-left-radius: var(--radius-medium) !important;
-}
-
-.circle {
-  border-radius: 50% !important;
-}
-
-.square {
-  border-radius: 0 !important;
-}
-
-.rounded-xxsmall {
-  border-radius: var(--radius-xxsmall) !important;
-}
-
-.rounded-top-xxsmall {
-  border-top-left-radius: var(--radius-xxsmall) !important;
-  border-top-right-radius: var(--radius-xxsmall) !important;
-}
-
-.rounded-right-xxsmall {
-  border-top-right-radius: var(--radius-xxsmall) !important;
-  border-bottom-right-radius: var(--radius-xxsmall) !important;
-}
-
-.rounded-bottom-xxsmall {
-  border-bottom-right-radius: var(--radius-xxsmall) !important;
-  border-bottom-left-radius: var(--radius-xxsmall) !important;
-}
-
-.rounded-left-xxsmall {
-  border-top-left-radius: var(--radius-xxsmall) !important;
-  border-bottom-left-radius: var(--radius-xxsmall) !important;
-}
-
-.rounded-xsmall {
-  border-radius: var(--radius-xsmall) !important;
-}
-
-.rounded-top-xsmall {
-  border-top-left-radius: var(--radius-xsmall) !important;
-  border-top-right-radius: var(--radius-xsmall) !important;
-}
-
-.rounded-right-xsmall {
-  border-top-right-radius: var(--radius-xsmall) !important;
-  border-bottom-right-radius: var(--radius-xsmall) !important;
-}
-
-.rounded-bottom-xsmall {
-  border-bottom-right-radius: var(--radius-xsmall) !important;
-  border-bottom-left-radius: var(--radius-xsmall) !important;
-}
-
-.rounded-left-xsmall {
-  border-top-left-radius: var(--radius-xsmall) !important;
-  border-bottom-left-radius: var(--radius-xsmall) !important;
-}
-
-.rounded-small {
-  border-radius: var(--radius-small) !important;
-}
-
-.rounded-top-small {
-  border-top-left-radius: var(--radius-small) !important;
-  border-top-right-radius: var(--radius-small) !important;
-}
-
-.rounded-right-small {
-  border-top-right-radius: var(--radius-small) !important;
-  border-bottom-right-radius: var(--radius-small) !important;
-}
-
-.rounded-bottom-small {
-  border-bottom-right-radius: var(--radius-small) !important;
-  border-bottom-left-radius: var(--radius-small) !important;
-}
-
-.rounded-left-small {
-  border-top-left-radius: var(--radius-small) !important;
-  border-bottom-left-radius: var(--radius-small) !important;
-}
-
-.rounded-medium {
-  border-radius: var(--radius-medium) !important;
-}
-
-.rounded-top-medium {
-  border-top-left-radius: var(--radius-medium) !important;
-  border-top-right-radius: var(--radius-medium) !important;
-}
-
-.rounded-right-medium {
-  border-top-right-radius: var(--radius-medium) !important;
-  border-bottom-right-radius: var(--radius-medium) !important;
-}
-
-.rounded-bottom-medium {
-  border-bottom-right-radius: var(--radius-medium) !important;
-  border-bottom-left-radius: var(--radius-medium) !important;
-}
-
-.rounded-left-medium {
-  border-top-left-radius: var(--radius-medium) !important;
-  border-bottom-left-radius: var(--radius-medium) !important;
-}
-
-.rounded-large {
-  border-radius: var(--radius-large) !important;
-}
-
-.rounded-top-large {
-  border-top-left-radius: var(--radius-large) !important;
-  border-top-right-radius: var(--radius-large) !important;
-}
-
-.rounded-right-large {
-  border-top-right-radius: var(--radius-large) !important;
-  border-bottom-right-radius: var(--radius-large) !important;
-}
-
-.rounded-bottom-large {
-  border-bottom-right-radius: var(--radius-large) !important;
-  border-bottom-left-radius: var(--radius-large) !important;
-}
-
-.rounded-left-large {
-  border-top-left-radius: var(--radius-large) !important;
-  border-bottom-left-radius: var(--radius-large) !important;
-}
-
-.rounded-xlarge {
-  border-radius: var(--radius-xlarge) !important;
-}
-
-.rounded-top-xlarge {
-  border-top-left-radius: var(--radius-xlarge) !important;
-  border-top-right-radius: var(--radius-xlarge) !important;
-}
-
-.rounded-right-xlarge {
-  border-top-right-radius: var(--radius-xlarge) !important;
-  border-bottom-right-radius: var(--radius-xlarge) !important;
-}
-
-.rounded-bottom-xlarge {
-  border-bottom-right-radius: var(--radius-xlarge) !important;
-  border-bottom-left-radius: var(--radius-xlarge) !important;
-}
-
-.rounded-left-xlarge {
-  border-top-left-radius: var(--radius-xlarge) !important;
-  border-bottom-left-radius: var(--radius-xlarge) !important;
-}
-
-.rounded-xxlarge {
-  border-radius: var(--radius-xxlarge) !important;
-}
-
-.rounded-top-xxlarge {
-  border-top-left-radius: var(--radius-xxlarge) !important;
-  border-top-right-radius: var(--radius-xxlarge) !important;
-}
-
-.rounded-right-xxlarge {
-  border-top-right-radius: var(--radius-xxlarge) !important;
-  border-bottom-right-radius: var(--radius-xxlarge) !important;
-}
-
-.rounded-bottom-xxlarge {
-  border-bottom-right-radius: var(--radius-xxlarge) !important;
-  border-bottom-left-radius: var(--radius-xxlarge) !important;
-}
-
-.rounded-left-xxlarge {
-  border-top-left-radius: var(--radius-xxlarge) !important;
-  border-bottom-left-radius: var(--radius-xxlarge) !important;
-}
-
-/*
  * ================ Generadores ================
  */
 /*
  * Modifica el cursor de un ratón al hacer hover sobre un elemento.
  */
 /*
-* Modifica el cursor de un ratón al hacer hover sobre un elemento.
-*
-* @example CSS
-*   .cursor-pointer       // Cursor de tipo puntero
-*   .cursor-wait          // Cursor de tipo esperar
-*/
+ * Modifica el cursor de un ratón al hacer hover sobre un elemento.
+ *
+ * @example CSS
+ *   .cursor-pointer       // Cursor de tipo puntero
+ *   .cursor-wait          // Cursor de tipo esperar
+ */
 .cursor-auto {
   cursor: auto !important;
 }
@@ -4216,27 +3433,152 @@ pre {
 }
 
 /*
- * ================ Mixins ================
+ * ================ Generadores ================
  */
-/*
- * Genera un media query con los parámetros del tipo de pantalla seleccionada
- *
- * @param {String} $screen - Tamaño de pantalla
- *
- * @example SCSS
- *     .myClass {
- *       @include media(palm) {
- *         color: color(brand);
- *       }
- *     }
- *
- * @result CSS
- *     @media screen and (max-width: 37.4375em) {
- *       .myClass {
- *         color: rgba(var(--brand), 1);
- *       }
- *     }
- */
+:root {
+  --FONT-FAMILIES-----------------: 01;
+  --font-body: "Source Sans Pro", Helvetica Neue, Arial, sans-serif;
+  --font-header: "Source Sans Pro", Helvetica Neue, Arial, sans-serif;
+  --font-mono: "Fira Code", "Courier New", Courier, monospace;
+  --FONT-SIZES--------------------: 02;
+  --font-h1: font-size(5);
+  --font-h2: font-size(4);
+  --font-h3: font-size(3);
+  --font-h4: font-size(2);
+  --font-h5: font-size(1);
+  --font-base: font-size(0);
+  --font-small1: font-size(-1);
+  --font-small2: font-size(-2);
+  --FONT-WEIGHTS------------------: 03;
+  --font-ultralight: 100;
+  --font-extralight: 200;
+  --font-light: 300;
+  --font-regular: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+  --font-extrabold: 800;
+  --font-ultrabold: 900;
+  --TEXT-LEADING------------------: 04;
+  --leading-xxsmall: leading(0.55);
+  --leading-xsmall: leading(0.7);
+  --leading-small: leading(0.85);
+  --leading-medium: leading(1);
+  --leading-large: leading(1.15);
+  --leading-xlarge: leading(1.3);
+  --leading-xxlarge: leading(1.45);
+  --TRAKING-----------------------: 05;
+  --traking-xxsmall: -0.1em;
+  --traking-xsmall: -0.05em;
+  --traking-small: -0.02em;
+  --traking-medium: 0;
+  --traking-large: 0.02em;
+  --traking-xlarge: 0.05em;
+  --traking-xxlarge: 0.1em;
+  --RADIUS------------------------: 06;
+  --radius-xxsmall: 0.1875rem;
+  --radius-xsmall: 0.25rem;
+  --radius-small: 0.375rem;
+  --radius-medium: 0.5rem;
+  --radius-large: 0.75rem;
+  --radius-xlarge: 1rem;
+  --radius-xxlarge: 1.5rem;
+  --BLUR--------------------------: 07;
+  --blur-2xs: 4px;
+  --blur-xs: 8px;
+  --blur-sm: 12px;
+  --blur-md: 16px;
+  --blur-lg: 24px;
+  --blur-xl: 32px;
+  --blur-2xl: 48px;
+  --SHADOWS-----------------------: 08;
+  --shadow-color: 11,15,17;
+  --shadow-1: shadow(1);
+  --shadow-2: shadow(2);
+  --shadow-3: shadow(3);
+  --shadow-4: shadow(4);
+  --shadow-5: shadow(5);
+  --shadow-6: shadow(6);
+  --GRADIENTS---------------------: 09;
+  --brand-gradient: radial-gradient(ellipse at left top, rgba(var(--brand-light), 1) 0%, rgba(var(--brand-dark), 1) 100%) ;
+  --warning-gradient: radial-gradient(ellipse at left top, rgba(var(--warning-light), 1) 0%, rgba(var(--warning-dark), 1) 100%) ;
+  --success-gradient: radial-gradient(ellipse at left top, rgba(var(--success-light), 1) 0%, rgba(var(--success-dark), 1) 100%) ;
+  --danger-gradient: radial-gradient(ellipse at left top, rgba(var(--danger-light), 1) 0%, rgba(var(--danger-dark), 1) 100%) ;
+  --light-gradient: radial-gradient(ellipse at left top, rgba(var(--gray7), 1) 0%, rgba(var(--gray5), 1) 100%) ;
+  --dark-gradient: radial-gradient(ellipse at left top, rgba(var(--gray2), 1) 0%, rgba(var(--gray1), 1) 100%) ;
+  --COLORS------------------------: 10;
+  --brand-darkest: 78,1,30;
+  --brand-darker: 128,0,47;
+  --brand-dark: 187,22,66;
+  --brand: 221,34,78;
+  --brand-light: 251,80,103;
+  --brand-lighter: 255,129,122;
+  --brand-lightest: 250,224,223;
+  --warning-darkest: 179,116,0;
+  --warning-darker: 179,116,0;
+  --warning-dark: 230,157,0;
+  --warning: 255,190,51;
+  --warning-light: 255,215,128;
+  --warning-lighter: 255,239,204;
+  --warning-lightest: 250,241,221;
+  --success-darkest: 68,138,15;
+  --success-darker: 68,138,15;
+  --success-dark: 95,175,35;
+  --success: 119,194,61;
+  --success-light: 172,229,128;
+  --success-lighter: 227,247,212;
+  --success-lightest: 235,250,224;
+  --danger-darkest: 153,15,0;
+  --danger-darker: 153,15,0;
+  --danger-dark: 230,23,0;
+  --danger: 255,71,51;
+  --danger-light: 255,140,128;
+  --danger-lighter: 255,209,204;
+  --danger-lightest: 252,228,225;
+  --BORDERS-----------------------: 11;
+  --border-thin: 1px;
+  --border-medium: 2px;
+  --border-thick: 4px;
+  --border-color: rgba(var(--gray3), 1);
+  --border-width: var(--border-medium);
+  --border-style: solid;
+  --SPACE-------------------------: 12;
+  --space: 1.6;
+}
+
+:root,
+.light-mode,
+[data-theme=light] {
+  --black: 0,0,0;
+  --gray1: 18,26,29;
+  --gray2: 59,76,84;
+  --gray3: 106,121,129;
+  --gray4: 157,166,170;
+  --gray5: 206,213,217;
+  --gray6: 231,235,238;
+  --gray7: 246,247,249;
+  --gray8: 252,252,253;
+  --gray9: 247,246,245;
+  --gray10: 247,246,245;
+  --white: 255,255,255;
+}
+
+.dark-mode,
+[data-theme=dark] {
+  --black: 255,255,255;
+  --gray1: 247,246,245;
+  --gray2: 247,246,245;
+  --gray3: 252,252,253;
+  --gray4: 246,247,249;
+  --gray5: 231,235,238;
+  --gray6: 206,213,217;
+  --gray7: 157,166,170;
+  --gray8: 106,121,129;
+  --gray9: 59,76,84;
+  --gray10: 23,34,38;
+  --white: 0,0,0;
+}
+
 /*
  * ================ Funciones ================
  */
@@ -4322,153 +3664,6 @@ pre {
   .shadow-6--hover:not([disabled]):hover {
     box-shadow: 0px 2px 2px rgba(var(--shadow-color), 0.25), 0px 4px 4px rgba(var(--shadow-color), 0.2), 0px 8px 8px rgba(var(--shadow-color), 0.1666666667), 0px 16px 16px rgba(var(--shadow-color), 0.1428571429), 0px 32px 32px rgba(var(--shadow-color), 0.125), 0px 64px 64px rgba(var(--shadow-color), 0.1111111111), 0px 128px 128px rgba(var(--shadow-color), 0.1) !important;
   }
-}
-
-/*
- * ================ Generadores ================
- */
-:root {
-  --FONT-FAMILIES-----------------: 01;
-  --font-body: "Source Sans Pro", Helvetica Neue, Arial, sans-serif;
-  --font-header: "Source Sans Pro", Helvetica Neue, Arial, sans-serif;
-  --font-mono: "Fira Code", "Courier New", Courier, monospace;
-  --FONT-SIZES--------------------: 02;
-  --font-h1: 2.24rem;
-  --font-h2: 1.907rem;
-  --font-h3: 1.623rem;
-  --font-h4: 1.381rem;
-  --font-h5: 1.175rem;
-  --font-base: 1rem;
-  --font-small1: 0.852rem;
-  --font-small2: 0.725rem;
-  --FONT-WEIGHTS------------------: 03;
-  --font-ultralight: 100;
-  --font-extralight: 200;
-  --font-light: 300;
-  --font-regular: 400;
-  --font-medium: 500;
-  --font-semibold: 600;
-  --font-bold: 700;
-  --font-extrabold: 800;
-  --font-ultrabold: 900;
-  --TEXT-LEADING------------------: 04;
-  --leading-xxsmall: 0.88;
-  --leading-xsmall: 1.12;
-  --leading-small: 1.36;
-  --leading-medium: 1.6;
-  --leading-large: 1.84;
-  --leading-xlarge: 2.08;
-  --leading-xxlarge: 2.32;
-  --TRAKING-----------------------: 05;
-  --traking-xxsmall: -0.1em;
-  --traking-xsmall: -0.05em;
-  --traking-small: -0.02em;
-  --traking-medium: 0;
-  --traking-large: 0.02em;
-  --traking-xlarge: 0.05em;
-  --traking-xxlarge: 0.1em;
-  --RADIUS------------------------: 06;
-  --radius-xxsmall: 0.1875rem;
-  --radius-xsmall: 0.25rem;
-  --radius-small: 0.375rem;
-  --radius-medium: 0.5rem;
-  --radius-large: 0.75rem;
-  --radius-xlarge: 1rem;
-  --radius-xxlarge: 1.5rem;
-  --BLUR--------------------------: 07;
-  --blur-2xs: 4px;
-  --blur-xs: 8px;
-  --blur-sm: 12px;
-  --blur-md: 16px;
-  --blur-lg: 24px;
-  --blur-xl: 32px;
-  --blur-2xl: 48px;
-  --SHADOWS-----------------------: 08;
-  --shadow-color: 11,15,17;
-  --shadow-1: 0px 2px 2px rgba(var(--shadow-color), 0.25), 0px 4px 4px rgba(var(--shadow-color), 0.2);
-  --shadow-2: 0px 2px 2px rgba(var(--shadow-color), 0.25), 0px 4px 4px rgba(var(--shadow-color), 0.2), 0px 8px 8px rgba(var(--shadow-color), 0.1666666667);
-  --shadow-3: 0px 2px 2px rgba(var(--shadow-color), 0.25), 0px 4px 4px rgba(var(--shadow-color), 0.2), 0px 8px 8px rgba(var(--shadow-color), 0.1666666667), 0px 16px 16px rgba(var(--shadow-color), 0.1428571429);
-  --shadow-4: 0px 2px 2px rgba(var(--shadow-color), 0.25), 0px 4px 4px rgba(var(--shadow-color), 0.2), 0px 8px 8px rgba(var(--shadow-color), 0.1666666667), 0px 16px 16px rgba(var(--shadow-color), 0.1428571429), 0px 32px 32px rgba(var(--shadow-color), 0.125);
-  --shadow-5: 0px 2px 2px rgba(var(--shadow-color), 0.25), 0px 4px 4px rgba(var(--shadow-color), 0.2), 0px 8px 8px rgba(var(--shadow-color), 0.1666666667), 0px 16px 16px rgba(var(--shadow-color), 0.1428571429), 0px 32px 32px rgba(var(--shadow-color), 0.125), 0px 64px 64px rgba(var(--shadow-color), 0.1111111111);
-  --shadow-6: 0px 2px 2px rgba(var(--shadow-color), 0.25), 0px 4px 4px rgba(var(--shadow-color), 0.2), 0px 8px 8px rgba(var(--shadow-color), 0.1666666667), 0px 16px 16px rgba(var(--shadow-color), 0.1428571429), 0px 32px 32px rgba(var(--shadow-color), 0.125), 0px 64px 64px rgba(var(--shadow-color), 0.1111111111), 0px 128px 128px rgba(var(--shadow-color), 0.1);
-  --GRADIENTS---------------------: 09;
-  --brand-gradient: radial-gradient(ellipse at left top, rgba(var(--brand-light), 1) 0%, rgba(var(--brand-dark), 1) 100%);
-  --warning-gradient: radial-gradient(ellipse at left top, rgba(var(--warning-light), 1) 0%, rgba(var(--warning-dark), 1) 100%);
-  --success-gradient: radial-gradient(ellipse at left top, rgba(var(--success-light), 1) 0%, rgba(var(--success-dark), 1) 100%);
-  --danger-gradient: radial-gradient(ellipse at left top, rgba(var(--danger-light), 1) 0%, rgba(var(--danger-dark), 1) 100%);
-  --light-gradient: radial-gradient(ellipse at left top, rgba(var(--gray7), 1) 0%, rgba(var(--gray5), 1) 100%);
-  --dark-gradient: radial-gradient(ellipse at left top, rgba(var(--gray2), 1) 0%, rgba(var(--gray1), 1) 100%);
-  --COLORS------------------------: 10;
-  --brand-darkest: 78,1,30;
-  --brand-darker: 128,0,47;
-  --brand-dark: 187,22,66;
-  --brand: 221,34,78;
-  --brand-light: 251,80,103;
-  --brand-lighter: 255,129,122;
-  --brand-lightest: 250,224,223;
-  --warning-darkest: 179,116,0;
-  --warning-darker: 179,116,0;
-  --warning-dark: 230,157,0;
-  --warning: 255,190,51;
-  --warning-light: 255,215,128;
-  --warning-lighter: 255,239,204;
-  --warning-lightest: 250,241,221;
-  --success-darkest: 68,138,15;
-  --success-darker: 68,138,15;
-  --success-dark: 95,175,35;
-  --success: 119,194,61;
-  --success-light: 172,229,128;
-  --success-lighter: 227,247,212;
-  --success-lightest: 235,250,224;
-  --danger-darkest: 153,15,0;
-  --danger-darker: 153,15,0;
-  --danger-dark: 230,23,0;
-  --danger: 255,71,51;
-  --danger-light: 255,140,128;
-  --danger-lighter: 255,209,204;
-  --danger-lightest: 252,228,225;
-  --BORDERS-----------------------: 11;
-  --border-thin: 1px;
-  --border-medium: 2px;
-  --border-thick: 4px;
-  --border-color: rgba(var(--gray3), 1);
-  --border-width: var(--border-medium);
-  --border-style: solid;
-  --SPACE-------------------------: 12;
-  --space: 1.6;
-}
-
-:root,
-.light-mode,
-[data-theme=light] {
-  --black: 0,0,0;
-  --gray1: 18,26,29;
-  --gray2: 59,76,84;
-  --gray3: 106,121,129;
-  --gray4: 157,166,170;
-  --gray5: 206,213,217;
-  --gray6: 231,235,238;
-  --gray7: 246,247,249;
-  --gray8: 252,252,253;
-  --gray9: 247,246,245;
-  --gray10: 247,246,245;
-  --white: 255,255,255;
-}
-
-.dark-mode,
-[data-theme=dark] {
-  --black: 255,255,255;
-  --gray1: 247,246,245;
-  --gray2: 247,246,245;
-  --gray3: 252,252,253;
-  --gray4: 246,247,249;
-  --gray5: 231,235,238;
-  --gray6: 206,213,217;
-  --gray7: 157,166,170;
-  --gray8: 106,121,129;
-  --gray9: 59,76,84;
-  --gray10: 23,34,38;
-  --white: 0,0,0;
 }
 
 /*
@@ -11586,7 +10781,1209 @@ pre {
 /*
  * ================ Generadores ================
  */
-/*! Didor CSS v3.0.0 | MIT License | github.com/fvena/didor */ /* prettier-ignore */
+/*
+ * ================ Funciones ================
+ */
+/*
+ * Devuelve el tamaño del texto en base al tamaño indicado
+ *
+ * @param {string|integer} $size - Valor númerico de la escala o alias del listado de tamaños de texto
+ * @return {Number} - valor del texto en rem
+ *
+ * @example SCSS
+ *   font-size(2) =>  1.381rem;
+ *   font-size(h4) =>  1.381rem;
+ */
+/*
+ * Devuelve la altura de línea en base al tamaño indicado
+ *
+ * @param {string|integer} $size - Valor númerico de la escala o alias del listado de tamaños de texto
+ * @return {Number} - valor del texto en rem
+ *
+ * @example SCSS
+ *   leading(2) =>  3.2;
+ *   leading(large) => 1.84;
+ */
+/*
+ * Devuelve el peso tipográfico
+ *
+ * @param {string} $weight - Alias del listado de tamaños de texto
+ * @return {Number} - valor del peso tipográfico
+ *
+ * @example SCSS
+ *   font-weight(semibold) =>  600;
+ */
+/*
+ * Devuele el valor de la familia seleccionada
+ *
+ * @param {string} $family - Alias del listado de tamaños de texto
+ * @return {Number} - valor del peso tipográfico
+ *
+ * @example SCSS
+ *   font-family(header) => "Source Sans Pro", Helvetica Neue, Arial, sans-serif;
+ */
+/*
+ * Devuelve un tamaño de fuente, familia o peso dependiendo del valor indicado
+ *
+ * @param {string} $font - Alias del tamaño del texto, peso tipográfico o familia
+ * @return {string} - valor del tamaño del texto, peso tipográfico o familia
+ *
+ * @example SCSS
+ *   font(h4) => 1.381rem;
+ *   font(header) => "Source Sans Pro", Helvetica Neue, Arial, sans-serif;
+ *   font(semibold) => 500;
+ */
+/*
+ * ================ Generadores ================
+ */
+/*
+ * Genera clases para definir el texto en base al tamaño, peso y color
+ *
+ * @example CSS
+ *   .h2-semibold-gray1       // Tamaño de fuente h2, peso semibold y color gray1
+ *   .small1-regular-danger   // Tamaño de fuente small1, peso regular y color danger
+ */
+.h1-regular-gray1 {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.h1-regular-gray4 {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.h1-regular-brand {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.h1-regular-danger {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.h1-regular-success {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.h1-regular-warning {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.h1-semibold-gray1 {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.h1-semibold-gray4 {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.h1-semibold-brand {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.h1-semibold-danger {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.h1-semibold-success {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.h1-semibold-warning {
+  font-size: var(--font-h1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.h2-regular-gray1 {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.h2-regular-gray4 {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.h2-regular-brand {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.h2-regular-danger {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.h2-regular-success {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.h2-regular-warning {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.h2-semibold-gray1 {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.h2-semibold-gray4 {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.h2-semibold-brand {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.h2-semibold-danger {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.h2-semibold-success {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.h2-semibold-warning {
+  font-size: var(--font-h2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.h3-regular-gray1 {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.h3-regular-gray4 {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.h3-regular-brand {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.h3-regular-danger {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.h3-regular-success {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.h3-regular-warning {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.h3-semibold-gray1 {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.h3-semibold-gray4 {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.h3-semibold-brand {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.h3-semibold-danger {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.h3-semibold-success {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.h3-semibold-warning {
+  font-size: var(--font-h3) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.h4-regular-gray1 {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.h4-regular-gray4 {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.h4-regular-brand {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.h4-regular-danger {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.h4-regular-success {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.h4-regular-warning {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.h4-semibold-gray1 {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.h4-semibold-gray4 {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.h4-semibold-brand {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.h4-semibold-danger {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.h4-semibold-success {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.h4-semibold-warning {
+  font-size: var(--font-h4) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.h5-regular-gray1 {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.h5-regular-gray4 {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.h5-regular-brand {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.h5-regular-danger {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.h5-regular-success {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.h5-regular-warning {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.h5-semibold-gray1 {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.h5-semibold-gray4 {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.h5-semibold-brand {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.h5-semibold-danger {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.h5-semibold-success {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.h5-semibold-warning {
+  font-size: var(--font-h5) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.base-regular-gray1 {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.base-regular-gray4 {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.base-regular-brand {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.base-regular-danger {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.base-regular-success {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.base-regular-warning {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.base-semibold-gray1 {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.base-semibold-gray4 {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.base-semibold-brand {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.base-semibold-danger {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.base-semibold-success {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.base-semibold-warning {
+  font-size: var(--font-base) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.small1-regular-gray1 {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.small1-regular-gray4 {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.small1-regular-brand {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.small1-regular-danger {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.small1-regular-success {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.small1-regular-warning {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.small1-semibold-gray1 {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.small1-semibold-gray4 {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.small1-semibold-brand {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.small1-semibold-danger {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.small1-semibold-success {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.small1-semibold-warning {
+  font-size: var(--font-small1) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.small2-regular-gray1 {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.small2-regular-gray4 {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.small2-regular-brand {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.small2-regular-danger {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.small2-regular-success {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.small2-regular-warning {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-regular) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+.small2-semibold-gray1 {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray1), 1) !important;
+}
+
+.small2-semibold-gray4 {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--gray4), 1) !important;
+}
+
+.small2-semibold-brand {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--brand), 1) !important;
+}
+
+.small2-semibold-danger {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--danger), 1) !important;
+}
+
+.small2-semibold-success {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--success), 1) !important;
+}
+
+.small2-semibold-warning {
+  font-size: var(--font-small2) !important;
+  font-weight: var(--font-semibold) !important;
+  color: rgba(var(--warning), 1) !important;
+}
+
+/*
+ * Genera clases en base a los tamaños texto definidos
+ *
+ * @example CSS
+ *   .h2            // Tamaño de fuente h2
+ *   .h3-lap        // Tamaño de fuente solo para pantallas Lap de tamaño h3
+ */
+.h1 {
+  font-size: var(--font-h1) !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .h1--palm {
+    font-size: var(--font-h1) !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .h1--lap {
+    font-size: var(--font-h1) !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .h1--small {
+    font-size: var(--font-h1) !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .h1--desk {
+    font-size: var(--font-h1) !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .h1--large {
+    font-size: var(--font-h1) !important;
+  }
+}
+
+.h2 {
+  font-size: var(--font-h2) !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .h2--palm {
+    font-size: var(--font-h2) !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .h2--lap {
+    font-size: var(--font-h2) !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .h2--small {
+    font-size: var(--font-h2) !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .h2--desk {
+    font-size: var(--font-h2) !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .h2--large {
+    font-size: var(--font-h2) !important;
+  }
+}
+
+.h3 {
+  font-size: var(--font-h3) !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .h3--palm {
+    font-size: var(--font-h3) !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .h3--lap {
+    font-size: var(--font-h3) !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .h3--small {
+    font-size: var(--font-h3) !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .h3--desk {
+    font-size: var(--font-h3) !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .h3--large {
+    font-size: var(--font-h3) !important;
+  }
+}
+
+.h4 {
+  font-size: var(--font-h4) !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .h4--palm {
+    font-size: var(--font-h4) !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .h4--lap {
+    font-size: var(--font-h4) !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .h4--small {
+    font-size: var(--font-h4) !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .h4--desk {
+    font-size: var(--font-h4) !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .h4--large {
+    font-size: var(--font-h4) !important;
+  }
+}
+
+.h5 {
+  font-size: var(--font-h5) !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .h5--palm {
+    font-size: var(--font-h5) !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .h5--lap {
+    font-size: var(--font-h5) !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .h5--small {
+    font-size: var(--font-h5) !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .h5--desk {
+    font-size: var(--font-h5) !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .h5--large {
+    font-size: var(--font-h5) !important;
+  }
+}
+
+.base {
+  font-size: var(--font-base) !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .base--palm {
+    font-size: var(--font-base) !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .base--lap {
+    font-size: var(--font-base) !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .base--small {
+    font-size: var(--font-base) !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .base--desk {
+    font-size: var(--font-base) !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .base--large {
+    font-size: var(--font-base) !important;
+  }
+}
+
+.small1 {
+  font-size: var(--font-small1) !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .small1--palm {
+    font-size: var(--font-small1) !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .small1--lap {
+    font-size: var(--font-small1) !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .small1--small {
+    font-size: var(--font-small1) !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .small1--desk {
+    font-size: var(--font-small1) !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .small1--large {
+    font-size: var(--font-small1) !important;
+  }
+}
+
+.small2 {
+  font-size: var(--font-small2) !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .small2--palm {
+    font-size: var(--font-small2) !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .small2--lap {
+    font-size: var(--font-small2) !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .small2--small {
+    font-size: var(--font-small2) !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .small2--desk {
+    font-size: var(--font-small2) !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .small2--large {
+    font-size: var(--font-small2) !important;
+  }
+}
+
+/*
+ * Genera clases en base a las alturas de texto definidos
+ *
+ * @example CSS
+ *   .leading-large       // Altura de línea para textos de tamaño large
+ */
+.leading-xxsmall {
+  line-height: var(--leading-xxsmall) !important;
+}
+
+.leading-xsmall {
+  line-height: var(--leading-xsmall) !important;
+}
+
+.leading-small {
+  line-height: var(--leading-small) !important;
+}
+
+.leading-medium {
+  line-height: var(--leading-medium) !important;
+}
+
+.leading-large {
+  line-height: var(--leading-large) !important;
+}
+
+.leading-xlarge {
+  line-height: var(--leading-xlarge) !important;
+}
+
+.leading-xxlarge {
+  line-height: var(--leading-xxlarge) !important;
+}
+
+/*
+ * Genera clases en base a la separación entre letras definidas
+ *
+ * @example CSS
+ *   .traking-large       // Separación entre letras large
+ */
+.traking-xxsmall {
+  letter-spacing: var(--traking-xxsmall) !important;
+}
+
+.traking-xsmall {
+  letter-spacing: var(--traking-xsmall) !important;
+}
+
+.traking-small {
+  letter-spacing: var(--traking-small) !important;
+}
+
+.traking-medium {
+  letter-spacing: initial !important;
+}
+
+.traking-large {
+  letter-spacing: var(--traking-large) !important;
+}
+
+.traking-xlarge {
+  letter-spacing: var(--traking-xlarge) !important;
+}
+
+.traking-xxlarge {
+  letter-spacing: var(--traking-xxlarge) !important;
+}
+
+/*
+ * Genera clases con los pesos tipográficos definidos
+ *
+ * @example CSS
+ *   .semibold
+ *   .regular
+ */
+.ultralight {
+  font-weight: 100 !important;
+}
+
+.extralight {
+  font-weight: 200 !important;
+}
+
+.light {
+  font-weight: 300 !important;
+}
+
+.regular {
+  font-weight: 400 !important;
+}
+
+.medium {
+  font-weight: 500 !important;
+}
+
+.semibold {
+  font-weight: 600 !important;
+}
+
+.bold {
+  font-weight: 700 !important;
+}
+
+.extrabold {
+  font-weight: 800 !important;
+}
+
+.ultrabold {
+  font-weight: 900 !important;
+}
+
+/*
+ * Genera clases con las familias tipográficas
+ *
+ * @example CSS
+ *   .body
+ *   .header
+ */
+.font-body {
+  font-family: "Source Sans Pro", Helvetica Neue, Arial, sans-serif !important;
+}
+
+.font-header {
+  font-family: "Source Sans Pro", Helvetica Neue, Arial, sans-serif !important;
+}
+
+.font-mono {
+  font-family: "Fira Code", "Courier New", Courier, monospace !important;
+}
+
+/*
+ * Indica como se alinea el texto dentro un elemento.
+ *
+ * @example CSS
+ *   .align-left
+ *   .align-center--lap
+ */
+.align-left {
+  text-align: left !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .align-left--palm {
+    text-align: left !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .align-left--lap {
+    text-align: left !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .align-left--small {
+    text-align: left !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .align-left--desk {
+    text-align: left !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .align-left--large {
+    text-align: left !important;
+  }
+}
+
+.align-right {
+  text-align: right !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .align-right--palm {
+    text-align: right !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .align-right--lap {
+    text-align: right !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .align-right--small {
+    text-align: right !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .align-right--desk {
+    text-align: right !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .align-right--large {
+    text-align: right !important;
+  }
+}
+
+.align-center {
+  text-align: center !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .align-center--palm {
+    text-align: center !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .align-center--lap {
+    text-align: center !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .align-center--small {
+    text-align: center !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .align-center--desk {
+    text-align: center !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .align-center--large {
+    text-align: center !important;
+  }
+}
+
+.justify {
+  text-align: justify !important;
+}
+@media screen and (max-width: 37.4375em) {
+  .justify--palm {
+    text-align: justify !important;
+  }
+}
+@media screen and (min-width: 37.5em) and (max-width: 56.1875em) {
+  .justify--lap {
+    text-align: justify !important;
+  }
+}
+@media screen and (min-width: 56.25em) and (max-width: 74.9375em) {
+  .justify--small {
+    text-align: justify !important;
+  }
+}
+@media screen and (min-width: 75em) and (max-width: 99.9375em) {
+  .justify--desk {
+    text-align: justify !important;
+  }
+}
+@media screen and (min-width: 100em) {
+  .justify--large {
+    text-align: justify !important;
+  }
+}
+
+/*
+ * Texto desbordante
+ */
+.nowrap {
+  white-space: nowrap !important;
+}
+
+.truncate {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: nowrap !important;
+}
+
+.truncate-2 {
+  display: -webkit-box !important;
+  overflow: hidden !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+
+.truncate-3 {
+  display: -webkit-box !important;
+  overflow: hidden !important;
+  -webkit-line-clamp: 3 !important;
+  -webkit-box-orient: vertical !important;
+}
+
+.truncate-4 {
+  display: -webkit-box !important;
+  overflow: hidden !important;
+  -webkit-line-clamp: 4 !important;
+  -webkit-box-orient: vertical !important;
+}
+
+/*
+ * Transformación
+ */
+.lowercase {
+  text-transform: lowercase !important;
+}
+
+.uppercase {
+  text-transform: uppercase !important;
+}
+
+.capitalize {
+  text-transform: capitalize !important;
+}
+
+/*
+ * Apariencia
+ */
+.italic {
+  font-style: italic !important;
+}
+
+.normal {
+  font-style: normal !important;
+}
+
+.text-hide {
+  text-indent: -10000px !important;
+}
+
+.underline {
+  text-decoration: underline !important;
+}
+
+.no-decoration {
+  text-decoration: none !important;
+}
+
+/* prettier-ignore */
 .element {
   color: rgba(var(--brand), 1);
 }

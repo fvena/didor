@@ -1,12 +1,8 @@
-@use '../core/helpers' as *;
-@use '../core/vars' as *;
-@use '../core/responsive' as *;
-
 /*
  * ================ Generadores ================
  */
 
-@if generate(display) == true {
+@if generate(display)==true {
   $displays: (none, inline, inline-block, block);
 
   /*

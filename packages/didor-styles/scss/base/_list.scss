@@ -1,7 +1,6 @@
 /* stylelint-disable no-descending-specificity */
-@use '../core/vars' as *;
+@if ($useBase ==true and $isGlobalScope ==true) {
 
-@if $useBase == true {
   /*
    * ================ Listados ================
    */
@@ -32,14 +31,15 @@
 
   // Elimina el espacio vertical extra, cuando anidamos varias listas.
   li {
-    > ul,
-    > ol {
+
+    >ul,
+    >ol {
       margin-bottom: 0;
     }
   }
 
-  ul > li,
-  ol > li {
+  ul>li,
+  ol>li {
     margin-left: simple();
   }
 
@@ -106,6 +106,7 @@
    * ================ Definiciones ================
    */
   dl {
+
     dt,
     dd {
       margin-left: 0;
@@ -116,10 +117,10 @@
     }
 
     dt {
-      font-weight: font-weight(normal);
+      font-weight: font-weight(medium);
     }
 
-    dd + dt {
+    dd+dt {
       padding-top: 1rem;
     }
   }

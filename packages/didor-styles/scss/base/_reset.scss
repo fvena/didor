@@ -1,7 +1,7 @@
 @use 'sass:map';
-@use '../core/vars' as *;
 
-@if $useReset == true {
+@if ($useReset ==true and $isGlobalScope ==true) {
+
   // reset everything
   *,
   *::before,

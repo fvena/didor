@@ -2,9 +2,6 @@
 @use 'sass:list';
 @use 'sass:string';
 @use 'sass:math';
-@use '../core/vars' as *;
-@use '../core/helpers' as *;
-@use 'colors' as *;
 
 /*
  * ================ Funciones ================
@@ -30,7 +27,7 @@
   }
 
   @if map.has-key($gradients, $color1) {
-    @if $css-variables == true and $type == $gradient-default {
+    @if $css-variables ==true and $type ==$gradient-default {
       @return var(--#{$color1}-gradient);
     }
 
@@ -39,19 +36,19 @@
     $color2: list.nth($colors, 2);
   }
 
-  @if type-of($color1) != color {
+  @if type-of($color1) !=color {
     $color1: color($color1);
   }
 
-  @if type-of($color2) != color {
+  @if type-of($color2) !=color {
     $color2: color($color2);
   }
 
-  @if $type == radial {
+  @if $type ==radial {
     @return radial-gradient(ellipse at left top, $color1 0%, $color2 100%);
   }
 
-  @if $type == conic {
+  @if $type ==conic {
     @return conic-gradient(from 90deg at 50% 50%, $color1 0%, $color2 100%);
   }
 
@@ -84,8 +81,7 @@
  */
 
 @function scrim-gradient($color: $shadow-color, $opacity: 0.9, $direction: 'to top') {
-  $scrim: (
-    1: 0%,
+  $scrim: (1: 0%,
     0.738: 19%,
     0.541: 34%,
     0.382: 47%,
@@ -100,33 +96,35 @@
     0: 100%,
   );
 
-  @if is-direction($direction) == false {
+  @if is-direction($direction)==false {
     @error "#{$direction} no es una dirección válida";
   }
 
-  @if $opacity < 0 or $opacity > 1 {
+  @if $opacity < 0 or $opacity >1 {
     @error "#{$opacity} debe ser un valor entre 0 y 1";
   }
 
-  $color-stops: ();
+  $color-stops: (
+  );
 
-  @each $key, $value in $scrim {
-    @if $css-variables == true and $color == $shadow-color {
-      $color-stops: list.append(
-        $color-stops,
-        string.unquote('rgba(var(--shadow-color), #{$key * $opacity}) #{$value}'),
-        'comma'
-      );
-    } @else {
-      $color-stops: list.append(
-        $color-stops,
-        string.unquote('#{color($color, $key * $opacity)} #{$value}'),
-        'comma'
-      );
-    }
+@each $key,
+$value in $scrim {
+  @if $css-variables ==true and $color ==$shadow-color {
+    $color-stops: list.append($color-stops,
+      string.unquote('rgba(var(--shadow-color), #{$key * $opacity}) #{$value}'),
+      'comma'
+    );
   }
 
-  @return linear-gradient(unquote($direction), #{$color-stops});
+  @else {
+    $color-stops: list.append($color-stops,
+      string.unquote('#{color($color, $key * $opacity)} #{$value}'),
+      'comma'
+    );
+  }
+}
+
+@return linear-gradient(unquote($direction), #{$color-stops});
 }
 
 /*
@@ -185,13 +183,11 @@
  *
  */
 
-@mixin border-gradient(
-  $color1,
+@mixin border-gradient($color1,
   $color2: null,
   $type: $gradient-default,
   $radius: 10px,
-  $width: 2px
-) {
+  $width: 2px) {
   @if not list.index((linear, radial, conic), $type) {
     @error "El tipo de gradiente no existe, solo admite linear, radial o conic";
   }
@@ -212,17 +208,18 @@
 
   $gradient: '';
 
-  @if $type == radial {
+  @if $type ==radial {
     $gradient: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="Gradient" cx="0" cy="0" r="150%"><stop stop-color="#{encodecolor($color1)}" offset="0%"/><stop stop-color="#{encodecolor($color2)}" offset="100%"/></radialGradient></defs><rect x="#{math.div($width,2)}" y="#{math.div($width,2)}" width="100%" height="100%" style="height:calc(100% - #{$width}); width:calc(100% - #{$width})" rx="#{$radius}" ry="#{$radius}" stroke-width="#{$width}" fill="transparent" stroke="url(%23Gradient)"/></svg>');
   }
 
-  @if $type == conic {
+  @if $type ==conic {
     // $gradient: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg"><defs><radialGradient id="Gradient" cx="0" cy="0" r="150%"><stop stop-color="#{encodecolor($color1)}" offset="0%"/><stop stop-color="#{encodecolor($color2)}" offset="100%"/></radialGradient></defs><rect x="#{math.div($width,2)}" y="#{math.div($width,2)}" width="100%" height="100%" style="height:calc(100% - #{$width}); width:calc(100% - #{$width})" rx="#{$radius}" ry="#{$radius}" stroke-width="#{$width}" fill="transparent" stroke="url(%23Gradient)"/></svg>');
   }
 
   $gradient: url('data:image/svg+xml;utf8, <svg xmlns="http://www.w3.org/2000/svg"><defs><linearGradient id="Gradient"><stop stop-color="#{encodecolor($color1)}" offset="0%"/><stop stop-color="#{encodecolor($color2)}" offset="100%"/></linearGradient></defs><rect x="#{math.div($width,2)}" y="#{math.div($width,2)}" width="100%" height="100%" style="height:calc(100% - #{$width}); width:calc(100% - #{$width})" rx="#{$radius}" ry="#{$radius}" stroke-width="#{$width}" fill="transparent" stroke="url(%23Gradient)"/></svg>');
   background: $gradient;
-  background-clip: content-box, border-box;
+  background-clip: content-box,
+  border-box;
 
   background-origin: border-box;
 }
@@ -231,7 +228,7 @@
  * ================ Generadores ================
  */
 
-@if generate(gradients) == true {
+@if generate(gradients)==true {
   /*
    * Genera clases con los degradados definidos por defecto
    *
@@ -239,7 +236,8 @@
    *     <div class="gradient-brand">...</div>
    */
 
-  @each $name, $gradients-colors in $gradients {
+  @each $name,
+  $gradients-colors in $gradients {
     .#{$prefix}bg-gradient-#{'' + $name} {
       background: gradient($name) #{$important};
     }

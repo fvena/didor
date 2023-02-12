@@ -14,6 +14,8 @@
     "@didor/docs": "*"
   },
   "devDependencies": {
-    "nuxt": "3.0.0"
+    "@didor/style-guide": "^0.1.0",
+    "nuxt": "3.0.0",
+    "stylelint-scss": "^4.3.0"
   }
 }

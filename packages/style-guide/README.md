@@ -5,7 +5,7 @@
 This repository is the home of Didor's style guide, which includes configs for
 popular linting and styling tools.
 
-The following configs are available, and are designed to be used together.
+The following configs are available and are designed to be used together.
 
 - [ESLint](#eslint)
 - [Prettier](#prettier)
@@ -28,7 +28,7 @@ alongside the available configs in the [ESLint](#eslint) section.
 > Note: Prettier is a peer-dependency of this package, and should be installed
 > at the root of your project.
 >
-> See: https://prettier.io/docs/en/install.html
+> See: <https://prettier.io/docs/en/install.html>
 
 To use the shared Prettier config, set the following in `package.json`.
 
@@ -43,7 +43,7 @@ To use the shared Prettier config, set the following in `package.json`.
 > Note: ESLint is a peer-dependency of this package, and should be installed
 > at the root of your project.
 >
-> See: https://eslint.org/docs/user-guide/getting-started#installation-and-usage
+> See: <https://eslint.org/docs/user-guide/getting-started#installation-and-usage>
 
 This ESLint config is designed to be composable.
 
@@ -82,7 +82,7 @@ module.exports = {
 Some of the rules enabled in the TypeScript config require additional type
 information, you'll need to provide the path to your `tsconfig.json`.
 
-For more information, see: https://typescript-eslint.io/docs/linting/type-linting
+For more information, see: <https://typescript-eslint.io/docs/linting/type-linting>
 
 ```js
 const { resolve } = require('path');
@@ -157,7 +157,7 @@ To use the shared TypeScript config, set the following in `tsconfig.json`.
 > Note: Stylelint is a peer-dependency of this package, and should be installed
 > at the root of your project.
 >
-> See: https://stylelint.io/user-guide/get-startedl
+> See: <https://stylelint.io/user-guide/get-startedl>
 
 To use the shared Stylelint config, set the following in `package.json`.
 

@@ -1,11 +1,6 @@
 @use 'sass:map';
 @use 'sass:math';
 @use 'sass:meta';
-@use '../core/helpers' as *;
-@use '../core/vars' as *;
-@use '../core/math' as *;
-@use '../core/responsive' as *;
-@use 'colors' as *;
 
 /*
  * ================ Funciones ================
@@ -34,13 +29,13 @@
   $font-type: meta.type-of($size);
 
   // Compruebo si el valor es un número
-  @if $font-type == number {
+  @if $font-type ==number {
     @return calcFontSize($size);
   }
 
   // Compruebo si el valor pertenece al listado de tamaños de texto
   @if map.get($font-sizes, $size) {
-    @if $css-variables == true {
+    @if $css-variables ==true {
       @return var(--font-#{$size});
     }
 
@@ -71,13 +66,13 @@
   $leading-type: meta.type-of($size);
 
   // Compruebo si el valor es un número
-  @if $leading-type == number {
+  @if $leading-type ==number {
     @return calcLeading($size);
   }
 
   // Compruebo si el valor pertenece al listado de alturas de línea
   @if map.get($leading, $size) {
-    @if $css-variables == true {
+    @if $css-variables ==true {
       @return var(--leading-#{$size});
     }
 
@@ -99,9 +94,10 @@
  */
 
 @function font-weight($weight) {
+
   // Compruebo si el valor pertenece al listado de pesos tipográficos
   @if map.get($font-weights, $weight) {
-    @if $css-variables == true {
+    @if $css-variables ==true {
       @return var(--font-#{$weight});
     }
 
@@ -123,9 +119,10 @@
  */
 
 @function font-family($family) {
+
   // Compruebo si el valor pertenece al listados de familias
   @if map.get($font-families, $family) {
-    @if $css-variables == true {
+    @if $css-variables ==true {
       @return var(--font-#{$family});
     }
 
@@ -149,6 +146,7 @@
  */
 
 @function font($value) {
+
   // Compruebo si el valor pertenece al listado de tamaños de texto
   @if map.get($font-sizes, $value) {
     @return font-size($value);
@@ -172,7 +170,8 @@
  * ================ Generadores ================
  */
 
-@if generate(types) == true {
+@if generate(types)==true {
+
   /*
    * Genera clases para definir el texto en base al tamaño, peso y color
    *
@@ -183,6 +182,7 @@
   @each $size-name in map.get($font-style-guide, sizes) {
     @each $weight-name in map.get($font-style-guide, weights) {
       @each $color-name in map.get($font-style-guide, colors) {
+
         %#{$size-name}-#{$weight-name}-#{$color-name},
         .#{$prefix}#{$size-name}-#{$weight-name}-#{$color-name} {
           font-size: font-size($size-name) #{$important};
@@ -201,7 +201,8 @@
    *   .h3-lap        // Tamaño de fuente solo para pantallas Lap de tamaño h3
    */
 
-  @each $font-size-name, $font-size-value in $font-sizes {
+  @each $font-size-name,
+  $font-size-value in $font-sizes {
     .#{$prefix}#{$font-size-name} {
       @include responsive {
         font-size: font-size($font-size-name) #{$important};
@@ -216,7 +217,8 @@
    *   .leading-large       // Altura de línea para textos de tamaño large
    */
 
-  @each $leading-size-name, $leading-size-value in $leading {
+  @each $leading-size-name,
+  $leading-size-value in $leading {
     .#{$prefix}leading-#{$leading-size-name} {
       line-height: leading($leading-size-name) #{$important};
     }
@@ -229,11 +231,14 @@
    *   .traking-large       // Separación entre letras large
    */
 
-  @each $traking-size-name, $traking-size-value in $traking {
+  @each $traking-size-name,
+  $traking-size-value in $traking {
     .#{$prefix}traking-#{$traking-size-name} {
-      @if $traking-size-name == medium {
+      @if $traking-size-name ==medium {
         letter-spacing: initial #{$important};
-      } @else {
+      }
+
+      @else {
         letter-spacing: isVar(--traking-#{$traking-size-name}, $traking-size-value) #{$important};
       }
     }
@@ -246,7 +251,8 @@
    *   .semibold
    *   .regular
    */
-  @each $font-weight-name, $font-weight-value in $font-weights {
+  @each $font-weight-name,
+  $font-weight-value in $font-weights {
     .#{$prefix}#{$font-weight-name} {
       font-weight: $font-weight-value #{$important};
     }
@@ -259,7 +265,8 @@
    *   .body
    *   .header
    */
-  @each $font-family-name, $font-family-value in $font-families {
+  @each $font-family-name,
+  $font-family-value in $font-families {
     .#{$prefix}font-#{$font-family-name} {
       font-family: $font-family-value #{$important};
     }

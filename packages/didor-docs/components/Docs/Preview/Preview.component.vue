@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { onMounted, ref, watch } from 'vue'
+import { onMounted, onBeforeUnmount, ref, watch } from 'vue'
+import { debounce } from '../../../utils';
+import srcdoc from './srcdoc.html?raw'
 
 interface Props {
   code: string
@@ -8,6 +10,10 @@ interface Props {
 const props = defineProps<Props>()
 const previewCode = ref<string>('')
 const delay = ref<NodeJS.Timeout>()
+const preview = ref<HTMLIFrameElement>()
+
+// Genera un id aleatorio para el iframe
+const uid = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)
 
 /**
  * Actualiza la demo cada vez que hay cambios en el código
@@ -34,59 +40,39 @@ function getPreviewCode(code: string): string {
     codeEscaped = `<template>${codeEscaped}</template>`;
   }
 
-  const source = `
-    <!DOCTYPE html>
-    <html>
-    <head>
-      <style>
-        html {
-          font-family: 'Source Sans Pro', Helvetica Neue, Arial, sans-serif;
-          font-style: normal;
-          font-weight: 400;
-          line-height: 1.6rem;
-          color: #3b4c54;
-        }
+  // Actualizo la plantilla con los datos recibidos
+  let sandboxSrc = srcdoc
+    .replace(/<!--IMPORT_COMPONENT-->/, codeEscaped)
+    .replace(/<!--UID-->/g, uid)
 
-        body {
-          margin: 0;
-        }
-
-        .wrapper {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 3.2rem 1.6rem;
-        }
-      </style>
-    </head>
-    <body>
-      <div class="wrapper">
-        <div id="app"></div>
-      </div>
-
-      <script src="https://unpkg.com/vue@next/dist/vue.runtime.global.prod.js"><\/script>
-      <script src="https://cdn.jsdelivr.net/npm/vue3-sfc-loader@0.8.4/dist/vue3-sfc-loader.js"><\/script>
-      <script>
-        const sfcContent = \`${codeEscaped}\`
-        const options = {
-          moduleCache: { vue: Vue },
-          getFile: () => sfcContent,
-          addStyle: (styleStr) => {
-            const style = document.createElement('style');
-            style.textContent = styleStr;
-            const ref = document.head.getElementsByTagName('style')[0] || null;
-            document.head.insertBefore(style, ref);
-          },
-        }
-        const { loadModule } = window["vue3-sfc-loader"];
-        Vue.createApp(Vue.defineAsyncComponent(() => loadModule('/myPugComponent.vue', options))).mount('#app');
-    <\/script>
-    </body>
-    </html>
-  `
-
-  const blob = new Blob([source], { type: 'text/html' });
+  // Para poder pasar el código al iframe,
+  // es necesario convertirlo a un objeto Blob y luego a un objeto URL
+  const blob = new Blob([sandboxSrc], { type: 'text/html' });
   return URL.createObjectURL(blob);
+}
+
+function handleMessage(event: MessageEvent): void {
+  if (event.data.uid !== uid) return
+
+  if (event.data.action === 'resize' && preview.value) {
+    preview.value.height = event.data.value
+    return
+  }
+
+  if (event.data.action === 'error') {
+    if (event.data.value instanceof SyntaxError) {
+      console.error('SyntaxError: ', event.data.value.message)
+      console.error('SyntaxError: ', event.data.value.name)
+      console.error('SyntaxError: ', event.data.value.fileName)
+      console.error('SyntaxError: ', event.data.value.lineNumber)
+      console.error('SyntaxError: ', event.data.value.columnNumber)
+      console.error('SyntaxError: ', event.data.value.stack)
+      return
+    }
+
+    console.error('from parent', event.data.value)
+    return
+  }
 }
 
 watch(
@@ -94,19 +80,35 @@ watch(
   newValue => refreshPreview(newValue)
 )
 
+
 onMounted(() => {
   previewCode.value = getPreviewCode(props.code)
+  window.addEventListener("message", handleMessage, false);
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener("message", handleMessage);
 })
 </script>
 
 <template lang="pug">
-iframe.preview__iframe(
-  v-if="previewCode"
-  :src="previewCode"
-  title="output"
-  sandbox="allow-scripts"
-  width="100%"
-  height="100%")
+.preview
+  iframe#preview(
+    v-if="previewCode"
+    :src="previewCode"
+    ref="preview"
+    title="output"
+    sandbox="allow-scripts"
+    width="100%"
+    height="100%")
 </template>
 
-<style lang="scss" scope></style>
+<style lang="scss" scoped>
+.preview,
+.preview :deep(iframe) {
+  // width: 100%;
+  // height: 100%;
+  border: none;
+  background-color: #fff;
+}
+</style>

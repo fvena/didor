@@ -1,6 +1,5 @@
-@use '../core/vars' as *;
+@if ($useBase ==true and $isGlobalScope ==true) {
 
-@if $useBase == true {
   /*
    * ================ Tabla ================
    */
@@ -22,36 +21,36 @@
 
   th,
   td,
-  tbody + tbody {
-    border-bottom-color: $table-border-color;
+  tbody+tbody {
+    border-bottom-color: color(gray3);
   }
 
   th {
     font-size: font-size(small2);
     font-weight: font-weight(bold);
-    color: $table-header-color;
+    color: color(gray1);
     text-transform: uppercase;
     vertical-align: bottom;
-    background-color: $table-header-background;
-    border-top: 1px solid $table-border-color;
-    border-bottom-color: $table-border-color;
+    background-color: color(gray5);
+    border-top: 1px solid color(gray3);
+    border-bottom-color: color(gray3);
 
     &:first-of-type {
-      border-left: 1px solid $table-border-color;
-      border-radius: $border-radius 0 0 $border-radius;
+      border-left: 1px solid color(gray3);
+      border-radius: radius(medium) 0 0 radius(medium);
     }
 
     &:last-of-type {
-      border-right: 1px solid $table-border-color;
-      border-radius: 0 $border-radius $border-radius 0;
+      border-right: 1px solid color(gray3);
+      border-radius: 0 radius(medium) radius(medium) 0;
     }
   }
 
   td {
     font-size: font-size(small1);
     line-height: 1.4rem;
-    color: $table-header-color;
-    border-bottom: 1px solid $table-border-color;
+    color: color(gray1);
+    border-bottom: 1px solid color(gray3);
 
     &:first-of-type {
       font-weight: font-weight(bold);
@@ -59,7 +58,7 @@
     }
   }
 
-  tbody + tbody {
+  tbody+tbody {
     border-bottom: 1px solid transparent;
   }
 }

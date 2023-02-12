@@ -1,7 +1,4 @@
 @use 'sass:map';
-@use '../core/helpers' as *;
-@use '../core/vars' as *;
-@use '../core/responsive' as *;
 
 /*
  * ================ Funciones ================
@@ -19,8 +16,9 @@
  */
 
 @function size($value) {
+
   // Compruebo si el valor pertenece al listado de tamaños relativos
-  @if type-of($value) == 'string' {
+  @if type-of($value)=='string' {
     @if map.get($sizes-relatives, $value) {
       $value: #{map.get($sizes-relatives, $value)};
     }
@@ -29,7 +27,7 @@
     @error "[#{$size}] does not exist";
   }
 
-  @if $css-variables == true {
+  @if $css-variables ==true {
     @return calc(var(--space) * #{$value * 1rem});
   }
 
@@ -44,7 +42,7 @@
  * Modifica el tamaño de un elemento.
  */
 
-@if generate(sizes) == true {
+@if generate(sizes)==true {
   /*
    * Tamaños relativos
    *
@@ -55,7 +53,8 @@
    *   .height-triple--lap    // Altura de tres espacios solo para dispostivos de escritorio
    */
 
-  @each $size, $value in $sizes-relatives {
+  @each $size,
+  $value in $sizes-relatives {
     .#{$prefix}width-#{$size} {
       @include responsive {
         width: size($value) #{$important};
@@ -81,7 +80,8 @@
    *   .height-50--lap     // Altura del 50% del contenedor solo para dispostivos de escritorio
    */
 
-  @each $size, $value in $sizes-percentages {
+  @each $size,
+  $value in $sizes-percentages {
     .#{$prefix}width-#{$size} {
       @include responsive {
         width: #{$value * 1%} #{$important};
@@ -105,6 +105,7 @@
         height: #{$value}vh #{$important};
       }
     }
+
     .#{$prefix}max-width-#{$size} {
       @include responsive {
         max-width: #{$value * 1%} #{$important};
@@ -116,6 +117,7 @@
         max-height: #{$value * 1%} #{$important};
       }
     }
+
     .#{$prefix}max-vw-#{$size} {
       @include responsive {
         max-width: #{$value}vw #{$important};

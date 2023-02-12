@@ -7,20 +7,51 @@
     "packages/*"
   ],
   "scripts": {
-    "clean": "turbo run clean && rimraf node_modules",
     "build": "turbo run build",
-    "dev": "turbo run dev --parallel",
-    "prepare": "turbo run prepare",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
-    "test": "turbo run test"
+    "build-api": "turbo run build-api",
+    "changeset": "changeset",
+    "clean": "turbo run clean && rimraf node_modules coverage tests-report.xml",
+    "dev": "turbo run dev",
+    "eslint": "turbo run eslint",
+    "postinstall": "npm run syncpack && npm run build",
+    "lint": "turbo run lint",
+    "prepare": "husky install",
+    "release": "turbo run build && changeset version",
+    "stylelint": "turbo run stylelint",
+    "syncpack": "syncpack fix-mismatches --filter \"^(?!@didor/).*\"",
+    "template": "template-generator",
+    "test": "turbo run test",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui --open",
+    "test:watch": "turbo run test:watch",
+    "type-check": "turbo run type-check",
+    "update": "ncu --interactive --format group -ws"
+  },
+  "prettier": "@didor/style-guide/prettier",
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
   },
   "devDependencies": {
-    "prettier": "latest",
-    "turbo": "latest"
+    "@changesets/changelog-github": "^0.4.7",
+    "@changesets/cli": "^2.25.0",
+    "@commitlint/cli": "^17.1.2",
+    "@commitlint/config-conventional": "^17.1.0",
+    "@didor/style-guide": "*",
+    "@vitest/coverage-c8": "^0.24.1",
+    "@vitest/ui": "^0.24.1",
+    "eslint": "^8.33.0",
+    "husky": "^8.0.1",
+    "npm-check-updates": "^16.6.5",
+    "rimraf": "^3.0.2",
+    "syncpack": "^8.2.4",
+    "turbo": "^1.7.3",
+    "vitest": "^0.28.4"
   },
+  "packageManager": "npm@8.19.1",
   "engines": {
-    "node": ">=14.0.0"
-  },
-  "dependencies": {},
-  "packageManager": "npm@8.19.2"
+    "node": ">=18.14.0",
+    "npm": ">=9.3.0"
+  }
 }

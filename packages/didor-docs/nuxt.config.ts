@@ -51,14 +51,14 @@ export default defineNuxtConfig({
           }
         }
       }
+    },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          additionalData: `@use "${resolve('./assets/scss/share.scss')}" as *;`,
+        }
+      }
     }
-    //   css: {
-    //     preprocessorOptions: {
-    //       scss: {
-    //         additionalData: '@use "./assets/_colors.scss";',
-    //       }
-    //     }
-    //   }
   },
 
   css: [

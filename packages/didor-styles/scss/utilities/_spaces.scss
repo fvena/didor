@@ -1,14 +1,10 @@
 @use 'sass:map';
-@use '../core/helpers' as *;
-@use '../core/vars' as *;
-@use '../core/responsive' as *;
-@use 'sizes' as *;
 
 /*
  * ================ Generadores ================
  */
 
-@if generate(spaces) == true {
+@if generate(spaces)==true {
   /*
    * Modifican los margenes internos y externos de un elemento
    *
@@ -44,18 +40,20 @@
    */
 
   @each $property in ('margin', 'padding') {
-    @each $size, $length in $sizes-relatives {
+
+    @each $size,
+    $length in $sizes-relatives {
       // Inicializo valores
       $none: '';
       $sizeName: '';
 
       // Si el tamaño es 0, añado el prefijo no
-      @if $size == 'none' {
+      @if $size =='none' {
         $none: 'no-';
       }
 
       // Cuando el tamaño es 0 o 1 (simple) no añado sufijo
-      @if $size != 'none' and $size != 'simple' {
+      @if $size !='none' and $size !='simple' {
         $sizeName: '-#{$size}';
       }
 

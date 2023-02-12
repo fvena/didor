@@ -1,7 +1,6 @@
 @use 'sass:math';
 @use 'sass:list';
 @use 'sass:meta';
-@use 'vars' as *;
 
 /*
  * ================ Funciones ================
@@ -15,10 +14,19 @@
  */
 
 @function generate($utily) {
+
+  /*
+   * Si no se llama al framework de forma global, como cuando se importa en un componente, 
+   * no deben generarse contenidos
+   */
+  @if $isGlobalScope ==false {
+    @return false;
+  }
+
   /*
    * Si no se habilitan las utilidades de clases no se genera ninguna
    */
-  @if $utility-class == false {
+  @if $utility-class ==false {
     @return false;
   }
 
@@ -32,7 +40,7 @@
   /*
    * Si hay lista de incluidos, solo se generan las utilidades de clases que se encuentren en ella
    */
-  @if list.length($includes) > 0 and not list.index($includes, $utily) {
+  @if list.length($includes)>0 and not list.index($includes, $utily) {
     @return false;
   }
 
@@ -52,7 +60,7 @@
  */
 
 @function isVar($name, $value) {
-  @if $css-variables == true {
+  @if $css-variables ==true {
     @return var(#{$name});
   }
 
@@ -73,9 +81,7 @@
  */
 
 @function is-direction($value) {
-  $is-keyword: list.index(
-    (
-      'to top',
+  $is-keyword: list.index(('to top',
       'to top right',
       'to right top',
       'to right',
@@ -88,10 +94,9 @@
       'to left top',
       'to top left'
     ),
-    $value
-  );
+    $value );
 
-  $is-angle: meta.type-of($value) == 'number' and list.index('deg' 'grad' 'turn' 'rad', math.unit($value));
+  $is-angle: meta.type-of($value)=='number' and list.index('deg' 'grad' 'turn' 'rad', math.unit($value));
 
   @return $is-keyword or $is-angle;
 }

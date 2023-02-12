@@ -73,6 +73,7 @@ module.exports = {
       'warn',
       {
         groups: [
+          'type', // Type imports
           'builtin', // Node.js built-in modules
           'external', // Packages
           'internal', // Aliased modules
@@ -84,4 +85,4 @@ module.exports = {
       }
     ]
   }
-};
+}

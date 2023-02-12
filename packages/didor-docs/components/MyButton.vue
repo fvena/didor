@@ -17,12 +17,10 @@ defineEmits<{
 </template>
 
 <style lang="scss" scope>
-@import '../assets/_colors.scss';
-
 .btn {
   padding: 1rem;
   border: none;
-  background-color: $primary;
+  background-color: color(brand);
   color: black;
   font-family: sans-serif;
 }

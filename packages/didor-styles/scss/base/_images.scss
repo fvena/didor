@@ -1,6 +1,5 @@
-@use '../core/vars' as *;
+@if ($useBase ==true and $isGlobalScope ==true) {
 
-@if $useBase == true {
   /*
    * ================ Imágenes ================
    *
@@ -13,15 +12,19 @@
    */
   img {
     box-sizing: content-box;
-    max-width: 100%; /* [1] */
+    max-width: 100%;
+    /* [1] */
     height: auto;
-    font-style: italic; /* [2] */
-    vertical-align: middle; /* [3] */
+    font-style: italic;
+    /* [2] */
+    vertical-align: middle;
+    /* [3] */
   }
 
   img[width],
   img[height] {
-    max-width: none; /* [4] */
+    max-width: none;
+    /* [4] */
   }
 
   /*

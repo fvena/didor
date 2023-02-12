@@ -1,7 +1,7 @@
-const { ECMA_VERSION, JAVASCRIPT_FILES } = require('./constants');
+const { ECMA_VERSION, JAVASCRIPT_FILES } = require('./constants')
 
 // See: https://github.com/eslint/eslint/issues/3458
-require('@rushstack/eslint-patch/modern-module-resolution');
+require('@rushstack/eslint-patch/modern-module-resolution')
 
 /**
  * This is the base for both our browser and Node ESLint config files.
@@ -46,4 +46,4 @@ module.exports = {
       }
     }
   ]
-};
+}

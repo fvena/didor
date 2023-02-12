@@ -1,8 +1,5 @@
-@use '../core/vars' as *;
-@use '../utilities/types' as *;
-@use '../utilities/colors' as *;
+@if ($useBase ==true and $isGlobalScope ==true) {
 
-@if $useBase == true {
   /*
    * ================ Tipografía ================
    */
@@ -95,8 +92,8 @@
     color: color(gray4);
   }
 
-  h1 + .caption,
-  .h1 + .caption {
+  h1+.caption,
+  .h1+.caption {
     margin-top: half();
     margin-bottom: simple();
     font-size: font(h4);
@@ -105,8 +102,8 @@
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
-  h2 + .caption,
-  .h2 + .caption {
+  h2+.caption,
+  .h2+.caption {
     margin-top: half();
     margin-bottom: simple();
     font-size: font(h5);
@@ -115,8 +112,8 @@
   }
 
   /* stylelint-disable-next-line no-descending-specificity */
-  h3 + .caption,
-  .h3 + .caption {
+  h3+.caption,
+  .h3+.caption {
     margin-bottom: half();
     font-size: font(base);
     font-style: normal;
@@ -148,8 +145,8 @@
       margin-bottom: 0;
     }
 
-    > footer,
-    > .footer {
+    >footer,
+    >.footer {
       display: block;
       padding-right: 30%;
       font-size: font(small1);

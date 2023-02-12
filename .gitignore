@@ -7,6 +7,8 @@ node_modules
 
 # testing
 coverage
+report
+tests-report.xml
 
 # next.js
 .next/

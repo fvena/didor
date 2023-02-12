@@ -1,6 +1,5 @@
-@use '../core/vars' as *;
+@if ($useBase ==true and $isGlobalScope ==true) {
 
-@if $useBase == true {
   /*
    * ================ Formularios ================
    */
@@ -29,7 +28,7 @@
     height: double();
     padding: 0 simple();
     line-height: double();
-    border: 1px solid color(border);
+    border: 1px solid color($border-color);
 
     &:focus {
       border-color: color(brand);

@@ -1,7 +1,5 @@
-@use '../core/vars' as *;
-@use '../utilities/hover' as *;
+@if ($useBase ==true and $isGlobalScope ==true) {
 
-@if $useBase == true {
   /*
    * ================ Enlaces ================
    */

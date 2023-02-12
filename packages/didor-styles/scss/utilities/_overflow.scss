@@ -1,11 +1,8 @@
-@use '../core/helpers' as *;
-@use '../core/vars' as *;
-
 /*
  * ================ Generadores ================
  */
 
-@if generate(overflow) == true {
+@if generate(overflow)==true {
   /*
    * Modifica como se comporta un elemento cuando su contenido se desborda.
    */

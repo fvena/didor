@@ -68,4 +68,4 @@ module.exports = {
      */
     'prefer-object-spread': 'warn'
   }
-};
+}

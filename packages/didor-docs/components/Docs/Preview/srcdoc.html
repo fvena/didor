@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      html {
+        font-family: 'Source Sans Pro', Helvetica Neue, Arial, sans-serif;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 1.6rem;
+        color: #3b4c54;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 3.2rem 1.6rem;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="app"></div>
+
+    <script src="https://unpkg.com/vue/dist/vue.global.prod.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue3-sfc-loader@0.8.4/dist/vue3-sfc-loader.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sass.js@0.11.1/dist/sass.sync.js"></script>
+    <script>
+      const config = {
+        files: {
+          '/main.vue': `
+            <template>
+              <div class="container" ref="container">
+                <div class="component">
+                  <my-component/>
+                </div>
+              </div>
+            </template>
+            <script setup>
+              import { onMounted, onBeforeUnmount, onUpdated, ref } from 'vue'
+              import myComponent from './myComponent.vue'
+
+              const container = ref()
+
+              function resize() {
+                const iframeHeight = container.value.scrollHeight + 'px';
+                parent.postMessage({ action: 'resize', value: iframeHeight, uid: '<!--UID-->' }, '*');
+              }
+
+              onMounted(() => {
+                resize()
+                window.addEventListener('resize', resize, false);
+              })
+
+              onBeforeUnmount(() => {
+                window.removeEventListener('resize', this.resize);
+              })
+            <\/script>
+          `,
+
+          '/myComponent.vue': `<!--IMPORT_COMPONENT-->`,
+        }
+      };
+
+      const options = {
+        moduleCache: { vue: Vue },
+        getFile: url => config.files[url],
+        addStyle(textContent) {
+          const style = Object.assign(document.createElement('style'), { textContent });
+          const ref = document.head.getElementsByTagName('style')[0] || null;
+          document.head.insertBefore(style, ref);
+        },
+      }
+
+      const { loadModule } = window['vue3-sfc-loader'];
+      const app = Vue.createApp(Vue.defineAsyncComponent(() => loadModule('/main.vue', options)));
+      app.mount(document.body);
+      app.config.errorHandler = (err, instance, info) => {
+        parent.postMessage({ action: 'error', value: err, uid: '<!--UID-->' }, '*');
+      }
+    </script>
+    <script>
+      window.onerror = function (msg, url, lineNo, columnNo, error) {
+        if (msg.includes('module specifier “vue”')) {
+          // firefox only error, ignore
+          return false
+        }
+        try {
+          parent.postMessage({ action: 'error', value: error, uid: '<!--UID-->' }, '*');
+        } catch (e) {
+          parent.postMessage({ action: 'error', value: msg, uid: '<!--UID-->' }, '*');
+        }
+      }
+    </script>
+  </body>
+</html>

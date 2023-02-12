@@ -1,5 +1,5 @@
 /* eslint-disable import/export */
-import { render } from '@testing-library/vue';
+import { render } from '@testing-library/vue'
 
 const customRender = <T>(ui: T, options = {}) =>
   render(ui, {
@@ -7,7 +7,7 @@ const customRender = <T>(ui: T, options = {}) =>
   });
 
 export * from '@testing-library/vue';
-export { default as userEvent } from '@testing-library/user-event';
+export { default as userEvent } from '@testing-library/user-event'
 
 // override render export
-export { customRender as render };
+export { customRender as render }

@@ -7,4 +7,4 @@ module.exports = {
      */
     '@typescript-eslint/unbound-method': 'off'
   }
-};
+}

@@ -7,10 +7,10 @@ const disabledRules = {
   'import/export': 'off',
   'import/namespace': 'off',
   'import/no-unresolved': 'off'
-};
+}
 
 module.exports = {
   rules: {
     ...disabledRules
   }
-};
+}

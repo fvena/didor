@@ -1,5 +1,3 @@
-@use 'vars' as *;
-
 /*
  * ================ Mixins ================
  */
@@ -25,7 +23,7 @@
 @mixin hover {
   @content;
 
-  @if $hover == true {
+  @if $hover ==true {
     @media (hover: hover) and (pointer: fine) {
       &--hover:not([disabled]):hover {
         @content;

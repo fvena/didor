@@ -1,8 +1,5 @@
 @use 'sass:map';
 @use 'sass:meta';
-@use '../core/vars' as *;
-@use '../core/helpers' as *;
-@use 'colors' as *;
 
 /*
  * ================ Funciones ================
@@ -23,13 +20,13 @@
   $border-type: meta.type-of($size);
 
   // Compruebo si el valor es un número
-  @if $border-type == number {
+  @if $border-type ==number {
     @return #{$size}px;
   }
 
   // Compruebo si el valor pertenece al listado de anchuras de borde
   @if map.get($border-widths, $size) {
-    @if $css-variables == true {
+    @if $css-variables ==true {
       @return var(--border-#{$size});
     }
 
@@ -52,7 +49,7 @@
 
 @function radius($radius: medium) {
   @if map.get($radiuses, $radius) {
-    @if $css-variables == true {
+    @if $css-variables ==true {
       @return var(--radius-#{$radius});
     }
 
@@ -67,7 +64,7 @@
  * ================ Generadores ================
  */
 
-@if generate(borders) == true {
+@if generate(borders)==true {
   /*
    * Genera una clase para añadir o quitar bordes a un elemento
    *
@@ -79,10 +76,7 @@
    */
 
   .#{$prefix}border {
-    border: border($border-width)
-      isVar('--border-style', $border-style)
-      color($border-color)
-      #{$important};
+    border: border($border-width) isVar('--border-style', $border-style) color($border-color) #{$important};
   }
 
   .#{$prefix}no-border {
@@ -91,10 +85,7 @@
 
   @each $position in ('top', 'right', 'bottom', 'left') {
     .#{$prefix}border-#{$position} {
-      border-#{$position}: border($border-width)
-        isVar('--border-style', $border-style)
-        color($border-color)
-        #{$important};
+      border-#{$position}: border($border-width) isVar('--border-style', $border-style) color($border-color) #{$important};
     }
 
     .#{$prefix}no-border-#{$position} {
@@ -103,25 +94,13 @@
   }
 
   .#{$prefix}border-x {
-    border-right: border($border-width)
-      isVar('--border-style', $border-style)
-      color($border-color)
-      #{$important};
-    border-left: border($border-width)
-      isVar('--border-style', $border-style)
-      color($border-color)
-      #{$important};
+    border-right: border($border-width) isVar('--border-style', $border-style) color($border-color) #{$important};
+    border-left: border($border-width) isVar('--border-style', $border-style) color($border-color) #{$important};
   }
 
   .#{$prefix}border-y {
-    border-top: border($border-width)
-      isVar('--border-style', $border-style)
-      color($border-color)
-      #{$important};
-    border-bottom: border($border-width)
-      isVar('--border-style', $border-style)
-      color($border-color)
-      #{$important};
+    border-top: border($border-width) isVar('--border-style', $border-style) color($border-color) #{$important};
+    border-bottom: border($border-width) isVar('--border-style', $border-style) color($border-color) #{$important};
   }
 
   .#{$prefix}no-border-x {
@@ -143,13 +122,15 @@
    *   .border.border--brand  // Colorea el borde con el color de la marca
    */
 
-  @each $name, $color in $theme {
+  @each $name,
+  $color in $theme {
     .#{$prefix}border--#{$name} {
       border-color: color($color) #{$important};
     }
   }
 
-  @each $name, $color in $light-theme {
+  @each $name,
+  $color in $light-theme {
     .#{$prefix}border--#{'' + $name} {
       border-color: color($color) #{$important};
     }
@@ -166,7 +147,8 @@
    *   .border.border--thick  // Establece el ancho del borde a 4px
    */
 
-  @each $name, $value in $border-widths {
+  @each $name,
+  $value in $border-widths {
     .#{$prefix}border--#{$name} {
       border-width: border($name) #{$important};
     }
@@ -234,7 +216,8 @@
     border-radius: 0 #{$important};
   }
 
-  @each $name, $radius in $radiuses {
+  @each $name,
+  $radius in $radiuses {
     .#{$prefix}rounded-#{$name} {
       border-radius: radius($name) #{$important};
     }

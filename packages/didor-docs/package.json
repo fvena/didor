@@ -16,7 +16,7 @@
     "nuxt.config.ts"
   ],
   "scripts": {
-    "clean": "rimraf node_modules && rimraf .nuxt",
+    "clean": "rimraf node_modules .nuxt .turbo",
     "prepare": "nuxt prepare",
     "devOld": "nuxi prepare & nuxi dev .playground",
     "build": "nuxi build .playground",
@@ -43,14 +43,18 @@
     "@codemirror/lang-javascript": "^6.1.1",
     "@codemirror/lang-json": "^6.0.1",
     "@codemirror/lang-markdown": "^6.0.5",
+    "@didor/style-guide": "^0.1.0",
     "@didor/styles": "*",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
+    "@types/prismjs": "^1.26.0",
     "eslint": "^8.27.0",
     "nuxt": "^3.0.0",
+    "prismjs": "^1.29.0",
     "pug": "^3.0.2",
     "pug-plain-loader": "^1.1.0",
     "sass": "^1.56.1",
     "sass-loader": "^10.4.1",
+    "stylelint-scss": "^4.3.0",
     "typescript": "^4.9.3",
     "vue3-sfc-loader": "^0.8.4"
   }

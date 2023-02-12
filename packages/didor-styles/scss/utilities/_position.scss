@@ -1,12 +1,8 @@
-@use '../core/helpers' as *;
-@use '../core/vars' as *;
-@use '../core/responsive' as *;
-
 /*
  * ================ Generadores ================
  */
 
-@if generate(position) == true {
+@if generate(position)==true {
   /*
    * Modifica como se posiciona un elemento respecto de su enterno.
    */

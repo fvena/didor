@@ -1,6 +1,5 @@
-@use '../core/vars' as *;
+@if ($useBase ==true and $isGlobalScope ==true) {
 
-@if $useBase == true {
   /*
    * ================ Bloques de código ================
    */
@@ -28,7 +27,7 @@
     white-space: pre;
     word-spacing: normal;
 
-    a > & {
+    a>& {
       padding: 0;
       color: inherit;
       background-color: inherit;
@@ -55,7 +54,7 @@
   /*
    * ================ Código dentro de una linea de texto normal ================
    */
-  :not(pre) > code {
+  :not(pre)>code {
     padding: 0.1rem 0.3rem;
     font-size: 0.9em;
     line-height: simple();

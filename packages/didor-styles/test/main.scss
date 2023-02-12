@@ -1,7 +1,5 @@
 /* prettier-ignore */
-@use "../scss" as * with (
-  $config: (
-    useBase: true,
+@use "../scss" as * with ($config: (useBase: true,
     useReset: true,
     prefix: '',
     css-variables: true,
@@ -12,13 +10,10 @@
     important: true,
     hover: true,
     medias: (palm, lap, small, desk, large),
-    font-families: (
-      body: ("Source Sans Pro", Helvetica Neue, Arial, sans-serif),
+    font-families: (body: ("Source Sans Pro", Helvetica Neue, Arial, sans-serif),
       header: ("Source Sans Pro", Helvetica Neue, Arial, sans-serif),
       mono: ("Fira Code", "Courier New", Courier, monospace),
-    )
-  )
-);
+    )));
 
 .element {
   color: color(brand);
@@ -72,51 +67,43 @@
 }
 
 .shadow-5-invert {
-  box-shadow: shadow(
-    5,
-    $shadow-color,
-    $shadow-soft,
-    $shadow-horizontal,
-    $shadow-vertical,
-    $shadow-hard,
-    true
-  );
+  box-shadow: shadow(5,
+      $shadow-color,
+      $shadow-soft,
+      $shadow-horizontal,
+      $shadow-vertical,
+      $shadow-hard,
+      true);
 }
 
 .shadow-5-soft1 {
-  box-shadow: shadow(
-    5,
-    $shadow-color,
-    1,
-    $shadow-horizontal,
-    $shadow-vertical,
-    $shadow-hard,
-    false
-  );
+  box-shadow: shadow(5,
+      $shadow-color,
+      1,
+      $shadow-horizontal,
+      $shadow-vertical,
+      $shadow-hard,
+      false);
 }
 
 .shadow-5-soft3 {
-  box-shadow: shadow(
-    5,
-    $shadow-color,
-    3,
-    $shadow-horizontal,
-    $shadow-vertical,
-    $shadow-hard,
-    false
-  );
+  box-shadow: shadow(5,
+      $shadow-color,
+      3,
+      $shadow-horizontal,
+      $shadow-vertical,
+      $shadow-hard,
+      false);
 }
 
 .shadow-5-soft4 {
-  box-shadow: shadow(
-    5,
-    $shadow-color,
-    4,
-    $shadow-horizontal,
-    $shadow-vertical,
-    $shadow-hard,
-    false
-  );
+  box-shadow: shadow(5,
+      $shadow-color,
+      4,
+      $shadow-horizontal,
+      $shadow-vertical,
+      $shadow-hard,
+      false);
 }
 
 .shadow-5-long1 {
@@ -132,39 +119,33 @@
 }
 
 .shadow-5-hard1 {
-  box-shadow: shadow(
-    5,
-    $shadow-color,
-    $shadow-soft,
-    $shadow-horizontal,
-    $shadow-vertical,
-    1,
-    false
-  );
+  box-shadow: shadow(5,
+      $shadow-color,
+      $shadow-soft,
+      $shadow-horizontal,
+      $shadow-vertical,
+      1,
+      false);
 }
 
 .shadow-5-hard3 {
-  box-shadow: shadow(
-    5,
-    $shadow-color,
-    $shadow-soft,
-    $shadow-horizontal,
-    $shadow-vertical,
-    3,
-    false
-  );
+  box-shadow: shadow(5,
+      $shadow-color,
+      $shadow-soft,
+      $shadow-horizontal,
+      $shadow-vertical,
+      3,
+      false);
 }
 
 .shadow-5-hard4 {
-  box-shadow: shadow(
-    5,
-    $shadow-color,
-    $shadow-soft,
-    $shadow-horizontal,
-    $shadow-vertical,
-    4,
-    false
-  );
+  box-shadow: shadow(5,
+      $shadow-color,
+      $shadow-soft,
+      $shadow-horizontal,
+      $shadow-vertical,
+      4,
+      false);
 }
 
 .shadow-7 {

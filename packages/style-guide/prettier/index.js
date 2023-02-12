@@ -9,7 +9,7 @@ const overridableDefaults = {
   tabWidth: 2,
   printWidth: 100,
   useTabs: false
-};
+}
 
 module.exports = {
   ...overridableDefaults,
@@ -22,5 +22,6 @@ module.exports = {
   quoteProps: 'as-needed',
   singleQuote: true,
   trailingComma: 'none',
-  vueIndentScriptAndStyle: true
-};
+  vueIndentScriptAndStyle: true,
+  semi: false
+}

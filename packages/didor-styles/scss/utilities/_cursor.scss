@@ -1,6 +1,4 @@
 @use 'sass:map';
-@use '../core/helpers' as *;
-@use '../core/vars' as *;
 
 /*
  * ================ Generadores ================
@@ -10,8 +8,8 @@
  * Modifica el cursor de un ratón al hacer hover sobre un elemento.
  */
 
-@if generate(cursor) == true {
-   /*
+@if generate(cursor)==true {
+  /*
    * Modifica el cursor de un ratón al hacer hover sobre un elemento.
    *
    * @example CSS

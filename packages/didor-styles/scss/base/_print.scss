@@ -1,11 +1,11 @@
-@use '../core/vars' as *;
+@if ($useBase ==true and $isGlobalScope ==true) {
 
-@if $useBase == true {
   /*
    * ================ Estilos para imprimir ================
    */
 
   @media print {
+
     *,
     *::before,
     *::after {

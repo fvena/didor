@@ -2,9 +2,6 @@
 @use 'sass:color';
 @use 'sass:string';
 @use 'sass:meta';
-@use '../core/helpers' as *;
-@use '../core/vars' as *;
-@use '../core/hover' as *;
 
 /*
  * ================ Funciones ================
@@ -36,7 +33,7 @@
  */
 
 @function encodecolor($color) {
-  @if meta.type-of($color) != color {
+  @if meta.type-of($color) !=color {
     @if map.get($theme, $color) {
       $color: map.get($theme, $color);
     }
@@ -52,7 +49,7 @@
 
   $hex: string.slice(color.ie-hex-str($color), 4);
   $color: string.unquote('#{$hex}');
-  @return '%23' + $color;
+  @return '%23'+$color;
 }
 
 /*
@@ -72,16 +69,16 @@
  */
 
 @function color($color, $opacity: 1) {
-  @if meta.type-of($opacity) == number and ($opacity < 0 or $opacity > 1) {
+  @if meta.type-of($opacity)==number and ($opacity < 0 or $opacity > 1) {
     @error "La opacidad debe tener un valor entre 0 y 1";
   }
 
-  @if meta.type-of($color) == color {
+  @if meta.type-of($color)==color {
     @return rgba($color, $opacity);
   }
 
   @if map.get($theme, $color) {
-    @if $css-variables == true {
+    @if $css-variables ==true {
       @return rgba(var(--#{$color}), $opacity);
     }
 
@@ -89,7 +86,7 @@
   }
 
   @if map.get($light-theme, $color) {
-    @if $css-variables == true {
+    @if $css-variables ==true {
       @return rgba(var(--#{$color}), $opacity);
     }
 
@@ -97,7 +94,7 @@
   }
 
   @if map.get($dark-theme, $color) {
-    @if $css-variables == true {
+    @if $css-variables ==true {
       @return rgba(var(--#{$color}), $opacity);
     }
 
@@ -140,7 +137,7 @@
  * ================ Generadores ================
  */
 
-@if generate(colors) == true {
+@if generate(colors)==true {
   /*
    * Genera una clase para modificar el color de fondo por cada color definido
    *
@@ -148,7 +145,8 @@
    *   .bg-brand             // El color de fondo se colorea con el color de la marca
    */
 
-  @each $name, $color in $theme {
+  @each $name,
+  $color in $theme {
     .#{$prefix}bg-#{'' + $name} {
       @include hover {
         --bg-opacity: 1;
@@ -157,7 +155,8 @@
     }
   }
 
-  @each $name, $color in $light-theme {
+  @each $name,
+  $color in $light-theme {
     .#{$prefix}bg-#{'' + $name} {
       --bg-opacity: 1;
       background-color: color($name, var(--bg-opacity)) #{$important};
@@ -182,14 +181,16 @@
    *   .color-brand
    */
 
-  @each $name, $color in $theme {
+  @each $name,
+  $color in $theme {
     .#{$prefix}color-#{'' + $name} {
       --color-opacity: 1;
       color: color($name, var(--color-opacity)) #{$important};
     }
   }
 
-  @each $name, $color in $light-theme {
+  @each $name,
+  $color in $light-theme {
     .#{$prefix}color-#{'' + $name} {
       --color-opacity: 1;
       color: color($name, var(--color-opacity)) #{$important};
